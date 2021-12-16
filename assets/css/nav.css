@@ -1,0 +1,146 @@
+.brand-logo {
+  font-family:'Comfortaa';
+  color:#ecf0f1;
+  font-size:45px;
+}
+
+.nav-elems .nav-item.show .nav-link, .nav-elems .nav-link.active {
+  border-radius:0px;
+  border-color:transparent;
+  background-color:transparent;
+  border-bottom:3px solid #2ecc71;
+  color:#ecf0f1;
+}
+
+.nav-elems .nav-link, .nav-item .nav-link {
+  background-color:transparent;
+  border-radius:0px;
+  font-weight:500;
+  color:#ecf0f1;
+  transition:none !important;
+}
+
+.nav-elems {
+  border-bottom:none;
+  font-size:18px;
+}
+
+.nav-link:hover {
+  border:none;
+  transition:0.5s;
+}
+
+.brand-logo:hover {
+  color:#2ecc71;
+}
+
+.fixed-account-btn {
+  background:linear-gradient(90deg, rgba(26,188,156,0.7) 23%, rgba(46,204,113,0.7) 100%);
+  display:block;
+  height:60px;
+  width:60px;
+  border-radius:50%;
+  position:fixed;
+  bottom:0;
+  right:0;
+  margin:20px;
+  border:none;
+  padding:16px;
+  font-size:16px;
+  border:none;
+  cursor:pointer;
+  transition:0.1s;
+  z-index:10;
+}
+
+.fixed-account-btn:focus, .fixed-account-btn:active {
+  outline:none !important;
+  border:none !important;
+  box-shadow:none !important;
+}
+
+.fixed-account-btn:hover {
+  transform:translate(-2px, -2px);
+  transition:0.1s;
+}
+
+.account-menu {
+  background-color:#34495e;
+  color:#ecf0f1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family:'Comfortaa';
+  color: #ecf0f1; 
+}
+
+.nav-account-link {
+  font-size:25px;
+}
+
+.nav-account-icon {
+  padding:10px;
+}
+
+.hover-underline:after {
+  content:'';
+  position:absolute;
+  width:250px;
+  transform:scaleX(0);
+  height:3px;
+  bottom:0;
+  left:25px;
+  background:linear-gradient(90deg, rgba(26,188,156,1) 23%, rgba(46,204,113,1) 100%);
+  transform-origin:bottom right;
+  transition:transform 0.25s ease-out;
+}
+
+.nav-elems .nav-link:after {
+  content:'';
+  position:absolute;
+  width:100%;
+  transform:scaleX(0);
+  height:3px;
+  bottom:-3px;
+  left:0;
+  background:linear-gradient(90deg, rgba(26,188,156,1) 23%, rgba(46,204,113,1) 100%);
+  transform-origin:bottom right;
+  transition:transform 0.25s ease-out;
+}
+
+.hover-underline:hover:after {
+  transform:scaleX(1);
+  transform-origin:bottom left;
+}
+
+.nav-elems .nav-link:hover:after {
+  transform:scaleX(1);
+  transform-origin:bottom left;
+}
+
+.hover-underline {
+  display:inline-block;
+  position:relative;
+}
+
+.nav-elems .nav-link {
+  display:inline-block;
+  position:relative;
+}
+
+.breadcrumb-item {
+  font-family: 'Comfortaa';
+  color: #ecf0f1;
+}
+
+.breadcrumb-item.active {
+  color: #3498db !important;
+  font-weight: 700;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+  font-family: 'Comfortaa';
+  font-weight: 900;
+  color: #2ecc71;
+}
