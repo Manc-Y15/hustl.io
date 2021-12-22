@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.2.2/echarts.min.js"></script>
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
@@ -137,6 +138,7 @@
                     <canvas id="data_chart"></canvas>
                 </div>
                 <script>
+                    
                     var ctx = document.getElementById('data_chart').getContext("2d");
 
                     var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
@@ -144,7 +146,7 @@
                     gradientStroke.addColorStop(1, 'rgba(46,204,113,1)');
 
                     var gradientFill = ctx.createLinearGradient(0, 0, 0, 300);
-                    gradientFill.addColorStop(0.3, "rgba(26,188,156,0.6)");
+                    gradientFill.addColorStop(0.3, "rgba(26,188,156,0.3)");
                     gradientFill.addColorStop(1, "rgba(0, 0, 0, 0.0)");
 
                     var data_chart = new Chart(ctx, {
@@ -164,8 +166,8 @@
                                 pointRadius: 3,
                                 fill: true,
                                 backgroundColor: gradientFill,
-                                borderWidth: 4,
-                                data: [900, 1000, 1150, 1220, 1300, 1210, 1100]
+                                borderWidth: 3,
+                                data: [894, 920, 945, 978, 989, 965, 932]
                             }]
                         },
                         options: {
@@ -178,7 +180,7 @@
                                 yAxes: [{
                                     ticks: {
                                         fontColor: "#ecf0f1",
-                                        beginAtZero: true,
+                                        beginAtZero: false,
                                         maxTicksLimit: 5,
                                         padding: 20,
                                         callback: function(value, index, values) {
@@ -209,6 +211,7 @@
                             }
                         }
                     });
+                    
                 </script>
             </div>
             <div class="col-md-4 col-sm-12">

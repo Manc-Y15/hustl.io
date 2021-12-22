@@ -1,6 +1,10 @@
 .chart-wrapper {
 }
 
+:host {
+    display:block;
+}
+
 .stock-description {
     color: #95a5a6;
     font-family: 'Comfortaa';
