@@ -134,7 +134,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .breadcrumb-item.active {
-  color: #3498db !important;
+  color: #3498db;
   font-weight: 700;
 }
 

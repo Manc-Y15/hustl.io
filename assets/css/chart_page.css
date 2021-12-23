@@ -25,6 +25,21 @@
     font-weight: 700;
 }
 
+.crypto-button {
+    border-radius: 5px;
+    background: linear-gradient(
+90deg, rgba(250, 0, 0,1) 50%, rgb(250 104 0) 100%);
+    border: 1px solid transparent;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: 0.2s ease-in;
+    min-width: 50px;
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    border-left: none !important;
+}
+
 .stock-button:hover {
     background: transparent;
     border: 1px solid #2ecc71;
