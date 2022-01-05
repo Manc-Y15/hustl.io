@@ -1,12 +1,14 @@
-.chart-wrapper {}
+body {
+    background-color: var(--background-colour);
+}
 
 :host {
     display: block;
 }
 
 .stock-description {
-    color: #95a5a6;
-    font-family: 'Comfortaa';
+    color: var(--p-text-colour);
+    font-family: var(--p-font);
     font-size: 12px;
 }
 
