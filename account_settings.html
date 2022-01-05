@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
     <link rel="stylesheet" href="assets/css/nav.css">
     <link rel="stylesheet" href="assets/css/site_theme.css">
-    <link rel="stylesheet" href="assets/css/chart_page.css">
+    <link rel="stylesheet" href="assets/css/account_settings.css">
 </head>
 
 <body>
@@ -34,13 +34,13 @@
                                 <a class="nav-link" href="#">HOME</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">TRADE</a>
+                                <a class="nav-link" href="#">TRADE</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">LEADERBOARD</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">PROFILE</a>
+                                <a class="nav-link active" href="#">PROFILE</a>
                             </li>
                         </ul>
                     </div>
@@ -58,5 +58,34 @@
                 </div>
             </div>
         </div>
+        <div class="row settings-block">
+            <div class="col-4">
+                <ul class="nav flex-column settings-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-8">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">a..</div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">..b.</div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">.c.</div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </body>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+</html>
