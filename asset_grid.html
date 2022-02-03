@@ -122,10 +122,66 @@
             </div>
         </div>
         <div class="asset">
+            <!-- Style used for asset -->
+            <style>
+                /* Note these add to the default Bootstrap classes */
+                
+                .breadcrumb-item {
+                    font-family: 'Comfortaa';
+                    color: #ecf0f1;
+                }
+                
+                .breadcrumb-item.active {
+                    color: #3498db;
+                    font-weight: 700;
+                }
+                
+                .breadcrumb-item+.breadcrumb-item::before {
+                    content: ">";
+                    font-family: 'Comfortaa';
+                    font-weight: 900;
+                    color: #2ecc71;
+                }
+            </style>
+            <label>Breadcrumb Page Location</label>
 
+            <div aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item">Stock Listing</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">$TSLA</li>
+                </ol>
+            </div>
         </div>
-        <div class="asset">
 
+        <div class="asset" style="max-width: none !important; width: 600px;">
+            <!-- Style used for asset -->
+            <style>
+                .activity-item {
+                    background: #34495e;
+                    border: 1px solid transparent !important;
+                    border-radius: 5px !important;
+                    margin-top: 15px;
+                    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+                }
+                
+                .activity-item-text {
+                    margin: 5px;
+                }
+            </style>
+
+            <label>List/Activity Item</label>
+            <div class="list-group list-group-flush" style="margin-top: 20px">
+                <li class="list-group-item activity-item">
+                    <h5 class="activity-item-text">
+                        <span style="color: #f39c12">Someone1391</span> sold
+                        <span style="color: #3498db">$TSLA</span> @
+                        <span style="color: #3498db">$1100.00</span>, making
+                        <span style="color: #2ecc71">$100.78</span>
+                        <span style="float: right; color: #95a5a6">Monday 6th December, 2021</span>
+                    </h5>
+                </li>
+            </div>
         </div>
         <div class="asset">
 
