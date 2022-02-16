@@ -3,7 +3,7 @@ Y15 Group Project for 10120
 
 # Front end pages
 These are just some of the front end pages that are going to need to be build.  Hopefully this list makes it easier to identify and assign work.
-### Accounts systems
+### Accounts systems (Louis)
   * [x] Login
   * [ ] Signup
   * [ ] Forgot password
@@ -12,20 +12,20 @@ These are just some of the front end pages that are going to need to be build.  
   * [ ] Your Portfolio
   * [ ] Add friend
   * [ ] View friend list, remove
-### Leaderboards
+### Leaderboards (Fawaz)
   * [ ] View global user leaderboard
   * [ ] View restricted leaderboards, i.e. UK only, time (last week or so)
-### Leagues
+### Leagues (Fawaz)
    * [ ] Managing the league:
        * [ ] Invite user to league
        * [ ] View users in league (remove)
 	 * [ ] View league table
-### Portfolio
+### Portfolio (Torin)
   * [ ] Personal portfolio, all stocks you have, dates of transactions etc
   * [ ] Friends portfolio, overall performance and maybe see which stocks they are holding
   * [ ] Private portfolio (other user), just overall performance
 
-### Misc
+### Misc (Leaving to the end)
 * [ ] Home page
 * [ ] Terms of service
 
