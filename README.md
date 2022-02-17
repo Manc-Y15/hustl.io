@@ -5,11 +5,10 @@ Y15 Group Project for 10120
 These are just some of the front end pages that are going to need to be build.  Hopefully this list makes it easier to identify and assign work.
 ### Accounts systems (Louis)
   * [x] Login
-  * [ ] Signup
-  * [ ] Forgot password
+  * [x] Signup
+  * [x] Forgot password
   * [ ] profile(view own/others)
   * [ ] Overall settings page
-  * [ ] Your Portfolio
   * [ ] Add friend
   * [ ] View friend list, remove
 ### Leaderboards (Fawaz)
