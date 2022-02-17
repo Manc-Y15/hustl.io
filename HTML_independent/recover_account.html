@@ -33,7 +33,7 @@
     </script>
 </head>
 
-<body style="background-color:#2c3e50;">
+<body style="background-color:var(--midnight-blue);">
     <!-- Top Navigation Bar -->
 	<nav class="navbar navbar-expand-lg justify-content-center navbar-dark">
 
@@ -114,19 +114,21 @@
                     <div class="container" style="padding-top: 20px;">
                         <div id="page-content">
                             <form id="account-input-form">
-                                <div class="account-input">
-                                    <h4 class="account-input-text">Username</h4> 
-                                    <input class="account-input-box" type="text" name="username" id="inputUsername">
-                                </div>
-                                <div class="account-input" style="padding-top:10px; padding-bottom: 10px;">
-                                    <h4 class="account-input-text">or</h4>
-                                </div>
-                                <div class="account-input">
-                                    <h4 class="account-input-text">Email</h4> 
-                                    <input class="account-input-box" type="text" name="email" id="inputEmail">
-                                </div>
-                                <div class="account-input" style="text-align: center;">
-                                    <button class="submit-button" type="button" name="Recover" onclick="confirm_recovery();">Recover</button>
+                                <div class="grid">
+                                    <div class="account-input row">
+                                        <h4 class="account-input-text col-12 col-sm-6">Username</h4> 
+                                        <input class="account-input-box col-12 col-sm-6" type="text" name="username" id="inputUsername">
+                                    </div>
+                                    <div class="account-input row" style="padding-top:10px; padding-bottom: 10px;">
+                                        <h4 class="account-input-text col-12">or</h4>
+                                    </div>
+                                    <div class="account-input row">
+                                        <h4 class="account-input-text col-12 col-sm-6">Email</h4> 
+                                        <input class="account-input-box col-12 col-sm-6" type="text" name="email" id="inputEmail">
+                                    </div>
+                                    <div class="account-input" style="text-align: center;">
+                                        <button class="submit-button" type="button" name="Recover" onclick="confirm_recovery();">Recover</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
