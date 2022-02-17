@@ -12,7 +12,7 @@ These are just some of the front end pages that are going to need to be build.  
   * [ ] Add friend
   * [ ] View friend list, remove
 ### Leaderboards (Fawaz)
-  * [ ] View global user leaderboard
+  * [x] View global user leaderboard
   * [ ] View restricted leaderboards, i.e. UK only, time (last week or so)
 ### Leagues (Fawaz)
    * [ ] Managing the league:
