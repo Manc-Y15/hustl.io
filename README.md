@@ -20,7 +20,7 @@ These are just some of the front end pages that are going to need to be build.  
        * [ ] View users in league (remove)
 	 * [ ] View league table
 ### Portfolio (Torin)
-  * [ ] Personal portfolio, all stocks you have, dates of transactions etc
+  * [x] Personal portfolio, all stocks you have, dates of transactions etc
   * [ ] Friends portfolio, overall performance and maybe see which stocks they are holding
   * [ ] Private portfolio (other user), just overall performance
 
