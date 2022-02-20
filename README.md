@@ -24,6 +24,10 @@ These are just some of the front end pages that are going to need to be build.  
   * [ ] Friends portfolio, overall performance and maybe see which stocks they are holding
   * [ ] Private portfolio (other user), just overall performance
 
+### Trade Section
+  * [ ] Asset page (price, buy/sell button, activity feed)
+  * [ ] Asset listing (list of all assets available)
+
 ### Misc (Leaving to the end)
 * [ ] Home page
 * [ ] Terms of service
