@@ -28,9 +28,10 @@ These are just some of the front end pages that are going to need to be build.  
   * [ ] Asset page (price, buy/sell button, activity feed)
   * [ ] Asset listing (list of all assets available)
 
-### Misc (Leaving to the end)
-* [ ] Home page
-* [ ] Terms of service
+### Misc
+* [ ] Terms of service (Dayo)
+
+### Home page (leave till end)
 
 ## Contributing
 New features should be made on separate branches per-feature as prescribed by the project board.
