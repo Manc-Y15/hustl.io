@@ -18,14 +18,28 @@
     <link rel="stylesheet" href="assets/css/profile.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <script type="text/javascript">
-        function change_account(){
-            // inputUsername and inputEmail to be used later to pass to backend
-            var inputUsername = document.getElementById("inputUsername").value;
-            var inputEmail = document.getElementById("inputEmail").value;
-
-            if(inputUsername!=""){
-                document.getElementById("inputUsername").setAttribute("placeholder", inputUsername)
+        function displayFriendInfo(ele){
+            var friendID=ele.parentElement.id;
+            childID=friendID+"_child"
+            if(document.getElementById(childID)!=null){
+                var divToDelete = document.getElementById(childID);
+                divToDelete.parentNode.removeChild(divToDelete);
+            }else{
+                let elem=document.createElement("div");
+                elem.setAttribute("id",childID);
+                elem.setAttribute("style","box-shadow:none;");
+                elem.setAttribute("class","profile-input row");
+                elem.innerHTML='<h4 class="profile-input-text col-6">Friends since:</h4><h4 class="profile-input-text col-6">21-02-2022</h4><h4 class="profile-input-text col-12 col-sm-6">Head to head:</h4><h4 class="profile-input-text col-12 col-sm-6"><span style="color: var(--alizarin);">Losing</span>&nbsp;by&nbsp;<span style="color: #2ecc71">$73.58</span></h4><div class="justify-content-center"><button style="margin-top: 10px;" class="default-button col-12 col-sm-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button><button style="margin-top: 10px;" class="remove-friend-button col-12 col-sm-6" type="button" name="Remove_friend" onclick="removeFriend(this);">Remove friend</button></div>';
+                document.getElementById(friendID).append(elem);
             }
+        }
+        function removeFriend(ele){
+            var friendID=ele.parentElement.parentElement.parentElement.id;
+            alert("Remove "+friendID+" from friends");
+        }
+        function viewProfile(ele){
+            var friendID=ele.parentElement.parentElement.parentElement.id;
+            alert("View "+friendID+"'s profile");
         }
     </script>
 </head>
@@ -108,31 +122,59 @@
                     <div class="container" style="padding-top: 20px;">
                         <form>
                             <div class="grid">
-                                <div class="profile-input row">
+                                <div class="profile-input row" id="Someone1391">
                                     <h4 class="profile-input-text col-10">
                                         <span style="color: #f39c12">Someone1391</span>&nbsp;worth&nbsp;
                                         <span style="color: #2ecc71">$100.78</span>
                                     </h4>
-                                    <button class="btn btn-link col-2" type="button">
+                                    <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
                                         <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
                                     </button>
                                 </div>
 
-                                <div class="profile-input row">
+                                <div class="profile-input row" id="Someone1191">
                                     <h4 class="profile-input-text col-10">
                                         <span style="color: #f39c12">Someone1191</span>&nbsp;worth&nbsp;
                                         <span style="color: #2ecc71">$1173.58</span>
                                     </h4>
-                                    <button class="btn btn-link col-2" type="button">
+                                    <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
                                         <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
                                     </button>
+                                    <div class="profile-input row" id="Someone1191_child" style="box-shadow: none;">
+                                        <h4 class="profile-input-text col-6">Friends since:</h4>
+                                        <h4 class="profile-input-text col-6">21-02-2022</h4>
+                                        <h4 class="profile-input-text col-12 col-sm-6">Head to head:</h4>
+                                        <h4 class="profile-input-text col-12 col-sm-6"><span style="color: var(--alizarin);">Losing</span>&nbsp;by&nbsp;<span style="color: #2ecc71">$73.58</span></h4>
+                                        <div class="justify-content-center">
+                                            <button style="margin-top: 10px;" class="default-button col-12 col-sm-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
+                                            <button style="margin-top: 10px;" class="remove-friend-button col-12 col-sm-6" type="button" name="Remove_friend" onclick="removeFriend(this);">Remove friend</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="profile-input row">
+                                <div class="profile-input row" id="Someone1227">
                                     <h4 class="profile-input-text col-10">
                                         <span style="color: #f39c12">Someone1227</span>&nbsp;worth&nbsp;
                                         <span style="color: #2ecc71">$100.78</span>
                                     </h4>
-                                    <button class="btn btn-link col-2" type="button">
+                                    <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
+                                        <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
+                                    </button>
+                                </div>
+                                <div class="profile-input row" id="Someone1237">
+                                    <h4 class="profile-input-text col-10">
+                                        <span style="color: #f39c12">Someone1237</span>&nbsp;worth&nbsp;
+                                        <span style="color: #2ecc71">$100.78</span>
+                                    </h4>
+                                    <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
+                                        <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
+                                    </button>
+                                </div>
+                                <div class="profile-input row" id="Someone5427">
+                                    <h4 class="profile-input-text col-10">
+                                        <span style="color: #f39c12">Someone5427</span>&nbsp;worth&nbsp;
+                                        <span style="color: #2ecc71">$100.78</span>
+                                    </h4>
+                                    <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
                                         <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
                                     </button>
                                 </div>

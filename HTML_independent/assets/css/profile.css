@@ -21,6 +21,54 @@
     transition: 0.2s ease-in;
 }
 
+.remove-friend-button {
+    text-decoration: none;
+    border-radius: 5px;
+    background: var(--pomegranate);
+    border: 1px solid transparent;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: var(--asphalt);
+    transition: 0.2s ease-in;
+    min-width: 50px;
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    max-width: 175px;
+    margin-left: 3px;
+}
+
+.remove-friend-button:hover {
+    background: transparent;
+    border: 1px solid var(--pomegranate);
+    color: var(--pomegranate);
+    transition: 0.2s ease-in;
+}
+
+.default-button {
+    text-decoration: none;
+    border-radius: 5px;
+    background: var(--river);
+    border: 1px solid transparent;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: var(--asphalt);
+    transition: 0.2s ease-in;
+    min-width: 50px;
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    max-width: 175px;
+    margin-right: 3px;
+}
+
+.default-button:hover {
+    background: transparent;
+    border: 1px solid var(--river);
+    color: var(--river);
+    transition: 0.2s ease-in;
+}
+
 .activity-item {
     background: var(--asphalt);
     border: 1px solid transparent !important;
