@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'hustlio.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mytestdb',
+        'NAME': 'testdb',
         'USER': 'admin',
         'PASSWORD': 'password',
         'HOST': 'localhost',
