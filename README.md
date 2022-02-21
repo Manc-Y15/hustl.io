@@ -7,7 +7,7 @@ These are just some of the front end pages that are going to need to be build.  
   * [x] Login
   * [x] Signup
   * [x] Forgot password
-  * [ ] profile(view own/others)
+  * [x] profile(now account settings)
   * [ ] Overall settings page
   * [ ] Add friend
   * [ ] View friend list, remove
