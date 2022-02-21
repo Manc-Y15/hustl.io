@@ -21,8 +21,8 @@ These are just some of the front end pages that are going to need to be build.  
 	 * [ ] View league table
 ### Portfolio (Torin)
   * [x] Personal portfolio, all stocks you have, dates of transactions etc
-  * [ ] Friends portfolio, overall performance and maybe see which stocks they are holding
-  * [ ] Private portfolio (other user), just overall performance
+  * [x] Friends portfolio, overall performance and maybe see which stocks they are holding
+  * [x] Private portfolio (other user), just overall performance
 
 ### Trade Section
   * [ ] Asset page (price, buy/sell button, activity feed)
