@@ -10,7 +10,7 @@ These are just some of the front end pages that are going to need to be build.  
   * [x] profile(now account settings)
   * [ ] Overall settings page
   * [ ] Add friend
-  * [ ] View friend list, remove
+  * [x] View friend list, remove
 ### Leaderboards (Fawaz)
   * [x] View global user leaderboard
   * [ ] View restricted leaderboards, i.e. UK only, time (last week or so)
