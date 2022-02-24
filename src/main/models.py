@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-class StockData(models.Model):
+class Stock(models.Model):
     ticket = models.CharField(max_length=5)
     name = models.CharField(max_length=100)
     desc = models.CharField(max_length=1000)
@@ -12,13 +12,11 @@ class StockData(models.Model):
     current_datetime = models.DateTimeField()
     historical = models.TextField() # Stored as JSON, needs to be large text file
 
-    def __str__():
-        print(f"{ticket} {name} {current_price} at {current_datetime}")
 
 class Holding(models.Model):
     owner = models.OneToOneField(User, on_delete=models.DO_NOTHING, primary_key=True)
     amount = models.DecimalField(max_digits=10, decimal_places=4)    
-    stock_id = models.ForeignKey(StockData, on_delete=models.DO_NOTHING)
+    stock_id = models.ForeignKey(Stock, on_delete=models.DO_NOTHING)
 
 class Portfolio(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -49,3 +47,12 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class Transaction(models.Model):
+    portfolio_id = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+    stock_id = models.OneToOneField(Stock, on_delete=models.DO_NOTHING)
+    buy_price = models.DecimalField(max_digits=10, decimal_places=2)
+    volume = models.DecimalField(max_digits=10, decimal_places=4)
+    time = models.DateTimeField()
+
+    

@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import StockData, Portfolio, Holding, Profile
+from .models import Stock, Portfolio, Holding, Profile, Transaction
 
-admin.site.register(StockData)
+admin.site.register(Stock)
 admin.site.register(Portfolio)
 admin.site.register(Holding)
 admin.site.register(Profile)
+admin.site.register(Transaction)
