@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+    <link rel="stylesheet" href="assets/css/nav.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/site_theme.css">
+    <link rel="stylesheet" href="assets/css/chart_page.css">
+    <link rel="stylesheet" href="assets/css/profile.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <script type="text/javascript">
+        function displayFriendInfo(ele){
+            var friendID=ele.parentElement.id;
+            childID=friendID+"_child"
+            if(document.getElementById(childID)!=null){
+                var divToDelete = document.getElementById(childID);
+                divToDelete.parentNode.removeChild(divToDelete);
+            }else{
+                let elem=document.createElement("div");
+                elem.setAttribute("id",childID);
+                elem.setAttribute("style","box-shadow:none;");
+                elem.setAttribute("class","profile-input row");
+                elem.innerHTML='<h4 class="profile-input-text col-6">Friends since:</h4><h4 class="profile-input-text col-6">21-02-2022</h4><h4 class="profile-input-text col-12 col-sm-6">Head to head:</h4><h4 class="profile-input-text col-12 col-sm-6"><span style="color: var(--alizarin);">Losing</span>&nbsp;by&nbsp;<span style="color: #2ecc71;">$73.58</span></h4><div class="justify-content-center" style="padding:0;"><button style="margin-top: 10px;" class="default-button col-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button><button style="margin-top: 10px;" class="remove-friend-button col-6" type="button" name="Remove_friend" onclick="removeFriend(this);">Remove friend</button></div>';
+                document.getElementById(friendID).append(elem);
+            }
+        }
+        function removeFriend(ele){
+            var friendID=ele.parentElement.parentElement.parentElement.id;
+            alert("Remove "+friendID+" from friends");
+        }
+        function viewProfile(ele){
+            var friendID=ele.parentElement.parentElement.parentElement.id;
+            alert("View "+friendID+"'s profile");
+        }
+    </script>
+</head>
+
+<body style="background-color:var(--midnight-blue);">
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg justify-content-center navbar-dark">
+
+        <div>
+            <div class="container justify-content-center">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button class="navbar-toggler" style="position:absolute; right:20px; top:20px" type="button" data-toggle="collapse" data-target="#navbarCollapseToggle" aria-controls="navbarCollapseToggle" aria-expanded="false" aria-label="Toggle Navigation">
+                            <span class="navbar-toggler-icon" style="color: white"></span>
+                        </button>
+                        <a class="navbar-brand brand-logo" href="#">hustl.io</a>
+                    </div>
+                    <div class="col-12 collapse navbar-collapse justify-content-center" id="navbarCollapseToggle">
+                        <ul class="nav nav-elems justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">HOME</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">STOCKS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">CRYPTO</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">LEADERBOARD</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Account Navigation Menu & Floating Button -->
+    <button class="fixed-account-btn shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#accountCanvas" aria-controls="offcanvasRight">
+        <i class="fas fa-user" style="pointer-events: none; color: white"></i>
+    </button>
+
+    <div class="offcanvas offcanvas-end account-menu" style="transition: transform .2s ease-in-out;" tabindex="-1" id="accountCanvas" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header" style="padding:30px">
+            <h2 id="offcanvasRightLabel">Your Account</h2>
+            <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link nav-account-link hover-underline" href="#">
+                        <i class="fas fa-chart-bar nav-account-icon"></i> Your Portfolio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-account-link hover-underline" href="#">
+                        <i class="fas fa-user-friends nav-account-icon"></i> Friends
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-account-link hover-underline" href="#">
+                        <i class="fas fa-cogs nav-account-icon"></i> Account Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 20px;max-width:800px;">
+        <div class="row">
+            <div class="container-lg" style="margin-top: 20px;">
+                <div class="row" style="border-bottom:1px solid #95a5a6">
+                    <h2 style="text-align: left;">Friends</h2>
+                </div>
+                <div class="row">
+                    <div class="col-7" style="padding-top: 20px;">
+                        <div class="grid">
+                            <div class="profile-input row" id="Someone1391">
+                                <h4 class="profile-input-text col-10">
+                                    <span style="color: #f39c12">Someone1391</span>&nbsp;worth&nbsp;
+                                    <span style="color: #2ecc71">$100.78</span>
+                                </h4>
+                                <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
+                                    <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
+                                </button>
+                            </div>
+
+                            <div class="profile-input row" id="Someone1191">
+                                <h4 class="profile-input-text col-10">
+                                    <span style="color: #f39c12">Someone1191</span>&nbsp;worth&nbsp;
+                                    <span style="color: #2ecc71">$1173.58</span>
+                                </h4>
+                                <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
+                                    <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
+                                </button>
+                                <!-- <div class="profile-input row" id="Someone1191_child" style="box-shadow: none;">
+                                    <h4 class="profile-input-text col-6">Friends since:</h4>
+                                    <h4 class="profile-input-text col-6">21-02-2022</h4>
+                                    <h4 class="profile-input-text col-12 col-sm-6">Head to head:</h4>
+                                    <h4 class="profile-input-text col-12 col-sm-6"><span style="color: var(--alizarin);">Losing</span>&nbsp;by&nbsp;<span style="color: #2ecc71">$73.58</span></h4>
+                                    <div class="justify-content-center">
+                                        <button style="margin-top: 10px;" class="default-button col-12 col-sm-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
+                                        <button style="margin-top: 10px;" class="remove-friend-button col-12 col-sm-6" type="button" name="Remove_friend" onclick="removeFriend(this);">Remove friend</button>
+                                    </div> -->
+                            </div>
+                            <div class="profile-input row" id="Someone1227">
+                                <h4 class="profile-input-text col-10">
+                                    <span style="color: #f39c12">Someone1227</span>&nbsp;worth&nbsp;
+                                    <span style="color: #2ecc71">$100.78</span>
+                                </h4>
+                                <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
+                                    <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
+                                </button>
+                            </div>
+                            <div class="profile-input row" id="Someone1237">
+                                <h4 class="profile-input-text col-10">
+                                    <span style="color: #f39c12">Someone1237</span>&nbsp;worth&nbsp;
+                                    <span style="color: #2ecc71">$100.78</span>
+                                </h4>
+                                <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
+                                    <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
+                                </button>
+                            </div>
+                            <div class="profile-input row" id="Someone5427">
+                                <h4 class="profile-input-text col-10">
+                                    <span style="color: #f39c12">Someone5427</span>&nbsp;worth&nbsp;
+                                    <span style="color: #2ecc71">$100.78</span>
+                                </h4>
+                                <button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
+                                    <i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" style="margin-left: 10px;padding-top: 20px;">
+                        <div class="grid">
+                            <div class="league-preview row col-12">
+                                <h4 class="league-preview-text" style="padding-bottom: 10px;">Y15 League</h4>
+                                <div class="league-preview-row row">
+                                    <h5 class="league-preview-text col-9 col-md-8">1. Someone1191</h5>
+                                    <i class="fa fa-solid fa-caret-up col" style="font-size: 1.5em; color: var(--emerald);"></i>
+                                </div>
+                                <div class="league-preview-row row">
+                                    <h5 class="league-preview-text col-9 col-md-8">2. Someone1391</h5>
+                                    <i class="fa fa-solid fa-caret-down col" style="font-size: 1.5em; color: var(--pomegranate);"></i>
+                                </div>
+                                <div class="league-preview-row row">
+                                    <h5 class="league-preview-text col-9 col-md-8">3. Someone1237</h5>
+                                    <i class="fa fa-solid fa-equals col" style="font-size: 1em; color: var(--river);"></i>
+                                </div>
+                            </div>
+                            <div class="league-preview row col-12">
+                                <h4 class="league-preview-text" style="padding-bottom: 10px;">Y20 League</h4>
+                                <div class="league-preview-row row">
+                                    <h5 class="league-preview-text col-9 col-md-8">1. Someone1191</h5>
+                                    <i class="fa fa-solid fa-equals col" style="font-size: 1em; color: var(--river);"></i>
+                                </div>
+                                <div class="league-preview-row row">
+                                    <h5 class="league-preview-text col-9 col-md-8">2. Someone1227</h5>
+                                    <i class="fa fa-solid fa-caret-up col" style="font-size: 1.5em; color: var(--emerald);"></i>
+                                </div>
+                                <div class="league-preview-row row">
+                                    <h5 class="league-preview-text col-9 col-md-8">3. Someone5427</h5>
+                                    <i class="fa fa-solid fa-caret-down col" style="font-size: 1.5em; color: var(--pomegranate);"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+</html>
