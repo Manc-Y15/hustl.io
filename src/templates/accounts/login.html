@@ -123,6 +123,13 @@
                                     <a href="signup.html" class="submit-button" style="padding-top: 0.488em;padding-bottom: 0.488em;">Sign Up</a>
                                 </div>
                             </div>
+                            <span style="color:var(--alizarin);">
+                                {% if errors|length > 0 %}
+                                    {% for error in errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                {% endif %}
+                            </span>
                         </form>
                         <div class="account-admin">
                             <a href="recover_account.html" class="account-admin-text">Forgot password?</a>
