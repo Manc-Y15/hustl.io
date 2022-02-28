@@ -8,8 +8,8 @@ These are just some of the front end pages that are going to need to be build.  
   * [x] Signup
   * [x] Forgot password
   * [ ] Account settings (Now requires extra work to add general settings)
-  ~~* [ ] Overall settings page~~ Can be integrated into account settings page
-  ~~* [ ] Add friend~~ Not sure we need a whole page to add a friend
+  ~~Overall settings page~~ Can be integrated into account settings page
+  ~~Add friend~~ Not sure we need a whole page to add a friend
   * [x] View friend list, remove
 ### Leaderboards (Fawaz)
   * [x] View global user leaderboard
