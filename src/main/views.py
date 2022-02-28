@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
-
+from updateStocks import updateStocks
+from .models import Stock
 def home(request):
     return render(request, 'home.html', {})
 
