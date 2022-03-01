@@ -1,0 +1,9 @@
+.price {
+    font-family: 'Consolas';
+    font-weight: 500;
+    font-size: 1.6rem;
+    float: right; 
+    color: var(--nephritis);
+    position: relative;
+    bottom: 2px;
+}
