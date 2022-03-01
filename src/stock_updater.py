@@ -1,6 +1,9 @@
 from datetime import datetime
+from django.utils import timezone
 from matplotlib.font_manager import json_load
 from main.models import Stock
+
+
 
 # -------- API modules --------
 import finnhub
@@ -8,6 +11,10 @@ import json
 
 
 def update_stocks():
+    print("[LOG] Updating Stocks")
+    successfully_updated = []
+    failed = []
+
     finnhub_client = finnhub.Client(api_key="c875a52ad3i9lkntda8g") # TODO: Make environment variable instead of literal
     stocknum = Stock.objects.all().count()
     for stock in Stock.objects.all():
@@ -16,8 +23,13 @@ def update_stocks():
         oldPrice = float(stock.current_price) # Decimal --> Float
         oldDateTime = str(stock.current_datetime) # Datetimes not supported in JSON lib, converted to string
         newData = finnhub_client.quote(ticket)
+
+        # Log success/fails for updates
+        if (newData.get('c')): successfully_updated.append(ticket)
+        else: failed.append(ticket)
+        
         newPrice = newData.get('c')
-        newDateTime = datetime.today()
+        newDateTime = timezone.now()
         # set data
         stock.current_price = newPrice
         stock.current_datetime = newDateTime
@@ -30,6 +42,10 @@ def update_stocks():
             history['history'] = [{"oldTime": oldDateTime, "oldData": oldPrice}] # If history doesn't exist for some reason
         stock.historical = json.dumps(history) # Saved as text due to SQLite not supporting JSONField
 
-        stock.save()
-
+        if(stock.save()): successfully_updated += 1
+    
+    success_output = ','.join(successfully_updated)
+    failed_output = ','.join(failed)
+    print(f"[LOG] {len(successfully_updated)} stocks were updated: {success_output}")
+    print(f"[LOG] {len(failed)} stocks failed to update: {failed_output}")
 

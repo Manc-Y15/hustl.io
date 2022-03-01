@@ -4,13 +4,6 @@ import os
 import sys
 
 
-# -------- API Funcs -------
-from update_stocks import update_stocks
-
-# -------- Scheduling Modules ---------
-from scheduler import run_continuously
-import schedule
-
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hustlio.settings')
@@ -22,19 +15,17 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+    # CHANGED AREA FROM DEFAULT DJANGO
+    # I have forced django reload to be turned off as otherwise you end up
+    # with duplicate background threads updating stocks, which 
+    # kills our API access. 
+    # You will have to manually relaunch the server when editing the python
+    # - we do this most of the time anyway.
+    if '--noreload' not in sys.argv:
+        sys.argv.append('--noreload')
+    # END OF CHANGED
     execute_from_command_line(sys.argv)
 
 
 if __name__ == '__main__':
-    schedule.every().second.do(update_stocks())
-
-    # Start the background thread
-    stop_run_continuously = run_continuously()
-
-    # Do some other things...
-    for i in range(0, 10):
-        print("test")
-        time.sleep(1)
-    # Stop the background thread
-    stop_run_continuously.set()
     main()
