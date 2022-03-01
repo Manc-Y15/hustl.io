@@ -56,7 +56,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="hero-unit">
-                                <h1 class="display-1 stock-ticker-heading">${{ stock.ticket }}</h1>
+                                <h1 class="display-1" style="width: fit-content;background: linear-gradient(90deg, var({{ stock.col1 }}) 23%, var({{ stock.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</h1>
                                 <h2>{{ stock.name }}</h2>
                                 <p class="stock-description">{{ stock.desc }}</p>
                             </div>
@@ -64,12 +64,14 @@
                     </div>
                     <div class="row">
                         <div class="col-md-auto">
-                            <h2 style="color:#2ecc71; font-family:'Consolas'"><i style="color:#2ecc71; margin:5px; position: relative; bottom:1px;" class="fas fa-caret-up"></i>${{ stock.curr_price }}</h2>
+                            <h2 style="font-family:'Consolas'">{% if stock.pos %}<span style="color: var(--nephritis);"><i style="margin-right:5px; position: relative; bottom:1px;"
+                                class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);"><i style="color: var(--alizarin); margin-right:5px; position: relative; bottom:1px;"
+                            class="fas fa-caret-down"></i>{% endif %}${{ stock.current_price }}</span></h2>
                         </div>
                         <div class="col-md-auto" style="padding: 5px;">
                             <button class="stock-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#buyCanvas" aria-controls="offcanvasBottom">
                                 <i class="fas fa-money-check-alt" style="margin-right: 5px;"></i>
-                                Buy $TSLA
+                                Buy ${{ stock.ticket }}
                             </button>
                         </div>
                     </div>
@@ -128,7 +130,7 @@
     <script src="{% static 'js/asset-page-chart.js' %}"></script>
 
     <script>
-        var charts = init_charts({{data|safe}});
+        var charts = init_charts({{data|safe}}, "{{ stock.col1 }}", "{{ stock.col2 }}");
     </script>
 
 {% endblock %}

@@ -1,13 +1,31 @@
-function init_charts(overall_data) {
+const hexToRgb = hex =>
+  hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
+             ,(m, r, g, b) => '#' + r + r + g + g + b + b)
+    .substring(1).match(/.{2}/g)
+    .map(x => parseInt(x, 16))
+
+function init_charts(overall_data, col1, col2) {
     var valuation_char_elem = document.getElementById('valuation_chart').getContext('2d');
+    console.log(String(getComputedStyle(
+        document.getElementById('valuation_chart')).getPropertyValue(col1)).trim(), col2);
+    
+        var first = hexToRgb(
+        String(getComputedStyle(
+        document.getElementById('valuation_chart')).getPropertyValue(col1)).trim()
+    );
+
+    var second = hexToRgb(
+        String(getComputedStyle(
+        document.getElementById('valuation_chart')).getPropertyValue(col2)).trim()
+    );
 
     var gradientStroke = valuation_char_elem.createLinearGradient(500, 0, 100, 0);
-    gradientStroke.addColorStop(0, 'rgba(26,188,156,1)');
-    gradientStroke.addColorStop(1, 'rgba(46,204,113,1)');
+    gradientStroke.addColorStop(0, 'rgba(' + first + ',1)'); //rgba(26,188,156,1)
+    gradientStroke.addColorStop(1, 'rgba(' + second + ',1)');
 
-    var gradientFill = valuation_char_elem.createLinearGradient(0, 0, 0, 500);
-    gradientFill.addColorStop(0.2, "rgba(26,188,156,0.3)");
-    gradientFill.addColorStop(1, "rgba(0, 0, 0, 0.0)");
+    var gradientFill = valuation_char_elem.createLinearGradient(0, 0, 800, 500);
+    gradientFill.addColorStop(0.2, 'rgba(' + second + ',0.3)');
+    gradientFill.addColorStop(1, 'rgba(' + first + ',0.3)');
 
     return new Chart(valuation_char_elem, {
         type: 'line',
