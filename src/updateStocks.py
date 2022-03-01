@@ -30,4 +30,4 @@ def updateStocks():
         stock.save()
         print('runs to here')
 
-updateStocks()
+#updateStocks()
