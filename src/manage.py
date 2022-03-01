@@ -4,6 +4,13 @@ import os
 import sys
 
 
+# -------- API Funcs -------
+from update_stocks import update_stocks
+
+# -------- Scheduling Modules ---------
+from scheduler import run_continuously
+import schedule
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hustlio.settings')
@@ -19,4 +26,15 @@ def main():
 
 
 if __name__ == '__main__':
+    schedule.every().second.do(update_stocks())
+
+    # Start the background thread
+    stop_run_continuously = run_continuously()
+
+    # Do some other things...
+    for i in range(0, 10):
+        print("test")
+        time.sleep(1)
+    # Stop the background thread
+    stop_run_continuously.set()
     main()
