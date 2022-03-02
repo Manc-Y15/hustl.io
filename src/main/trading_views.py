@@ -27,6 +27,9 @@ def choose_background(stock):
         return backgrounds[4]
 
 def asset_page(request, ticket):
+    if request.method == "POST":
+        print(request.POST.get("buy_amount", ""))
+        
     query_matches = Stock.objects.filter(ticket=ticket)
     if len(query_matches) != 1:
         return render(request, 'home.html', {})
