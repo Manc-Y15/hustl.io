@@ -32,9 +32,14 @@ def user_buy(user, is_buy, stock_id, amount):
         if firstBuy == False:
             thisHolding = Holding.objects.filter(owner = user, stock_id = stock)[0]
             if is_buy:
-                thisHolding.amount = round((thisHolding.amount + volume),2)
+                x = float(thisHolding.amount) + volume
+                print(type(x))
+                thisHolding.amount = Decimal.from_float(x)
+                thisHolding.save()
             else:
-                thisHolding.amount = round((thisHolding.amount + volumeSell),2)
+                x = float(thisHolding.amount) + volume
+                thisHolding.amount = Decimal.from_float(x)
+                thisHolding.save()
         else:
             newHolding = Holding()
             newHolding.owner = user
