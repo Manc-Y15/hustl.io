@@ -20,9 +20,9 @@
                     <span style="width: fit-content;font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, {{ stock.col1 }} 23%, {{ stock.col2 }} 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</span>
                     <span style="color: var(--concrete);">{{ stock.name }}</span>
                     <span class="price">
-                        {% if stock.pos %}<span style="color: var(--nephritis);"><i style="margin-right:5px; position: relative; bottom:1px;"
-                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);"><i style="color: var(--alizarin); margin-right:5px; position: relative; bottom:1px;"
-                        class="fas fa-caret-down"></i>{% endif %}${{ stock.current_price }}</span></span>
+                        {% if stock.pos %}<span style="color: var(--nephritis);">${{ stock.current_price }}<i style="margin-left:5px; position: relative; bottom:1px;"
+                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price }}<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:1px;"
+                        class="fas fa-caret-down"></i>{% endif %}</span></span>
                 </h5>
             </a>
             </div>

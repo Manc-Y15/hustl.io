@@ -33,9 +33,9 @@ def asset_page(request, ticket):
     else:
         stock = query_matches[0]
         historical_prices = json.loads(stock.historical)['history']
-        if historical_prices[0]['oldData'] > historical_prices[len(historical_prices)-1]['oldData']:
-            stock.pos = True
-        else: stock.pos = False
+        if historical_prices[8]['oldData'] > historical_prices[len(historical_prices)-1]['oldData']:
+            stock.pos = False
+        else: stock.pos = True
 
         cols = stock.display_colour.split(' ')
         stock.col1 = cols[0].split('(')[1][:-1]
@@ -46,10 +46,15 @@ def asset_page(request, ticket):
         for raw in raw_day_dates:
             split = raw.split('-')
             dates.append(calendar.month_name[int(split[1])][:3].upper() + " " + split[2])
+        
+        value_history = [f"{datum['oldData']:.2f}" for datum in historical_prices]
+        if len(dates) > 7: 
+            value_history = value_history[7:]
+            dates = dates[7:]
         return render(request, 'trading/stock_listing.html', {
             'stock': stock,
             'data': str({
-                "value_history": [f"{datum['oldData']:.2f}" for datum in historical_prices],
+                "value_history": value_history,
                 "dates": dates
             })
         }
@@ -60,9 +65,9 @@ def asset_list_page(request):
     positive = {}
     for stock in stocks:
         historical_prices = json.loads(stock.historical)['history']
-        if historical_prices[0]['oldData'] > historical_prices[len(historical_prices)-1]['oldData']:
-            stock.pos = True
-        else: stock.pos = False
+        if historical_prices[7]['oldData'] > historical_prices[len(historical_prices)-1]['oldData']:
+            stock.pos = False
+        else: stock.pos = True
 
         cols = stock.display_colour.split(' ')
         stock.col1 = cols[0]
