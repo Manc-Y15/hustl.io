@@ -54,5 +54,5 @@ class Transaction(models.Model):
     buy_price = models.DecimalField(max_digits=10, decimal_places=2)
     volume = models.DecimalField(max_digits=10, decimal_places=4)
     time = models.DateTimeField()
-
+    buy = models.BooleanField(default=True)
     
