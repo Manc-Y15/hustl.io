@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Stock
+from .transactions import user_buy
 from random import randint, choice
 import json
 from datetime import datetime
@@ -28,8 +29,16 @@ def choose_background(stock):
 
 def asset_page(request, ticket):
     if request.method == "POST":
-        print(request.POST.get("buy_amount", ""))
-        
+        transaction = {
+            "is_buy": True if (request.POST.get("transaction", "") == "buy") else False,
+            "stock_id": ticket, 
+            "amount": request.POST.get("amount", "")
+        }
+        if user_buy(request.user, transaction['is_buy'], transaction['stock_id'], float(transaction['amount'])):
+            print("SUCCESS")
+        else: print("FAIL")
+
+
     query_matches = Stock.objects.filter(ticket=ticket)
     if len(query_matches) != 1:
         return render(request, 'home.html', {})
