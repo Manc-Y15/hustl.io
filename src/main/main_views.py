@@ -3,9 +3,12 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
 from .models import Stock
 
+from .holdings import get_holdings, holdings_distribution, holdings_total
+
 
 def home(request):
-    return render(request, 'home.html', {})
+    return render(request, 'home.html', {'holdings': get_holdings(request.user), 'total': holdings_total(request.user),
+	'distribution': holdings_distribution(request.user)})
 
 def signup_view(request):
 	errors = []

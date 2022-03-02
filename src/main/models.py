@@ -14,7 +14,7 @@ class Stock(models.Model):
     display_colour = models.TextField(null=True, blank=True)
 
 class Holding(models.Model):
-    owner = models.OneToOneField(User, on_delete=models.DO_NOTHING, primary_key=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=4)    
     stock_id = models.ForeignKey(Stock, on_delete=models.DO_NOTHING)
 
@@ -43,10 +43,16 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+        user_port = Portfolio()
+        user_port.owner = instance
+        user_port.balance = 50000
+        user_port.bal_hist = '{"history": []}'
+        user_port.save()
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+    instance.portfolio.save()
 
 class Transaction(models.Model):
     portfolio_id = models.ForeignKey(Portfolio, on_delete=models.CASCADE)

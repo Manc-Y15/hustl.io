@@ -12,5 +12,11 @@
     {% else %}
         Not logged in.
     {% endif %}
+
+    {% for holding in holdings %}
+        <p>{{ holding.stock_id.ticket }}</p>
+        <p>{{ holding.amount }}</p>
+        <p>{{ holding.stock_id.current_price }}</p>
+    {% endfor %}
 </body>
 </html>

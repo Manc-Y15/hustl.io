@@ -13,24 +13,21 @@
                 <div class="row" style="border-bottom:1px solid #95a5a6">
                     <div class="col">
                         <h3>Buy
-                            <font style="color:#3498db">$TSLA</font>
+                            <font style="color:#3498db">${{ stock.ticket }}</font>
                         </h3>
                     </div>
                 </div>
                 <div class="row">
-                    <form class="row g-3">
+                    <form action="/trading/{{ stock.ticket }}" method="POST" class="row g-3">
+                        {% csrf_token %}
                         <div class="col-auto">
                             <div class="col-sm-auto">
                                 $
                             </div>
                             <div class="col-sm-auto">
                                 <label for="buy_amount" class="visually-hidden">Amount</label>
-                                <input type="number" style="width:100px;" class="form-control buy-amount-input" id="amountToBuy" value="0000.00">
+                                <input type="number" style="width:100px;" class="form-control buy-amount-input" id="amountToBuy" name="buy_amount" min="0.01" max="{{ user.portfolio.balance }}"  value="0.00">
                             </div>
-                        </div>
-                        <div class="col-auto">
-                            <h4>Stock Amount:</h4>
-                            <input type="number" readonly class="form-control buy-amount-input" id="stockNumber" value="0.0">
                         </div>
                         <div class="col-auto">
                             <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
