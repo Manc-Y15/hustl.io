@@ -17,17 +17,6 @@
     <link rel="stylesheet" href="assets/css/chart_page.css">
     <link rel="stylesheet" href="assets/css/profile.css">
     <script src="https://kit.fontawesome.com/2938df8840.js" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        function change_account(){
-            // inputUsername and inputEmail to be used later to pass to backend
-            var inputUsername = document.getElementById("inputUsername").value;
-            var inputEmail = document.getElementById("inputEmail").value;
-
-            if(inputUsername!=""){
-                document.getElementById("inputUsername").setAttribute("placeholder", inputUsername)
-            }
-        }
-    </script>
 </head>
 
 <body style="background-color:var(--midnight-blue);">
@@ -109,22 +98,65 @@
                         <form>
                             <div class="grid">
                                 <div class="profile-input row">
-                                    <h4 class="profile-input-text col-12 col-sm-4">Username:</h4>
-                                    <input class="profile-input-box col-12 col-sm-7" type="text" name="username" id="inputUsername" placeholder="Username_123">
-                                    <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="col-sm-1 fa-solid fa-pencil"></i>
-                                </div>
-
-                                <div class="profile-input row">
                                     <h4 class="profile-input-text col-12 col-sm-5">Date joined:</h4>
                                     <h4 class="profile-input-text col-12 col-sm-7">17-02-2022</h4>
                                 </div>
                                 <div class="profile-input row">
+                                    <h4 class="profile-input-text col-12 col-sm-4">Username:</h4>
+                                    <input class="profile-input-box col-12 col-sm-7" type="text" name="username" id="inputUsername" placeholder="Username_123">
+                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
+                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class=" fa-solid fa-pencil"></i>
+                                    </button>
+                                </div>
+                                <div class="profile-input row">
                                     <h4 class="profile-input-text col-12 col-sm-3">Email:</h4>
                                     <input class="profile-input-box col-12 col-sm-8" type="text" name="email" id="inputEmail" placeholder="person123@email.com">
-                                    <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="col-sm-1 fa-solid fa-pencil"></i>
+                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
+                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
+                                    </button>
+                                </div>
+                                <div class="profile-input row">
+                                    <h4 class="profile-input-text col-12 col-sm-3">Privacy:</h4>
+                                    <select class="profile-input-box col-12 col-sm-8" name="privacy">
+                                        <option value="private">Private</option>
+                                        <option value="public">Public</option>
+                                    </select>
+                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
+                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
+                                    </button>
+                                </div>
+                                <div class="profile-input row">
+                                    <h4 class="profile-input-text col-12 col-sm-3">Theme:</h4>
+                                    <select class="profile-input-box col-12 col-sm-8" name="theme">
+                                        <option value="light">Light</option>
+                                        <option value="dark">Dark</option>
+                                    </select>
+                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
+                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
+                                    </button>
+                                </div>
+                                <div class="profile-input row">
+                                    <h4 class="profile-input-text col-12 col-sm-3">Region:</h4>
+                                    <select class="profile-input-box col-12 col-sm-8" name="region">
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="US">United States</option>
+                                    </select>
+                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
+                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
+                                    </button>
+                                </div>
+                                <div class="profile-input row">
+                                    <h4 class="profile-input-text col-12 col-sm-4">Currency:</h4>
+                                    <select class="profile-input-box col-12 col-sm-7" name="currency">
+                                        <option value="USD">$USD</option>
+                                        <option value="GBP">£GBP</option>
+                                    </select>
+                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
+                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
+                                    </button>
                                 </div>
                                     <div class="profile-input-button row justify-content-center" style="text-align: center;">
-                                        <button class="submit-button" type="button" name="Recover" onclick="change_account();">Confirm changes</button>
+                                        <button class="submit-button" type="button" name="Recover" type="submit">Confirm changes</button>
                                     </div>
                             </div>
                         </form>
