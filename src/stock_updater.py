@@ -1,6 +1,5 @@
 from datetime import datetime
 from django.utils import timezone
-from matplotlib.font_manager import json_load
 from main.models import Stock
 
 
