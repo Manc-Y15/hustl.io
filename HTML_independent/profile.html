@@ -17,6 +17,15 @@
     <link rel="stylesheet" href="assets/css/chart_page.css">
     <link rel="stylesheet" href="assets/css/profile.css">
     <script src="https://kit.fontawesome.com/2938df8840.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function showEntry(id){
+            if(document.getElementById(id).style.display=="flex"){
+                document.getElementById(id).style.display="none";
+            }else{
+                document.getElementById(id).style.display="flex";
+            }
+        }
+    </script>
 </head>
 
 <body style="background-color:var(--midnight-blue);">
@@ -98,62 +107,61 @@
                         <form>
                             <div class="grid">
                                 <div class="profile-input row">
-                                    <h4 class="profile-input-text col-12 col-sm-5">Date joined:</h4>
-                                    <h4 class="profile-input-text col-12 col-sm-7">17-02-2022</h4>
+                                    <h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Joined:</h5>
+                                    <h5 class="profile-input-text col-12 col-sm-8">17-02-2022</h5>
                                 </div>
                                 <div class="profile-input row">
-                                    <h4 class="profile-input-text col-12 col-sm-4">Username:</h4>
-                                    <input class="profile-input-box col-12 col-sm-7" type="text" name="username" id="inputUsername" placeholder="Username_123">
-                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
+                                    <h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Username:</h5>
+                                    <h5 class="profile-input-text col-12 col-sm-7">Username_123</h5>
+                                    <button class="btn btn-link col-sm-1" type="button" style="margin: 0; padding: 0;" onclick="showEntry('inputUsername');">
                                         <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class=" fa-solid fa-pencil"></i>
                                     </button>
+                                    <div class="row" id="inputUsername" style="margin: 0; padding: 0; display: none;">
+                                        <div class="col-sm-4"></div>
+                                        <input class="profile-input-box col-12 col-sm-8" type="text" name="username" placeholder="New username">
+                                    </div>
                                 </div>
                                 <div class="profile-input row">
-                                    <h4 class="profile-input-text col-12 col-sm-3">Email:</h4>
-                                    <input class="profile-input-box col-12 col-sm-8" type="text" name="email" id="inputEmail" placeholder="person123@email.com">
-                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
+                                    <h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Email:</h5>
+                                    <h5 class="profile-input-text col-12 col-sm-7">person123@email.com</h5>
+                                    <button class="btn btn-link col-sm-1" type="button" style="margin: 0; padding: 0;" onclick="showEntry('inputEmail');">
                                         <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
                                     </button>
+                                    <div class="row" id="inputEmail" style="margin: 0; padding: 0; display: none;">
+                                        <div class="col-sm-4"></div>
+                                        <input class="profile-input-box col-12 col-sm-8" type="text" name="email" placeholder="New email">
+                                        <div class="col-sm-4"></div>
+                                        <input class="profile-input-box col-12 col-sm-8" type="text" name="confEmail" placeholder="Confirm email">
+                                    </div>
                                 </div>
                                 <div class="profile-input row">
-                                    <h4 class="profile-input-text col-12 col-sm-3">Privacy:</h4>
-                                    <select class="profile-input-box col-12 col-sm-8" name="privacy">
+                                    <h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Privacy:</h5>
+                                    <select class="profile-input-select col-12 col-sm-8" name="privacy">
                                         <option value="private">Private</option>
                                         <option value="public">Public</option>
                                     </select>
-                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
-                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
-                                    </button>
                                 </div>
-                                <div class="profile-input row">
-                                    <h4 class="profile-input-text col-12 col-sm-3">Theme:</h4>
-                                    <select class="profile-input-box col-12 col-sm-8" name="theme">
+<!--                                 <div class="profile-input row">
+                                    <h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Theme:</h5>
+                                    <select class="profile-input-select col-12 col-sm-8" name="theme">
                                         <option value="light">Light</option>
                                         <option value="dark">Dark</option>
                                     </select>
-                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
-                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
-                                    </button>
-                                </div>
+                                </div> -->
                                 <div class="profile-input row">
-                                    <h4 class="profile-input-text col-12 col-sm-3">Region:</h4>
-                                    <select class="profile-input-box col-12 col-sm-8" name="region">
+                                    <h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Region:</h5>
+                                    <select class="profile-input-select col-12 col-sm-8" name="region">
                                         <option value="UK">United Kingdom</option>
                                         <option value="US">United States</option>
                                     </select>
-                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
-                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
-                                    </button>
                                 </div>
                                 <div class="profile-input row">
-                                    <h4 class="profile-input-text col-12 col-sm-4">Currency:</h4>
-                                    <select class="profile-input-box col-12 col-sm-7" name="currency">
+                                    <h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Currency:</h5>
+                                    <select class="profile-input-select col-12 col-sm-8" name="currency">
                                         <option value="USD">$USD</option>
                                         <option value="GBP">£GBP</option>
                                     </select>
-                                    <button class="btn btn-link col-sm-1" style="margin: 0; padding: 0;">
-                                        <i style="font-size: 1.25em;color: var(--green-sea); margin-top: 0.3em;" class="fa-solid fa-pencil"></i>
-                                    </button>
+
                                 </div>
                                     <div class="profile-input-button row justify-content-center" style="text-align: center;">
                                         <button class="submit-button" type="button" name="Recover" type="submit">Confirm changes</button>
