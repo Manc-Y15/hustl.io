@@ -9,5 +9,6 @@ urlpatterns = [
     path('login/', main_views.login_view),
     path('logout/', main_views.logout),
     path('trading/<str:ticket>', trading_views.asset_page),
-    path('trading/', trading_views.asset_list_page)
+    path('trading/', trading_views.asset_list_page),
+    path('portfolio/', trading_views.portfolio_view)
 ]
