@@ -14,17 +14,17 @@
     <div class="row">
         {% for stock in stocks %}
         <div class="col-12 col-sm-6">
-            <div class="activity-item" style="padding: 5px;">
-                <a style="text-decoration: none;" href="/trading/{{ stock.ticket }}">
+            <div class="activity-item d-flex justify-content-between" style="padding: 5px;">
+                <a class="col-12 col-md-8" style="text-decoration: none;" href="/trading/{{ stock.ticket }}">
                 <h5 class="activity-item-text">
                     <span style="width: fit-content;font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, {{ stock.col1 }} 23%, {{ stock.col2 }} 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</span>
-                    <span style="color: var(--concrete);">{{ stock.name }}</span>
-                    <span class="price">
-                        {% if stock.pos %}<span style="color: var(--nephritis);">${{ stock.current_price }}<i style="margin-left:5px; position: relative; bottom:1px;"
-                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price }}<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:1px;"
-                        class="fas fa-caret-down"></i>{% endif %}</span></span>
+                    <span style="color: var(--concrete); font-size:1rem">{{ stock.name }}</span>
                 </h5>
-            </a>
+                </a>
+                <span class="price" style="max-width: fit-content; margin-right: 5px;">
+                    {% if stock.pos %}<span style="color: var(--nephritis);">${{ stock.current_price }}<i style="margin-left:5px; position: relative; bottom:0px;"
+                        class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price }}<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
+                    class="fas fa-caret-down"></i>{% endif %}</span></span>
             </div>
         </div>
         {% endfor %}
