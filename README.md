@@ -26,8 +26,8 @@ These are just some of the front end pages that are going to need to be build.  
   * [x] Private portfolio (other user), just overall performance
 
 ### Trade Section (Trade)
-  * [ ] Asset page (price, buy/sell button, activity feed)
-  * [ ] Asset listing (list of all assets available)
+  * [x] Asset page (price, buy/sell button, activity feed)
+  * [x] Asset listing (list of all assets available)
 
 ### Misc
 * [ ] Terms of service (Dayo)
