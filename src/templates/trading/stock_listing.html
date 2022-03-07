@@ -22,20 +22,25 @@
                     <div class="row">
                         <form action="/trading/{{ stock.ticket }}" method="POST" class="row g-3">
                             {% csrf_token %}
+                            <input type="hidden" name="transaction" value="buy">
+
                             <div class="col-auto">
-                                <div class="col-sm-auto">
-                                    $
-                                </div>
-                                <div class="col-sm-auto">
-                                    <input type="hidden" name="transaction" value="buy">
-                                    <label for="amount" class="visually-hidden">Amount</label>
-                                    <input type="number" style="width:100px;" class="form-control buy-amount-input"
+                                <div class="row">
+                                    <div class="col-2">
+                                        <h2>$</h2>
+                                    </div>
+                                    <div class="col-10">
+                                        <input aria-label="buy-amount-input" type="number" style="width:100px;" class="buy-amount-input"
                                         id="amountToBuy" name="amount" min="0.00" max="{{ user.portfolio.balance }}"
                                         value="0.00">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+                                <button type="submit" class="trade-form-btn">
+                                    <i class="fa-solid fa-circle-plus" style="margin-right: 5px;"></i>
+                                    Buy
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -54,19 +59,22 @@
                         <form action="/trading/{{ stock.ticket }}" method="POST" class="row g-3">
                             {% csrf_token %}
                             <div class="col-auto">
-                                <div class="col-sm-auto">
-                                    $
-                                </div>
-                                <div class="col-sm-auto">
-                                    <input type="hidden" name="transaction" value="buy">
-                                    <label for="amount" class="visually-hidden">Amount</label>
-                                    <input type="number" style="width:100px;" class="form-control buy-amount-input"
+                                <div class="row">
+                                    <div class="col-2">
+                                        <h2>$</h2>
+                                    </div>
+                                    <div class="col-10">
+                                        <input aria-label="buy-amount-input" type="number" style="width:100px;" class="buy-amount-input"
                                         id="amountToBuy" name="amount" min="0.00" max="{{ user.portfolio.balance }}"
                                         value="0.00">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+                                <button type="submit" class="trade-form-btn">
+                                    <i class="fa-solid fa-circle-minus" style="margin-right: 5px;"></i>
+                                    Sell
+                                </button>
                             </div>
                         </form>
                     </div>
