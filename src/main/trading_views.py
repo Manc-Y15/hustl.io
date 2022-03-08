@@ -92,22 +92,34 @@ def asset_list_page(request):
 def portfolio_view(request):
     userHoldings = [holding for holding in Holding.objects.filter(owner = request.user)]
     for holding in userHoldings:
+        cols = holding.stock_id.display_colour.split(' ')
+        holding.stock_id.col1 = cols[0].split('(')[1][:-1]
+        holding.stock_id.col2 = cols[1].split('(')[1][:-1]
         holding.stock_id.balance = (round((holding.stock_id.current_price * holding.amount),2))
+    # number of trades    
     portID = Portfolio.objects.filter(owner =request.user)[0]
     userTrades = 0
     for trades in Transaction.objects.filter(portfolio_id = portID):
         userTrades += 1
+    #total portfolio value
     totalPortValue = 0
     for holding in userHoldings:
         totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
     portfolio = Portfolio.objects.filter(owner = request.user)[0]
     userProfit = totalPortValue + portfolio.balance - 50000
-    lastTrade = Transaction.objects.filter(portfolio_id = portID).last().stock_id.ticket
+
+    # Last trade query & colour setting
+    lastTrade = Transaction.objects.filter(portfolio_id = portID).last().stock_id
+    cols = lastTrade.display_colour.split(' ')
+    lastTrade.col1 = cols[0].split('(')[1][:-1]
+    lastTrade.col2 = cols[1].split('(')[1][:-1]
+
     # getting data for the graph
     historical_balance = json.loads(portfolio.bal_hist)['history']
     if historical_balance[8]['oldData'] > historical_balance[len(historical_balance)-1]['oldData']:
             portfolio.pos = False
     else: portfolio.pos = True
+
     portfolio.display_colour = "var(--turquoise) var(--amethyst)"
     cols = portfolio.display_colour.split(' ')
     portfolio.col1 = cols[0].split('(')[1][:-1]

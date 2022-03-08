@@ -36,7 +36,7 @@
             </div>
             <div class="col portfolio-info-box ">
                 <h3>Last Traded</h3>
-                <h1 class="showcase-number "><span style="color: var(--river); ">{{ lastTraded }}</span>
+                <h1 class="showcase-number "><span style="width: fit-content;font-weight: 900; background: linear-gradient(90deg, var({{ lastTraded.col1 }}) 23%, var({{ lastTraded.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ lastTraded.ticket }}</span>
                 </h1>
             </div>
         </div>
@@ -52,24 +52,23 @@
 
         </div>
         <div class="row">
-            <div class="section-heading">
-                <h1 style="text-align: center;">Stock List</h1>
-            </div>
-        </div>
-        <div class="row">
-            {% for userstock in userstocks %}
-            <div class="col-12 col-sm-6">
-                <div class="activity-item" style="padding: 5px;">
-                    <a style="text-decoration: none;" href="/trading/{{ userstock.stock_id.ticket }}">
-                    <h5 class="activity-item-text">
-                        <span style="width: fit-content;font-weight: 900; font-size: 1.6rem"> {{  userstock.stock_id.ticket }} </span>
-                        <span style="color: var(--concrete);">{{ userstock.stock_id.name }}</span>
-                        <span class="price">
-                            <span style="color: var(--nephritis);font-size: 1.05rem">shares worth ${{ userstock.stock_id.balance }}<i style="margin-left:5px; position: relative; bottom:1px;" >
-                    </h5>
-                </a>
+            <div class="col" style="margin: 25px auto; padding: 0 !important;">
+                <div class="display-1 section-heading ">
+                    <h1>Your Assets</h1>
                 </div>
             </div>
+        </div>
+        <div class="row" style="margin-top: 15px; gap: 15px; ">
+            {% for userstock in userstocks %}
+            {% if userstock.stock_id.balance > 0 %}
+            <div class="col portfolio-info-box ">
+                <h3><span style="width: fit-content;font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, var({{ userstock.stock_id.col1 }}) 23%, var({{ userstock.stock_id.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ userstock.stock_id.ticket }}</span></h3>
+                <h1 class="showcase-number "><span style="color: var(--concrete); ">${{ userstock.stock_id.balance }}</span>
+                </h1>
+                <a href="/trading/{{ userstock.stock_id.ticket }}"><button  class="regular-btn" style="float:right;"><i class="fa fa-cogs" aria-hidden="true"></i>
+                    Manage</button></a>
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
@@ -77,10 +76,12 @@
 
 </body>
 
-<script src="assets/js/portfolio-chart.js "></script>
-<script src="assets/js/jquery.min.js"></script>
+<script href="{% static 'js/portfolio-chart.js' %}"></script>
 
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="{% static 'js/portfolio-chart.js' %}"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/asset-page-chart.js' %}"></script>
 <script>
     var charts = init_charts({{data|safe}}, "{{ portfolio.col1 }}", "{{ portfolio.col2 }}");
