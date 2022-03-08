@@ -58,6 +58,9 @@
                     <div class="row">
                         <form action="/trading/{{ stock.ticket }}" method="POST" class="row g-3">
                             {% csrf_token %}
+                            <input type="hidden" name="transaction" value="sell">
+
+
                             <div class="col-auto">
                                 <div class="row">
                                     <div class="col-2">
