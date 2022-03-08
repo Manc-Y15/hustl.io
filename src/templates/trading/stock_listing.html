@@ -1,5 +1,6 @@
 {% extends 'base/base_layout.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/chart_page.css' %}">
 
@@ -116,7 +117,7 @@
                                     style="margin-right:5px; position: relative; bottom:1px;"
                                     class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);"><i
                                         style="color: var(--alizarin); margin-right:5px; position: relative; bottom:1px;"
-                                        class="fas fa-caret-down"></i>{% endif %}${{ stock.current_price }}</span></h2>
+                                        class="fas fa-caret-down"></i>{% endif %}${{ stock.current_price|intcomma }}</span></h2>
                     </div>
                     <div class="col-md-auto" style="padding: 5px;">
                         <button class="stock-button" type="button" data-bs-toggle="offcanvas"

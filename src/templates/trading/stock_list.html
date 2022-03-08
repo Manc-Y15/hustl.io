@@ -1,5 +1,6 @@
 {% extends 'base/base_layout.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/chart_page.css' %}">
 <link rel="stylesheet" href="{% static 'css/stock_list.css' %}">
@@ -22,8 +23,8 @@
                 </h5>
                 </a>
                 <span class="price" style="max-width: fit-content; margin-right: 5px;">
-                    {% if stock.pos %}<span style="color: var(--nephritis);">${{ stock.current_price }}<i style="margin-left:5px; position: relative; bottom:0px;"
-                        class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price }}<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
+                    {% if stock.pos %}<span style="color: var(--nephritis);">${{ stock.current_price|intcomma }}<i style="margin-left:5px; position: relative; bottom:0px;"
+                        class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price|intcomma }}<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
                     class="fas fa-caret-down"></i>{% endif %}</span></span>
             </div>
         </div>

@@ -101,12 +101,14 @@ def portfolio_view(request):
     userTrades = 0
     for trades in Transaction.objects.filter(portfolio_id = portID):
         userTrades += 1
-    #total portfolio value
+    # total portfolio value
     totalPortValue = 0
     for holding in userHoldings:
         totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
     portfolio = Portfolio.objects.filter(owner = request.user)[0]
-    userProfit = totalPortValue + portfolio.balance - 50000
+    totalPortValue +=  portfolio.balance
+    portValue = f"${totalPortValue:,}"
+    userProfit = f"${(portfolio.balance  - 50000):,}"
 
     # Last trade query & colour setting
     lastTrade = Transaction.objects.filter(portfolio_id = portID).last().stock_id
@@ -114,7 +116,7 @@ def portfolio_view(request):
     lastTrade.col1 = cols[0].split('(')[1][:-1]
     lastTrade.col2 = cols[1].split('(')[1][:-1]
 
-    # getting data for the graph
+    # getting data for the line graph
     historical_balance = json.loads(portfolio.bal_hist)['history']
     if historical_balance[8]['oldData'] > historical_balance[len(historical_balance)-1]['oldData']:
             portfolio.pos = False
@@ -135,17 +137,47 @@ def portfolio_view(request):
     if len(dates) > 7: 
         value_history = value_history[7:]
         dates = dates[7:]
+    # asset graph
+    ticket_list = []
+    data_list = []
+    sorting_list = [['Cash',float(round((portfolio.balance / totalPortValue ) * 100 ,2))]]
+    for holding in userHoldings:
+        if holding.amount > 0:
+            sorting_list.append([])
+            sorting_list[-1].append(holding.stock_id.ticket)
+            sorting_list[-1].append( float( round((holding.stock_id.balance / totalPortValue ) * 100,2)))
+    sorting_list.sort(key = lambda x: x[1])
+    for item in sorting_list:
+        ticket_list.append(item[0])
+        data_list.append(item[1])
+
+    colour_list = [
+    "--river", 
+    "--emerald", 
+    "--turquoise", 
+    "--amethyst",
+    "--green-sea",
+    "--nephritis",
+    "--wisteria",
+    "--sun-flower",
+    "--carrot",
+    "--alizarin",
+    "--orange"
+    ]
+
+    asset_data = {'tickets': ticket_list ,'data' :data_list,'colours': colour_list }
     return render(request, "trading/portfolio.html",{
         'numOfTrades': userTrades,
         'rankRegional': '13',
         'rankOverall': '78',
-        'totalProfit': ('$'+ str(userProfit)),
-        'totalPortValue': ('$'+ str(totalPortValue)),
+        'totalProfit': userProfit,
+        'totalPortValue': portValue,
         'lastTraded': lastTrade,
         'userstocks': userHoldings,
         'portfolio': portfolio,
-        'data':str({
+        'valueData':str({
                 "value_history": value_history,
                 "dates": dates
-            })
+            }),
+        'assetData':str(asset_data)
     })

@@ -1,6 +1,8 @@
 
 {% extends 'base/base_layout.html' %}
 {% load static %}
+{% load humanize %}
+
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/chart_page.css' %}">
 <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
@@ -59,11 +61,16 @@
             </div>
         </div>
         <div class="row" style="margin-top: 15px; gap: 15px; ">
+            <div class="col portfolio-info-box ">
+                <h3><span style="width: fit-content;font-weight: 900; font-size: 1.6rem;">Cash</span></h3>
+                <h1 class="showcase-number "><span style="color: var(--concrete); ">${{ portfolio.balance|intcomma }}</span>
+                </h1>
+            </div>
             {% for userstock in userstocks %}
             {% if userstock.stock_id.balance > 0 %}
             <div class="col portfolio-info-box ">
                 <h3><span style="width: fit-content;font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, var({{ userstock.stock_id.col1 }}) 23%, var({{ userstock.stock_id.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ userstock.stock_id.ticket }}</span></h3>
-                <h1 class="showcase-number "><span style="color: var(--concrete); ">${{ userstock.stock_id.balance }}</span>
+                <h1 class="showcase-number "><span style="color: var(--concrete); ">${{ userstock.stock_id.balance|intcomma }}</span>
                 </h1>
                 <a href="/trading/{{ userstock.stock_id.ticket }}"><button  class="regular-btn" style="float:right;"><i class="fa fa-cogs" aria-hidden="true"></i>
                     Manage</button></a>
@@ -84,7 +91,10 @@
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/asset-page-chart.js' %}"></script>
 <script>
-    var charts = init_charts({{data|safe}}, "{{ portfolio.col1 }}", "{{ portfolio.col2 }}");
+    var value_chart = init_charts({{ valueData|safe }}, "{{ portfolio.col1 }}", "{{ portfolio.col2 }}");
+
+    var asset_chart = init_assets_chart({{ assetData|safe }});
+
 </script>
 
 {% endblock %}
