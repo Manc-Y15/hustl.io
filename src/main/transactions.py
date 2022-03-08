@@ -23,7 +23,7 @@ def user_buy(user, is_buy, stock_id, amount):
             if amount > user.portfolio.balance:
                 return False
         else:
-            if volume > Holding.objects.filter(owner = user, stock_id = stock)[0]:
+            if volume > Holding.objects.filter(owner = user, stock_id = stock)[0].amount:
                 return False
             purchase = 'SELL'
             amount = amount * -1 # makes the amount negative. The amount is subtracted from the balance.
@@ -37,7 +37,7 @@ def user_buy(user, is_buy, stock_id, amount):
                 thisHolding.amount = Decimal.from_float(x)
                 thisHolding.save()
             else:
-                x = float(thisHolding.amount) + volume
+                x = float(thisHolding.amount) - volume
                 thisHolding.amount = Decimal.from_float(x)
                 thisHolding.save()
         else:
