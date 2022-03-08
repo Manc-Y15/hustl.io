@@ -1,134 +1,184 @@
 {% extends 'base/base_layout.html' %}
 {% load static %}
 {% block content %}
-    <link rel="stylesheet" href="{% static 'css/chart_page.css' %}">
+<link rel="stylesheet" href="{% static 'css/chart_page.css' %}">
 
-    <!-- Buy Menu Example -->
-    <div class="offcanvas offcanvas-bottom account-menu" style="transition: transform .2s ease-in-out;" tabindex="-1" id="buyCanvas" aria-labelledby="offcanvasBottomLabel">
-        <div class="offcanvas-header">
-            <button type="button" class="btn-close btn-close-white text-reset" style="position:absolute; right:25px; top:25px" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="container" style="max-width:1100px;">
-                <div class="row" style="border-bottom:1px solid #95a5a6">
-                    <div class="col">
-                        <h3>Buy
-                            <font style="color:#3498db">${{ stock.ticket }}</font>
-                        </h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <form action="/trading/{{ stock.ticket }}" method="POST" class="row g-3">
-                        {% csrf_token %}
-                        <div class="col-auto">
-                            <div class="col-sm-auto">
-                                $
-                            </div>
-                            <div class="col-sm-auto">
-                                <input type="hidden" name="transaction" value="buy">
-                                <label for="amount" class="visually-hidden">Amount</label>
-                                <input type="number" style="width:100px;" class="form-control buy-amount-input" id="amountToBuy" name="amount" min="0.00" max="{{ user.portfolio.balance }}"  value="0.00">
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<!-- Buy Menu Example -->
+<div class="offcanvas offcanvas-bottom account-menu" style="transition: transform .2s ease-in-out;" tabindex="-1"
+    id="buyCanvas" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas-header">
+        <button type="button" class="btn-close btn-close-white text-reset"
+            style="position:absolute; right:25px; top:25px" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-
-
-    <!-- Stock Listing Example -->
-    <div class="container" style="margin-top: 40px;max-width:1090px;">
-        <div class="row">
-            <div class="col-md-8 col-sm-12">
-                <div class="chart-wrapper">
-                    <canvas id="valuation_chart"></canvas>
-                </div>
-
-            </div>
-            <div class="col-md-4 col-sm-12">
-                <div class="container d-flex flex-column" style="margin:0; padding:0; height: 100%">
+    <div class="offcanvas-body">
+        <div class="container" style="max-width:1100px;">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="row" style="border-bottom:1px solid #95a5a6">
+                        <div class="col">
+                            <h3>Buy <span style="font-weight: 900; width: fit-content;background: linear-gradient(90deg, var({{ stock.col1 }}) 23%, var({{ stock.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</span></h3>
+                        </div>
+                    </div>
                     <div class="row">
-                        <div class="col-12">
-                            <div class="hero-unit">
-                                <h1 class="display-1" style="width: fit-content;background: linear-gradient(90deg, var({{ stock.col1 }}) 23%, var({{ stock.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</h1>
-                                <h2>{{ stock.name }}</h2>
-                                <p class="stock-description">{{ stock.desc }}</p>
+                        <form action="/trading/{{ stock.ticket }}" method="POST" class="row g-3">
+                            {% csrf_token %}
+                            <input type="hidden" name="transaction" value="buy">
+
+                            <div class="col-auto">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <h2>$</h2>
+                                    </div>
+                                    <div class="col-10">
+                                        <input aria-label="buy-amount-input" type="number" style="width:100px;" class="buy-amount-input"
+                                        id="amountToBuy" name="amount" min="0.00" max="{{ user.portfolio.balance }}"
+                                        value="0.00">
+                                    </div>
+                                </div>
                             </div>
+                            <div class="col-auto">
+                                <button type="submit" class="trade-form-btn">
+                                    <i class="fa-solid fa-circle-plus" style="margin-right: 5px;"></i>
+                                    Buy
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- I engaged with magic to center this, not 100% sure why it works but it does, basically just stacking margin-left autos with flexbox -->
+                <div class="col-md-2 divider-adapt-mobile">
+
+                </div>
+                <div class="col-md-5" style="margin-left: auto">
+                    <div class="row" style="border-bottom:1px solid #95a5a6">
+                        <div class="col">
+                            <h3>Sell <span style="font-weight: 900; width: fit-content;background: linear-gradient(90deg, var({{ stock.col1 }}) 23%, var({{ stock.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</span></h3>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: auto; margin-bottom: 10px;">
-                        <div class="col-md-auto">
-                            <h2 style="font-family:'Consolas'">{% if stock.pos %}<span style="color: var(--nephritis);"><i style="margin-right:5px; position: relative; bottom:1px;"
-                                class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);"><i style="color: var(--alizarin); margin-right:5px; position: relative; bottom:1px;"
-                            class="fas fa-caret-down"></i>{% endif %}${{ stock.current_price }}</span></h2>
-                        </div>
-                        <div class="col-md-auto" style="padding: 5px;">
-                            <button class="stock-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#buyCanvas" aria-controls="offcanvasBottom">
-                                <i class="fas fa-money-check-alt" style="margin-right: 5px;"></i>
-                                Buy ${{ stock.ticket }}
-                            </button>
-                        </div>
+                    <div class="row">
+                        <form action="/trading/{{ stock.ticket }}" method="POST" class="row g-3">
+                            {% csrf_token %}
+                            <div class="col-auto">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <h2>$</h2>
+                                    </div>
+                                    <div class="col-10">
+                                        <input aria-label="buy-amount-input" type="number" style="width:100px;" class="buy-amount-input"
+                                        id="amountToBuy" name="amount" min="0.00" max="{{ user.portfolio.balance }}"
+                                        value="0.00">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="trade-form-btn">
+                                    <i class="fa-solid fa-circle-minus" style="margin-right: 5px;"></i>
+                                    Sell
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Activity Feed -->
-    <div class="container" style="margin-top: 30px; max-width: 1100px">
-        <div class="row">
-            <div class="col-12">
-                <div class="display-1" style="border-bottom: 1px solid #95a5a6;">
-                    <h1>Activity Feed</h1>
+
+<!-- Stock Listing Example -->
+<div class="container" style="margin-top: 40px;max-width:1090px;">
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            <div class="chart-wrapper">
+                <canvas id="valuation_chart"></canvas>
+            </div>
+
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="container d-flex flex-column" style="margin:0; padding:0; height: 100%">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="hero-unit">
+                            <h1 class="display-1"
+                                style="width: fit-content;background: linear-gradient(90deg, var({{ stock.col1 }}) 23%, var({{ stock.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                ${{ stock.ticket }}</h1>
+                            <h2>{{ stock.name }}</h2>
+                            <p class="stock-description">{{ stock.desc }}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="list-group list-group-flush" style="margin-top: 20px">
-                    <li class="list-group-item activity-item">
-                        <h5 class="activity-item-text">
-                            <font style="color: #f39c12">Someone1391</font> sold
-                            <font style="color: #3498db">$TSLA</font> @
-                            <font style="color: #3498db">$1100.00</font>, making
-                            <font style="color: #2ecc71">$100.78</font>
-                            <font style="float: right; color: #95a5a6">Monday 6th December, 2021</font>
-                        </h5>
-                    </li>
-                    <li class="list-group-item activity-item">
-                        <h5 class="activity-item-text">
-                            <font style="color: #f39c12">Someone1391</font> bought
-                            <font style="color: #3498db">$TSLA</font> @
-                            <font style="color: #3498db">$999.22</font>
-                            <font style="float: right; color: #95a5a6">Sunday 5th December, 2021</font>
-                        </h5>
-                    </li>
-                    <li class="list-group-item activity-item">
-                        <h5 class="activity-item-text">
-                            <font style="color: #f39c12">SomeoneElse02</font> sold
-                            <font style="color: #3498db">$TSLA</font> @
-                            <font style="color: #3498db">$968.12</font>, making
-                            <font style="color: #e74c3c">-$22.31</font>
-                            <font style="float: right; color: #95a5a6">Saturday 4th December, 2021</font>
-                        </h5>
-                    </li>
-                    <li class="list-group-item activity-item">
-                        <h5 class="activity-item-text">
-                            <font style="color: #f39c12">SomeoneElse02</font> bought
-                            <font style="color: #3498db">$TSLA</font> @
-                            <font style="color: #3498db">$990.43</font>
-                            <font style="float: right; color: #95a5a6">Friday 3rd December, 2021</font>
-                        </h5>
-                    </li>
+                <div class="row" style="margin-top: auto; margin-bottom: 10px;">
+                    <div class="col-md-auto">
+                        <h2 style="font-family:'Consolas'">{% if stock.pos %}<span style="color: var(--nephritis);"><i
+                                    style="margin-right:5px; position: relative; bottom:1px;"
+                                    class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);"><i
+                                        style="color: var(--alizarin); margin-right:5px; position: relative; bottom:1px;"
+                                        class="fas fa-caret-down"></i>{% endif %}${{ stock.current_price }}</span></h2>
+                    </div>
+                    <div class="col-md-auto" style="padding: 5px;">
+                        <button class="stock-button" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#buyCanvas" aria-controls="offcanvasBottom">
+                            <i class="fas fa-money-check-alt" style="margin-right: 5px;"></i>
+                            Trade ${{ stock.ticket }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="{% static 'js/asset-page-chart.js' %}"></script>
+<!-- Activity Feed -->
+<div class="container" style="margin-top: 30px; max-width: 1100px">
+    <div class="row">
+        <div class="col-12">
+            <div class="display-1" style="border-bottom: 1px solid #95a5a6;">
+                <h1>Activity Feed</h1>
+            </div>
+            <div class="list-group list-group-flush" style="margin-top: 20px">
+                <li class="list-group-item activity-item">
+                    <h5 class="activity-item-text">
+                        <font style="color: #f39c12">Someone1391</font> sold
+                        <font style="color: #3498db">$TSLA</font> @
+                        <font style="color: #3498db">$1100.00</font>, making
+                        <font style="color: #2ecc71">$100.78</font>
+                        <font style="float: right; color: #95a5a6">Monday 6th December, 2021</font>
+                    </h5>
+                </li>
+                <li class="list-group-item activity-item">
+                    <h5 class="activity-item-text">
+                        <font style="color: #f39c12">Someone1391</font> bought
+                        <font style="color: #3498db">$TSLA</font> @
+                        <font style="color: #3498db">$999.22</font>
+                        <font style="float: right; color: #95a5a6">Sunday 5th December, 2021</font>
+                    </h5>
+                </li>
+                <li class="list-group-item activity-item">
+                    <h5 class="activity-item-text">
+                        <font style="color: #f39c12">SomeoneElse02</font> sold
+                        <font style="color: #3498db">$TSLA</font> @
+                        <font style="color: #3498db">$968.12</font>, making
+                        <font style="color: #e74c3c">-$22.31</font>
+                        <font style="float: right; color: #95a5a6">Saturday 4th December, 2021</font>
+                    </h5>
+                </li>
+                <li class="list-group-item activity-item">
+                    <h5 class="activity-item-text">
+                        <font style="color: #f39c12">SomeoneElse02</font> bought
+                        <font style="color: #3498db">$TSLA</font> @
+                        <font style="color: #3498db">$990.43</font>
+                        <font style="float: right; color: #95a5a6">Friday 3rd December, 2021</font>
+                    </h5>
+                </li>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script>
-        var charts = init_charts({{data|safe}}, "{{ stock.col1 }}", "{{ stock.col2 }}");
-    </script>
+<script src="{% static 'js/asset-page-chart.js' %}"></script>
+
+<script>
+    var charts = init_charts({{ data| safe}}, "{{ stock.col1 }}", "{{ stock.col2 }}");
+</script>
 
 {% endblock %}

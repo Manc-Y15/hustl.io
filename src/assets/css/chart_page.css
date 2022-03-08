@@ -25,26 +25,13 @@ body {
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    color: #34495e;
+    color: var(--asphalt);
     transition: 0.2s ease-in;
     min-width: 50px;
     font-family: 'Comfortaa';
     font-weight: 700;
 }
 
-.crypto-button {
-    border-radius: 5px;
-    background: linear-gradient( 90deg, rgba(250, 0, 0, 1) 50%, rgb(250 104 0) 100%);
-    border: 1px solid transparent;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    transition: 0.2s ease-in;
-    min-width: 50px;
-    font-family: 'Comfortaa';
-    font-weight: 700;
-    border-left: none !important;
-}
 
 .stock-button:hover {
     background: transparent;
@@ -64,3 +51,83 @@ body {
 .activity-item-text {
     margin: 5px;
 }
+
+
+@media only screen and (min-width: 765px) {
+    .divider-adapt-mobile {
+        border: 1px solid white;
+        width:1px;
+        padding: 0px !important;
+        height: 20vh; /* keep proportion to view height when resizing */
+        margin-left: auto; /* magic to center it */ 
+    }
+}
+
+
+@media only screen and (max-width: 765px) {
+    .divider-adapt-mobile {
+        border: 1px solid white;
+        width:100vw; /* keep proportion to view width when resizing */
+        height: 1px; 
+        margin: 25px 0px;
+        
+    }
+}
+
+.buy-amount-input {
+    background: none !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid var(--concrete);
+    border-radius: 0%;
+    font-family: 'Comfortaa';
+    font-size: 1.5rem;
+    color: white;
+    transition: .2s ease-in-out;
+
+}
+
+.buy-amount-input:focus, .buy-amount-input:active {
+    outline: none !important;
+    border-bottom: 1px solid var(--river);
+    transition: .2s ease-in-out;
+}
+
+.trade-form-btn {
+    border-radius: 5px;
+    border: 1px solid transparent;
+    margin: 1px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: var(--asphalt);
+    transition: 0.2s ease-in;
+    min-width: 50px;
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--river) 23%, var(--turquoise) 100%);
+    background-origin: border-box;
+
+}
+
+.trade-form-btn:hover {
+    background: transparent !important;
+    transition: 0.2s ease-in;
+    border: 1px solid var(--river);
+    color: var(--river);
+}
+
+/* remove ugly arrows in number input box */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* mozilla version of above */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
