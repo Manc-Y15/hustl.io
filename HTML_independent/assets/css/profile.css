@@ -144,6 +144,18 @@
     border-color: var(--concrete);
 }
 
+.profile-search {;
+    margin: 0;
+    background: var(--asphalt);
+    color: var(--clouds);
+    padding: 5px;
+    padding-left: 8px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: var(--concrete);
+    font-size: 1.3em;
+}
+
 .profile-input-text {
     vertical-align: middle;
     display: inline;
@@ -187,9 +199,14 @@
     display: inline-block;
 }
 
-::placeholder {
+.profile-input-box::placeholder {
     color: var(--clouds);
     opacity: 1;
     font-family: 'Comfortaa';
-    font-weight: normal;
+}
+
+.profile-search::placeholder {
+    color: var(--silver);
+    opacity: 1;
+    font-family: 'Comfortaa';
 }
