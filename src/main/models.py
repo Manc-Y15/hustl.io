@@ -11,7 +11,7 @@ class Stock(models.Model):
     current_price = models.DecimalField(max_digits=10, decimal_places=2)
     current_datetime = models.DateTimeField()
     historical = models.TextField() # Stored as JSON, needs to be large text file
-
+    display_colour = models.TextField(null=True, blank=True)
 
 class Holding(models.Model):
     owner = models.OneToOneField(User, on_delete=models.DO_NOTHING, primary_key=True)
@@ -54,5 +54,5 @@ class Transaction(models.Model):
     buy_price = models.DecimalField(max_digits=10, decimal_places=2)
     volume = models.DecimalField(max_digits=10, decimal_places=4)
     time = models.DateTimeField()
-
+    buy = models.BooleanField(default=True)
     

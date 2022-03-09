@@ -15,6 +15,15 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+    # CHANGED AREA FROM DEFAULT DJANGO
+    # I have forced django reload to be turned off as otherwise you end up
+    # with duplicate background threads updating stocks, which 
+    # kills our API access. 
+    # You will have to manually relaunch the server when editing the python
+    # - we do this most of the time anyway.
+    if '--noreload' not in sys.argv:
+        sys.argv.append('--noreload')
+    # END OF CHANGED
     execute_from_command_line(sys.argv)
 
 
