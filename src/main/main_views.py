@@ -11,6 +11,8 @@ def home(request):
 	'distribution': holdings_distribution(request.user)})
 
 def signup_view(request):
+	if request.user.is_authenticated:
+		return redirect('/portfolio')
 	errors = []
 
 	if request.method == 'POST':
@@ -28,6 +30,8 @@ def signup_view(request):
 
 
 def login_view(request):
+	if request.user.is_authenticated:
+		return redirect('/portfolio')
 	errors = []
 
 	if request.method == 'POST':
@@ -43,7 +47,6 @@ def login_view(request):
 		return redirect('/portfolio')
 	return render(request, "accounts/login.html", {'errors': errors})
 
-def logout(request):
-	if request.method == 'POST':
-		logout(request)
-		return redirect('/')
+def logout_view(request):
+	logout(request)
+	return redirect('/')
