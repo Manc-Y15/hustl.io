@@ -3,11 +3,16 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
 from .models import Stock
 
+from .holdings import get_holdings, holdings_distribution, holdings_total
+
 
 def home(request):
-    return render(request, 'home.html', {})
+    return render(request, 'home.html', {'holdings': get_holdings(request.user), 'total': holdings_total(request.user),
+	'distribution': holdings_distribution(request.user)})
 
 def signup_view(request):
+	if request.user.is_authenticated:
+		return redirect('/portfolio')
 	errors = []
 
 	if request.method == 'POST':
@@ -19,11 +24,14 @@ def signup_view(request):
 		if form.is_valid():
 			user = form.save() # Create account
 			login(request, user)
-			return redirect('/')
+			return redirect('/portfolio')
+
 	return render(request, 'accounts/signup.html', {'errors': errors})
 
 
 def login_view(request):
+	if request.user.is_authenticated:
+		return redirect('/portfolio')
 	errors = []
 
 	if request.method == 'POST':
@@ -36,10 +44,9 @@ def login_view(request):
 			# login
 			user = form.get_user()
 			login(request, user)
-			return redirect('/')
+		return redirect('/portfolio')
 	return render(request, "accounts/login.html", {'errors': errors})
 
-def logout(request):
-	if request.method == 'POST':
-		logout(request)
-		return redirect('/')
+def logout_view(request):
+	logout(request)
+	return redirect('/')

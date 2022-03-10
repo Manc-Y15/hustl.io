@@ -21,7 +21,7 @@ def main():
     # kills our API access. 
     # You will have to manually relaunch the server when editing the python
     # - we do this most of the time anyway.
-    if '--noreload' not in sys.argv:
+    if '--noreload' not in sys.argv and 'runserver' in sys.argv:
         sys.argv.append('--noreload')
     # END OF CHANGED
     execute_from_command_line(sys.argv)
