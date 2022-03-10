@@ -40,6 +40,12 @@ body {
     transition: 0.2s ease-in;
 }
 
+.stock-button-disabled, .stock-button-disabled:hover {
+    opacity: .2;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .activity-item {
     background: #34495e;
     border: 1px solid transparent !important;

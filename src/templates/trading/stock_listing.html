@@ -116,10 +116,18 @@
                                         class="fas fa-caret-down"></i>{% endif %}${{ stock.current_price|intcomma }}</span></h2>
                     </div>
                     <div class="col-md-auto" style="padding: 5px;">
+                        {% if user.is_authenticated %}
                         <button class="stock-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#buyCanvas" aria-controls="offcanvasBottom">
                             <i class="fas fa-money-check-alt" style="margin-right: 5px;"></i>
                             Trade ${{ stock.ticket }}
                         </button>
+                        {% else %}
+                        <button class="stock-button stock-button-disabled" type="button">
+                            <i class="fas fa-money-check-alt" style="margin-right: 5px;"></i>
+                            Trade ${{ stock.ticket }}
+                        </button>
+                        <p style="font-family: 'Comfortaa'; color: white; margin: 5px;">You need to <a href="/login">log in</a> or <a href="/signup">sign up</a> to trade.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
