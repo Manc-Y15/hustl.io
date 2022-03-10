@@ -1,6 +1,5 @@
 from datetime import datetime
 from django.utils import timezone
-from matplotlib.font_manager import json_load
 from main.models import Stock
 
 
@@ -20,8 +19,6 @@ def update_stocks():
     for stock in Stock.objects.all():
         # get data
         ticket = stock.ticket
-        oldPrice = float(stock.current_price) # Decimal --> Float
-        oldDateTime = str(stock.current_datetime) # Datetimes not supported in JSON lib, converted to string
         newData = finnhub_client.quote(ticket)
 
         # Log success/fails for updates
@@ -37,9 +34,9 @@ def update_stocks():
         if history.get('history'):
             if len(history['history']) >= 14: # Roll over oldest historical value after 14 days.
                 del history['history'][0]
-            history['history'].append({"oldTime": oldDateTime, "oldData": oldPrice})
+            history['history'].append({"oldTime": str(stock.current_datetime), "oldData": float(stock.current_price)})
         else:
-            history['history'] = [{"oldTime": oldDateTime, "oldData": oldPrice}] # If history doesn't exist for some reason
+            history['history'] = [{"oldTime": str(stock.current_datetime), "oldData": float(stock.current_price)}] # If history doesn't exist for some reason
         stock.historical = json.dumps(history) # Saved as text due to SQLite not supporting JSONField
 
         if(stock.save()): successfully_updated += 1

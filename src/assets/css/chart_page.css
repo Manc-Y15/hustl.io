@@ -25,32 +25,25 @@ body {
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    color: #34495e;
+    color: var(--asphalt);
     transition: 0.2s ease-in;
     min-width: 50px;
     font-family: 'Comfortaa';
     font-weight: 700;
 }
 
-.crypto-button {
-    border-radius: 5px;
-    background: linear-gradient( 90deg, rgba(250, 0, 0, 1) 50%, rgb(250 104 0) 100%);
-    border: 1px solid transparent;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    transition: 0.2s ease-in;
-    min-width: 50px;
-    font-family: 'Comfortaa';
-    font-weight: 700;
-    border-left: none !important;
-}
 
 .stock-button:hover {
     background: transparent;
     border: 1px solid #2ecc71;
     color: #2ecc71;
     transition: 0.2s ease-in;
+}
+
+.stock-button-disabled, .stock-button-disabled:hover {
+    opacity: .2;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .activity-item {
@@ -63,4 +56,146 @@ body {
 
 .activity-item-text {
     margin: 5px;
+}
+
+
+@media only screen and (min-width: 765px) {
+    .divider-adapt-mobile {
+        border: 1px solid white;
+        width:1px;
+        padding: 0px !important;
+        height: 20vh; /* keep proportion to view height when resizing */
+        margin-left: auto; /* magic to center it */ 
+    }
+}
+
+
+@media only screen and (max-width: 765px) {
+    .divider-adapt-mobile {
+        border: 1px solid white;
+        width:100vw; /* keep proportion to view width when resizing */
+        height: 1px; 
+        margin: 25px 0px;
+        
+    }
+}
+
+.buy-amount-input {
+    background: none !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid var(--concrete);
+    border-radius: 0%;
+    font-family: 'Comfortaa';
+    font-size: 1.5rem;
+    color: white;
+    transition: .2s ease-in-out;
+
+}
+
+.buy-amount-input:focus, .buy-amount-input:active {
+    outline: none !important;
+    border-bottom: 1px solid var(--river);
+    transition: .2s ease-in-out;
+}
+
+.trade-form-btn {
+    border-radius: 5px;
+    border: 1px solid transparent;
+    margin: 1px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: var(--asphalt);
+    transition: 0.2s ease-in;
+    min-width: 50px;
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--river) 23%, var(--turquoise) 100%);
+    background-origin: border-box;
+
+}
+
+.trade-form-btn:hover {
+    background: transparent !important;
+    transition: 0.2s ease-in;
+    border: 1px solid var(--river);
+    color: var(--river);
+}
+
+/* remove ugly arrows in number input box */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* mozilla version of above */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+svg {
+    cursor: pointer;
+}
+
+#Tick {
+    fill: var(--nephritis);
+    animation: fadeInUp .8s cubic-bezier(0.6,-0.4, 0.09, 2.23);
+}
+
+#Cross {
+    fill: var(--alizarin);
+    animation: fadeInUp .8s cubic-bezier(0.6,-0.4, 0.09, 2.23);
+}
+
+#TickCircle, #CrossCircle {
+    animation: fadeInUp .4s cubic-bezier(0.6,-0.4, 0.09, 2.23);
+}
+
+@keyframes fadeInUp {
+    20% {
+        opacity: 0;
+        transform: translateY(20%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#TickCircle, #CrossCircle {
+    filter: drop-shadow(0px 2px 5px rgb(0 0 0 / 0.4));
+    fill: var(--midnight-blue);
+}
+
+#TickCircle, #CrossCircle, #Tick, #Cross {
+    transition: all 1s ease;
+}
+
+
+.form-response-container {
+    position: absolute;
+    top: 40%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+
+    transform: translate(-50%, -40%); /* This is a shorthand of
+                                         translateX(-50%) and translateY(-50%) */
+    z-index:1050;
+}
+
+.form-response-toast {
+    padding: 25px;
+    background: var(--midnight-blue) !important;
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    margin: none;
+    border: none !important;
+}
+
+.form-response-h1 {
+    text-align: center;
+
 }
