@@ -21,10 +21,10 @@ def user_buy(user, is_buy, stock_id, amount):
         if is_buy:
             purchase = 'BUY'
             if amount > user.portfolio.balance:
-                return False
+                return (False, "You don't have enough money to buy this amount.")
         else:
             if volume > Holding.objects.filter(owner = user, stock_id = stock)[0].amount:
-                return False
+                return (False, "You don't own enough of this asset to sell this amount.")
             purchase = 'SELL'
             amount = amount * -1 # makes the amount negative. The amount is subtracted from the balance.
             volumeSell = volume * -1
@@ -56,6 +56,6 @@ def user_buy(user, is_buy, stock_id, amount):
         transac.buy = is_buy
         user.portfolio.save()
         transac.save()
-        return True
+        return (True, "")
     else:
-        return False
+        return (False, "No amount specified.")

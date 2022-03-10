@@ -22,7 +22,8 @@ def signup_view(request):
 		if form.is_valid():
 			user = form.save() # Create account
 			login(request, user)
-			return redirect('/')
+			return redirect('/portfolio')
+
 	return render(request, 'accounts/signup.html', {'errors': errors})
 
 
@@ -39,7 +40,7 @@ def login_view(request):
 			# login
 			user = form.get_user()
 			login(request, user)
-			return redirect('/')
+		return redirect('/portfolio')
 	return render(request, "accounts/login.html", {'errors': errors})
 
 def logout(request):

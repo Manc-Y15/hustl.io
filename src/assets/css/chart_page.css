@@ -131,3 +131,65 @@ input[type=number] {
 }
 
 
+svg {
+    cursor: pointer;
+}
+
+#Tick {
+    fill: var(--nephritis);
+    animation: fadeInUp .8s cubic-bezier(0.6,-0.4, 0.09, 2.23);
+}
+
+#Cross {
+    fill: var(--alizarin);
+    animation: fadeInUp .8s cubic-bezier(0.6,-0.4, 0.09, 2.23);
+}
+
+#TickCircle, #CrossCircle {
+    animation: fadeInUp .4s cubic-bezier(0.6,-0.4, 0.09, 2.23);
+}
+
+@keyframes fadeInUp {
+    20% {
+        opacity: 0;
+        transform: translateY(20%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#TickCircle, #CrossCircle {
+    filter: drop-shadow(0px 2px 5px rgb(0 0 0 / 0.4));
+    fill: var(--midnight-blue);
+}
+
+#TickCircle, #CrossCircle, #Tick, #Cross {
+    transition: all 1s ease;
+}
+
+
+.form-response-container {
+    position: absolute;
+    top: 40%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+
+    transform: translate(-50%, -40%); /* This is a shorthand of
+                                         translateX(-50%) and translateY(-50%) */
+    z-index:1050;
+}
+
+.form-response-toast {
+    padding: 25px;
+    background: var(--midnight-blue) !important;
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    margin: none;
+    border: none !important;
+}
+
+.form-response-h1 {
+    text-align: center;
+
+}
