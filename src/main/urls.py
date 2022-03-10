@@ -11,5 +11,7 @@ urlpatterns = [
     path('trading/transaction', trading_views.asset_page_form),
     path('trading/<str:ticket>', trading_views.asset_page),
     path('trading/', trading_views.asset_list_page),
-    path('portfolio/', trading_views.portfolio_view)
+    path('portfolio/', trading_views.portfolio_view),
+    path('settings/', main_views.settings_view),
+    path('friends/', main_views.friends_view)
 ]

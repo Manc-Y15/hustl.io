@@ -50,3 +50,19 @@ def login_view(request):
 def logout_view(request):
 	logout(request)
 	return redirect('/')
+
+def logout(request):
+	if request.method == 'POST':
+		logout(request)
+		return redirect('/')
+
+def settings_view(request):
+	errors = []
+
+	return render(request, 'accounts/account_settings.html', {})
+
+def friends_view(request):
+	errors = []
+
+	return render(request, 'accounts/friends.html', {})
+
