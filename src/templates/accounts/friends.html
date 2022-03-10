@@ -10,7 +10,7 @@
 				<h2 style="text-align: left;">Friends</h2>
 			</div>
 			<div class="row">
-				<div class="col-sm-7 col-12" style="padding-top: 20px;">
+				<div class="col-md-7 col-12" style="padding-top: 20px;">
 					<div class="grid">
 						<form>
 							<div class="profile-input row" style="margin-bottom: 45px; padding: 10px;">
@@ -20,30 +20,38 @@
 								</button>
 							</div>
 						</form>
+						
 						<div class="row" style="border-bottom:1px solid #95a5a6">
 							<h3 style="text-align: left;">My friends</h3>
 							</div>
-							<div class="profile-input row" id="Someone1391">
-								<h4 class="profile-input-text col-10">
-									<span style="color: #f39c12">Someone1391</span>&nbsp;worth&nbsp;
-									<span style="color: #2ecc71">$100.78</span>
+							{% for friend in friends %}
+							<div class="profile-input row" id={{ friend.0 }}>
+								<h4 class="profile-input-text col-10 flex-wrap">
+									<span style="color: #f39c12">{{ friend.0 }}</span>&nbsp;worth&nbsp;
+									<span style="color: #2ecc71">${{ friend.1 }}</span>
 								</h4>
 								<button class="btn btn-link col-2" type="button" onclick="displayFriendInfo(this);">
 									<i style="color: var(--clouds);font-size: 1.5em;" class="fa fa-solid fa-bars" style="pointer-events: none; color: white"></i>
 								</button>
-								<div class="profile-input row" id="Someone1391_child" style="box-shadow: none; display: none;">
+								<div class="profile-input row" id="{{friend.0}}_child" style="box-shadow: none; display: none;">
 									<h4 class="profile-input-text col-6">Friends since:</h4>
-									<h4 class="profile-input-text col-6">21-02-2022</h4>
-									<h4 class="profile-input-text col-12 col-sm-6">Head to head:</h4>
-									<h4 class="profile-input-text col-12 col-sm-6"><span style="color: var(--alizarin);">Losing</span>&nbsp;by&nbsp;<span style="color: #2ecc71">$73.58</span></h4>
+									<h4 class="profile-input-text col-6">{{ friend.2 }}</h4>
+									<h4 class="profile-input-text col-6">Head to head:</h4>
+									<h4 class="profile-input-text col-6 flex-wrap">
+										{% if friend.3 == 'Losing' %}
+										<span style="color: var(--alizarin);">
+										{% else %}
+										<span style="color: var(--emerald);">
+										{% endif %}
+									{{friend.3}}</span>&nbsp;by&nbsp;<span style="color: #2ecc71">${{friend.4}}</span></h4>
 									<div class="justify-content-center" style="padding: 0;">
-										<button style="margin-top: 10px;" class="default-button col-12 col-sm-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
-										<button style="margin-top: 10px;" class="remove-friend-button col-12 col-sm-6" type="button" name="Remove_friend" onclick="removeFriend(this);">Remove friend</button>
+										<button style="margin-top: 10px;" class="default-button col-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
+										<button style="margin-top: 10px;" class="remove-friend-button col-6" type="button" name="Remove_friend" onclick="removeFriend(this);">Remove friend</button>
 									</div>
 								</div>
 							</div>
-
-							<div class="profile-input row" id="Someone1191">
+							{% endfor %}
+							<!-- <div class="profile-input row" id="Someone1191">
 								<h4 class="profile-input-text col-10">
 									<span style="color: #f39c12">Someone1191</span>&nbsp;worth&nbsp;
 									<span style="color: #2ecc71">$1173.58</span>
@@ -117,43 +125,45 @@
 										<button style="margin-top: 10px;" class="default-button col-12 col-sm-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
 										<button style="margin-top: 10px;" class="remove-friend-button col-12 col-sm-6" type="button" name="Remove_friend" onclick="removeFriend(this);">Remove friend</button>
 									</div>
-								</div>
-							</div>
+								</div> -->
+							<!-- </div> -->
 						</div>
 					</div>
 					<div class="col" style="margin-left: 10px;padding-top: 20px;">
 						<div class="grid">
-							<div class="league-preview row col-12">
-								<h4 class="league-preview-text" style="padding-bottom: 10px;">Y15 League</h4>
-								<div class="league-preview-row row">
-									<h5 class="league-preview-text col-9 col-md-8">1. Someone1191</h5>
-									<i class="fa fa-solid fa-caret-up col" style="font-size: 1.5em; color: var(--emerald);"></i>
+							<div class="row justify-content-center">
+								<div class="league-preview col-md-12 col-6">
+									<h4 class="league-preview-text" style="padding-bottom: 10px;">Y15 League</h4>
+									<div class="league-preview-row row">
+										<h5 class="league-preview-text col-9 col-md-8">1. Someone1191</h5>
+										<i class="fa fa-solid fa-caret-up col" style="font-size: 1.5em; color: var(--emerald);"></i>
+									</div>
+									<div class="league-preview-row row">
+										<h5 class="league-preview-text col-9 col-md-8">2. Someone1391</h5>
+										<i class="fa fa-solid fa-caret-down col" style="font-size: 1.5em; color: var(--pomegranate);"></i>
+									</div>
+									<div class="league-preview-row row">
+										<h5 class="league-preview-text col-9 col-md-8">3. Someone1237</h5>
+										<i class="fa fa-solid fa-equals col" style="font-size: 1em; color: var(--river);"></i>
+									</div>
 								</div>
-								<div class="league-preview-row row">
-									<h5 class="league-preview-text col-9 col-md-8">2. Someone1391</h5>
-									<i class="fa fa-solid fa-caret-down col" style="font-size: 1.5em; color: var(--pomegranate);"></i>
-								</div>
-								<div class="league-preview-row row">
-									<h5 class="league-preview-text col-9 col-md-8">3. Someone1237</h5>
-									<i class="fa fa-solid fa-equals col" style="font-size: 1em; color: var(--river);"></i>
+								<div class="league-preview col-6 col-md-12">
+									<h4 class="league-preview-text" style="padding-bottom: 10px;">Y20 League</h4>
+									<div class="league-preview-row row">
+										<h5 class="league-preview-text col-9 col-md-8">1. Someone1191</h5>
+										<i class="fa fa-solid fa-equals col" style="font-size: 1em; color: var(--river);"></i>
+									</div>
+									<div class="league-preview-row row">
+										<h5 class="league-preview-text col-9 col-md-8">2. Someone1227</h5>
+										<i class="fa fa-solid fa-caret-up col" style="font-size: 1.5em; color: var(--emerald);"></i>
+									</div>
+									<div class="league-preview-row row">
+										<h5 class="league-preview-text col-9 col-md-8">3. Someone5427</h5>
+										<i class="fa fa-solid fa-caret-down col" style="font-size: 1.5em; color: var(--pomegranate);"></i>
+									</div>
 								</div>
 							</div>
-							<div class="league-preview row col-12">
-								<h4 class="league-preview-text" style="padding-bottom: 10px;">Y20 League</h4>
-								<div class="league-preview-row row">
-									<h5 class="league-preview-text col-9 col-md-8">1. Someone1191</h5>
-									<i class="fa fa-solid fa-equals col" style="font-size: 1em; color: var(--river);"></i>
-								</div>
-								<div class="league-preview-row row">
-									<h5 class="league-preview-text col-9 col-md-8">2. Someone1227</h5>
-									<i class="fa fa-solid fa-caret-up col" style="font-size: 1.5em; color: var(--emerald);"></i>
-								</div>
-								<div class="league-preview-row row">
-									<h5 class="league-preview-text col-9 col-md-8">3. Someone5427</h5>
-									<i class="fa fa-solid fa-caret-down col" style="font-size: 1.5em; color: var(--pomegranate);"></i>
-								</div>
-							</div>
-							<a href="leagues.html" class="default-button row justify-content-center" style="padding-top: 0.488em;padding-bottom: 0.488em; max-width: 200px; margin-top: 10px;">View all leagues</a>
+							<a href="leagues.html" class="default-button row justify-content-center" style="padding-top: 0.488em;padding-bottom: 0.488em; max-width: 200px; max-height: 160px; margin-top: 10px; margin-left: 0;">View all leagues</a>
 						</div>
 					</div>
 				</div>
