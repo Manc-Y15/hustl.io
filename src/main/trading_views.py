@@ -126,7 +126,7 @@ def portfolio_view(request):
     portfolio = Portfolio.objects.filter(owner = request.user)[0]
     totalPortValue +=  portfolio.balance
     portValue = f"${totalPortValue:,}"
-    userProfit = f"${(portfolio.balance  - 50000):,}"
+    userProfit = f"${(totalPortValue  - 50000):,}"
 
     # Last trade query & colour setting
     if len(Transaction.objects.filter(portfolio_id = portID)) > 0:
