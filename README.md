@@ -15,11 +15,11 @@ These are just some of the front end pages that are going to need to be build.  
   * [x] View global user leaderboard
   * [x] View restricted leaderboards, i.e. UK only, time (last week or so)
 ### Leagues (Fawaz, Louis)
-   * [ ] List of owned/joined leagues
+   * [x] List of owned/joined leagues
    * [ ] Create league
    * [ ] Manage league
       * [ ] List users, add/remove friends
-   * [ ] View leaderboard
+   * [x] View leaderboard
 ### Portfolio (Torin)
   * [x] Personal portfolio, all stocks you have, dates of transactions etc
   * [x] Friends portfolio, overall performance and maybe see which stocks they are holding
