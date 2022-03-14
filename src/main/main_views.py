@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
-from .models import Stock
+from .models import Stock,Profile,Portfolio,Holding
 
 from .holdings import get_holdings, holdings_distribution, holdings_total
 
@@ -62,9 +62,16 @@ def settings_view(request):
 	return render(request, 'accounts/account_settings.html', {})
 
 def friends_view(request):
-	errors = []
+	#getUserProfile = Profile.objects.filter(user = request.user)[0]
+	friendNames = []
+	friendsWorth = []
+	print(request.user.profile.friends.all())
+	for friend in request.user.profile.friends.all():
+		print(friend.username)
+		friendNames.append(friend.username)
+		friendsWorth.append(1000)
 
-	friends = [["Someone2354",100.78,"21-02-2022","Losing",73.58],["Someone1391",230.78,"10-03-2022","Winning",62.58],["Someone7321",10058.32,"03-03-2022","Winning",3256.58]]
+	friends = [[friendNames[0],100.78,"21-02-2022","Losing",73.58],[friendNames[1],230.78,"10-03-2022","Winning",62.58],["Someone7321",10058.32,"03-03-2022","Winning",3256.58]]
 
 	leagues = [["Y15 League",["Someone1191","Up"],["Someone1391","Down"],["Someone1237","Same"]],["Y20 League",["Someone2054","Same"],["Someone2978","Up"],["Someone2453","Down"]]]
 	
