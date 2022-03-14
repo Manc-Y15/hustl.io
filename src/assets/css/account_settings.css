@@ -1,0 +1,28 @@
+.settings-block {
+    margin: 20px 0;
+}
+
+.settings-tabs>.nav-item:nth-child(1) {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top: 3px solid var(--border-colour);
+}
+
+.settings-tabs>.nav-item:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.settings-tabs>.nav-item {
+    --border-colour: var(--asphalt);
+    border-left: 3px solid var(--border-colour);
+    border-right: 3px solid var(--border-colour);
+    border-bottom: 3px solid var(--border-colour);
+    font-size: 20px;
+    font-family: var(--p-font);
+    font-weight: 900;
+}
+
+body {
+    background-color: var(--background-colour);
+}

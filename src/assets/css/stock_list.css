@@ -1,0 +1,15 @@
+.price {
+    font-family: 'Consolas';
+    font-weight: 500;
+    font-size: 1.6rem;
+    float: right; 
+    color: var(--nephritis);
+    position: relative;
+    bottom: 2px;
+}
+
+@media only screen and (max-width: 1020px) {
+    .activity-item {
+        flex-direction: column !important;
+    }
+}

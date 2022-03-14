@@ -1,0 +1,212 @@
+.submit-button {
+    text-decoration: none;
+    border-radius: 5px;
+    background: var(--green-sea);
+    border: 1px solid transparent;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: var(--asphalt);
+    transition: 0.2s ease-in;
+    min-width: 50px;
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    max-width: 200px;
+}
+
+.submit-button:hover {
+    background: transparent;
+    border: 1px solid var(--emerald);
+    color: var(--emerald);
+    transition: 0.2s ease-in;
+}
+
+.remove-friend-button {
+    text-decoration: none;
+    border-radius: 5px;
+    background: var(--pomegranate);
+    border: 1px solid transparent;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: var(--asphalt);
+    transition: 0.2s ease-in;
+    min-width: 50px;
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    max-width: 175px;
+    margin-left: 3px;
+}
+
+.remove-friend-button:hover {
+    background: transparent;
+    border: 1px solid var(--pomegranate);
+    color: var(--pomegranate);
+    transition: 0.2s ease-in;
+}
+
+.default-button {
+    text-decoration: none;
+    border-radius: 5px;
+    background: var(--river);
+    border: 1px solid transparent;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: var(--asphalt);
+    transition: 0.2s ease-in;
+    min-width: 50px;
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    max-width: 175px;
+    margin-right: 3px;
+}
+
+.default-button:hover {
+    background: transparent;
+    border: 1px solid var(--river);
+    color: var(--river);
+    transition: 0.2s ease-in;
+}
+
+.activity-item {
+    background: var(--asphalt);
+    border: 1px solid transparent !important;
+    border-radius: 5px !important;
+    margin-top: 15px;
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12)
+}
+
+.activity-item-text {
+    margin: 5px;
+}
+
+.login-block {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.profile-input {
+    font-family: "Comfortaa";
+    padding: 10px;
+    padding-left: 20px;
+    background: var(--asphalt);
+    border: 1px solid transparent !important;
+    border-radius: 5px !important;
+    margin-top: 15px;
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+}
+
+.league-preview {
+    font-family: "Comfortaa";
+    padding: 10px;
+    padding-left: 20px;
+    background: var(--asphalt);
+    border: 1px solid transparent !important;
+    border-radius: 5px !important;
+    margin-top: 15px;
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+}
+
+.profile-input-button {
+    padding: 10px;
+    padding-left: 20px;
+    margin-top: 15px;
+    }
+
+@media only screen and (max-width: 575px) {
+    .account-input {
+        text-align: center !important;
+    }
+}
+
+.profile-input-select {
+    max-width: 300px;
+    margin: 0;
+    display: inline;
+    background: var(--asphalt);
+    color: var(--clouds);
+    font-size: 1.25rem;
+    border: 0px;
+    padding: 0px;
+}
+
+.profile-input-box {
+    max-width: 250px;
+    margin: 0;
+    margin-top: 10px;
+    background: var(--asphalt);
+    color: var(--clouds);
+    padding: 5px;
+    padding-left: 8px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: var(--concrete);
+}
+
+.profile-search {;
+    margin: 0;
+    background: var(--asphalt);
+    color: var(--clouds);
+    padding: 5px;
+    padding-left: 8px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: var(--concrete);
+    font-size: 1.3em;
+}
+
+.profile-input-text {
+    vertical-align: middle;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    display: flex; 
+    align-items: center;
+}
+
+.league-preview-text {
+    vertical-align: middle;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    padding-bottom: auto;
+    display: flex; 
+    align-items: center;
+}
+
+.league-preview-row{
+    padding: 5px;
+}
+
+.account-admin {
+    display: inline-block;
+    padding: 5px;
+}
+
+.account-admin-text {
+    color: var(--asbestos);
+    text-decoration: none;
+}
+
+.account-admin-text:hover {
+    color: var(--silver);
+    text-decoration: underline;
+}
+
+.account-input-text-block {
+    text-align: center;
+    display: inline-block;
+}
+
+.profile-input-box::placeholder {
+    color: var(--clouds);
+    opacity: 1;
+    font-family: 'Comfortaa';
+}
+
+.profile-search::placeholder {
+    color: var(--silver);
+    opacity: 1;
+    font-family: 'Comfortaa';
+}

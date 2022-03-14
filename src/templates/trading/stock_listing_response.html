@@ -1,0 +1,65 @@
+{% if form.success %}
+<div class="form-response-container" hx-swap-oob="innerHTML:#responseModal">
+    <div class="toast form-response-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+        <h1 class="form-response-h1">Successfully {% if transaction.is_buy %}bought{% else %}sold{% endif %} ${{ transaction.amount }} of
+            <span style="font-weight: 900; width: fit-content;background: linear-gradient(90deg, var({{ stock.col1 }}) 23%, var({{ stock.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                ${{ stock.ticket }}
+            </span>
+        </h1>
+
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="TickPopup">
+            <circle id="TickCircle" cx="100" cy="100" r="40"/>
+            <g id="Tick">
+            <rect id="tickPart1" x="84" y="114.355" width="50" height="10" transform="rotate(-45 84 114.355)"/>
+            <rect id="tickPart2" x="84.0711" y="100" width="20" height="10" transform="rotate(45 84.0711 100)"/>
+            </g>
+            </g>
+            </svg>
+
+    </div>
+    <script>
+        $(".toast").toast("show");
+        //$(".offcanvas-backdrop").hide();
+        $(".offcanvas").hide();
+
+        setTimeout(function() {
+            //$(".offcanvas-backdrop").show();
+            $(".offcanvas").show();
+
+        }, 3000);
+    </script>
+</div>
+
+{% else %}
+<div class="form-response-container" hx-swap-oob="innerHTML:#responseModal">
+    <div class="toast form-response-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+        <h1 class="form-response-h1">Failed to {% if transaction.is_buy %}buy{% else %}sell{% endif %}
+            </span>
+        </h1>
+        <h5 style="text-align: center;"><span style="color: var(--alizarin);">{{ transaction.error }}</span></h5>
+
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="CrossPopup">
+            <circle id="CrossCircle" cx="100" cy="100" r="40"/>
+            <g id="Cross">
+            <rect id="crossPart2" x="79" y="114.355" width="50" height="10" transform="rotate(-45 79 114.355)"/>
+            <rect id="crossPart1" x="86.0711" y="79" width="50" height="10" transform="rotate(45 86.0711 79)"/>
+            </g>
+            </g>
+            </svg>
+
+    </div>
+    <script>
+        $(".toast").toast("show");
+        //$(".offcanvas-backdrop").hide();
+        $(".offcanvas").hide();
+
+        setTimeout(function() {
+            //$(".offcanvas-backdrop").show();
+            $(".offcanvas").show();
+
+        }, 3000);
+    </script>
+</div>
+{% endif %}
