@@ -13,6 +13,9 @@ def leaderboard_view(request):
         totalPortValue +=  player.portfolio.balance
         player.portfolio_value = totalPortValue
         userlist.append(player)
+    userlist.sort(key = lambda x: x.portfolio_value)
+    userlist = userlist[::-1]
+    
     winner = userlist[0]
     del userlist[0]
     silver = userlist[0]
