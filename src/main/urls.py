@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from . import main_views
 from . import trading_views
+from . import leaderboards_views
 
 urlpatterns = [
     path('', main_views.login_view),
@@ -10,6 +11,7 @@ urlpatterns = [
     path('logout/', main_views.logout_view),
     path('trading/transaction', trading_views.asset_page_form),
     path('trading/<str:ticket>', trading_views.asset_page),
+    path('leaderboard/', leaderboards_views.leaderboard_view),
     path('trading/', trading_views.asset_list_page),
     path('portfolio/', trading_views.portfolio_view),
     path('settings/', main_views.settings_view),
