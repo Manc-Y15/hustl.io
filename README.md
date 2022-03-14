@@ -30,7 +30,7 @@ These are just some of the front end pages that are going to need to be build.  
   * [x] Asset listing (list of all assets available)
 
 ### Misc
-* [ ] Terms of service (Dayo)
+* [x] Terms of service (Dayo)
 
 ### Home page (leave till end)
 
