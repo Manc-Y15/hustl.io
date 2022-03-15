@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
 from .models import Stock,Profile,Portfolio,Holding,User
-from .generic_functions import getPortfolioValue
+from .generic_functions import getPortfolioValue, percentage_change
 from .holdings import get_holdings, holdings_distribution, holdings_total
 import json
 
@@ -12,9 +12,20 @@ def home_view(request):
 	positive = {}
 	for stock in stocks:
 		historical_prices = json.loads(stock.historical)['history']
-		if historical_prices[7]['oldData'] > historical_prices[len(historical_prices)-1]['oldData']:
-			stock.pos = False
-		else: stock.pos = True
+		lastWeekPrice = float(historical_prices[len(historical_prices)-4]['oldData'])
+		yesterdayPrice =  float(historical_prices[len(historical_prices)-2]['oldData'])
+		todayPrice =  float(stock.current_price)
+		if yesterdayPrice > todayPrice:
+			stock.price_pos = False
+		else: stock.price_pos = True
+		stock.day_change = percentage_change(yesterdayPrice,todayPrice)
+		print(stock.day_change)
+		if stock.day_change > 0:stock.day_pos = True
+		else: stock.day_pos = False
+		stock.week_change = percentage_change(lastWeekPrice,todayPrice)
+		print(stock.week_change)
+		if stock.week_change > 0:stock.week_pos = True
+		else: stock.week_pos = False
 		cols = stock.display_colour.split(' ')
 		stock.col1 = cols[0]
 		stock.col2 = cols[1]
