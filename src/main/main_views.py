@@ -60,12 +60,20 @@ def settings_view(request):
 	errors = []
 
 	return render(request, 'accounts/account_settings.html', {})
+def accept_friend_request(request,friend_name):
+	pass
+
+def request_friend(request,friend_name):
+	pass
+	# add user to friend names requested list
 def add_friend(request,friend_name):
 	if User.objects.filter(username = friend_name).exists():
 		newFriend =  User.objects.filter(username = friend_name)[0]
 		if newFriend not in request.user.profile.friends.all():
 			request.user.profile.friends.add(newFriend)
 			request.user.profile.save()
+			newFriend.profile.friends.add(request.user)
+			newFriend.profile.save()
 			return(True,"")
 		else:
 			return(False,f"You're already friends with {friend_name}")
