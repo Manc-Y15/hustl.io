@@ -53,6 +53,28 @@ def update_stocks():
     print(f"[LOG] {len(successfully_updated)} stocks were updated: {success_output}")
     print(f"[LOG] {len(failed)} stocks failed to update: {failed_output}")
 
+def update_user_portfolio(user_portfolio):
+    try:
+        history = json.loads(user_portfolio.bal_hist)['history']
+    except:
+        failed.append(user_portfolio.owner.username)
+        return False
+    if len(history) >= 7:
+        # Cycle next
+        del history[0]
+        day_date = int(history[5]['oldTime'].split('-')[2].split(' ')[0]) # Split off day number from date
+        if int(timezone.now().strftime('%d')) != day_date:
+            history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
+    elif len(history) == 0:
+        # fill blanks
+        for i in range(0, 7):
+            history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
+    user_portfolio.bal_hist = json.dumps({"history": history})
+    user_portfolio.save()
+
+    return True
+
+
 def update_portfolios():
     # Update value history of all portfolios
     # Would be good to cache this if we were in production but we are not.
@@ -60,26 +82,9 @@ def update_portfolios():
     successful = []
     failed = []
     for user_portfolio in Portfolio.objects.all():
-        try:
-            history = json.loads(user_portfolio.bal_hist)['history']
-        except:
-            failed.append(user_portfolio.owner.username)
-            continue
-        if len(history) >= 7:
-            # Cycle next
-            del history[0]
-            day_date = int(history[5]['oldTime'].split('-')[2].split(' ')[0]) # Split off day number from date
-            if int(timezone.now().strftime('%d')) != day_date:
-                history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
-        elif len(history) == 0:
-            # fill blanks
-            for i in range(0, 7):
-                history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
+        if update_user_portfolio(user_portfolio): successful.append(user_portfolio.owner.username)
+        else: failed.append(user_portfolio.owner.username)
 
-        
-        successful.append(user_portfolio.owner.username)
-        user_portfolio.bal_hist = json.dumps({"history": history})
-        user_portfolio.save()
     success_output = ','.join(successful)
     failed_output = ','.join(failed)
     print(f"[LOG] Successfully updated portfolios for: {success_output}")
