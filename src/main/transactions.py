@@ -16,6 +16,7 @@ def user_sell_all(user,stock_id):
         holding =  Holding.objects.filter(owner = user, stock_id = stock)[0]
         user.portfolio.balance += holding.amount * stock.current_price
         amount_sold = holding.amount * stock.current_price
+        tempAmount =  holding.amount
         holding.amount = 0.0
         holding.save()
         timeOfBuy = timezone.now()
@@ -23,7 +24,7 @@ def user_sell_all(user,stock_id):
         transac.portfolio_id = (user.portfolio)
         transac.stock_id = stock
         transac.buy_price = stock.current_price
-        transac.volume = holding.amount
+        transac.volume = tempAmount
         transac.time = timeOfBuy
         transac.buy = False
         user.portfolio.save()
