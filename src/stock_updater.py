@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.utils import timezone
-from main.models import Stock, Portfolio
+from main.models import Stock, Portfolio, Holding
 
 
 
@@ -68,13 +68,18 @@ def update_portfolios():
         if len(history) >= 7:
             # Cycle next
             del history[0]
+            day_date = int(history[5]['oldTime'].split('-')[2].split(' ')[0]) # Split off day number from date
+            if int(timezone.now().strftime('%d')) != day_date:
+                history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
         elif len(history) == 0:
             # fill blanks
-            for i in range(0, 6):
+            for i in range(0, 7):
                 history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
-        history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
-        successful.append(user_portfolio.owner.username)
 
+        
+        successful.append(user_portfolio.owner.username)
+        user_portfolio.bal_hist = json.dumps({"history": history})
+        user_portfolio.save()
     success_output = ','.join(successful)
     failed_output = ','.join(failed)
     print(f"[LOG] Successfully updated portfolios for: {success_output}")
