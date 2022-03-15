@@ -1,0 +1,27 @@
+{% if form.success %}
+<div class="profile-input row" style="margin-bottom: 45px; padding: 10px;">
+	<input class="profile-search col-10" placeholder="Find friends">
+	<button class="btn btn-link col-2" name="Friend_search" type="button" type="submit" style=" padding-left: 1em; padding-top: 0.4em;">
+		<i class="fas fa-search" style="font-size:1.5em; color: var(--clouds);"></i>
+	</button>
+</div>
+<div class="profile-input row" id="SomeoneNew123" style="margin-top: -30px; margin-bottom: 45px;">
+	<h4 class="profile-input-text col-10 flex-wrap">
+		<span style="color: #f39c12">SomeoneNew123</span>
+	</h4>
+	<button style="margin-top: 10px;" class="default-button col-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
+	<button style="margin-top: 10px;" class="add-friend-button col-6" type="button" name="Add_friend" onclick="addFriend(this);">Add friend</button>
+</div>
+{% else %}
+<div class="profile-input row" style="margin-bottom: 45px; padding: 10px;">
+	<input class="profile-search col-10" placeholder="Find friends">
+	<button class="btn btn-link col-2" name="Friend_search" type="button" type="submit" style=" padding-left: 1em; padding-top: 0.4em;">
+		<i class="fas fa-search" style="font-size:1.5em; color: var(--clouds);"></i>
+	</button>
+</div>
+<div class="profile-input row" id="SomeoneNew123" style="margin-top: -30px; margin-bottom: 45px;">
+	<h4 class="profile-input-text col-10 flex-wrap">
+		<span style="color: var(--pomegranate);">No users found</span>
+	</h4>
+</div>
+{% endif %}

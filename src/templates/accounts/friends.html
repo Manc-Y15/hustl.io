@@ -12,10 +12,11 @@
 			<div class="row">
 				<div class="col-sm-7 col-12" style="padding-top: 20px;">
 					<div class="grid">
-						<form>
+						<form hx-post="/friends/search" hx-swap="innerHTML">
+							{% csrf_token %}
 							<div class="profile-input row" style="margin-bottom: 45px; padding: 10px;">
 								<input class="profile-search col-10" placeholder="Find friends">
-								<button class="btn btn-link col-2" name="Friend_search" type="button" type="submit" style=" padding-left: 1em; padding-top: 0.4em;">
+								<button class="btn btn-link col-2" name="Friend_search" type="submit" style=" padding-left: 1em; padding-top: 0.4em;">
 									<i class="fas fa-search" style="font-size:1.5em; color: var(--clouds);"></i>
 								</button>
 							</div>
@@ -73,6 +74,7 @@
 									</div>
 									{% endfor %}
 								</div>
+							{% endfor %}
 							</div>
 							<a href="leagues.html" class="default-button row justify-content-center" style="padding-top: 0.488em;padding-bottom: 0.488em; max-width: 200px; max-height: 160px; margin-top: 10px; margin-left: 0;">View all leagues</a>
 						</div>
@@ -101,6 +103,11 @@
         var friendID=ele.parentElement.parentElement.parentElement.id;
         alert("View "+friendID+"'s profile");
     }
+    function addFriend(ele){
+        var friendID=ele.parentElement.id;
+        alert("Add "+friendID+" from friends");
+    }
 </script>
+<script src="https://unpkg.com/htmx.org@1.7.0"></script>
 
 {% endblock %}
