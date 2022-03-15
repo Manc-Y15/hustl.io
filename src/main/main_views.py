@@ -127,3 +127,8 @@ def friends_view(request):
 		})
 	
 
+def friends_search_form(request):
+	form = {}
+	form['success'] = True
+	return render(request, 'accounts/friends_response.html', {"form": form})
+
