@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
+from stock_updater import update_user_portfolio
 from .models import Stock,Profile,Portfolio,Holding,User
 
 from .holdings import get_holdings, holdings_distribution, holdings_total
@@ -24,6 +25,7 @@ def signup_view(request):
 		if form.is_valid():
 			user = form.save() # Create account
 			login(request, user)
+			update_user_portfolio(user.portfolio)
 			return redirect('/portfolio')
 
 	return render(request, 'accounts/signup.html', {'errors': errors})
