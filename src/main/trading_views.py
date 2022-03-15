@@ -72,6 +72,7 @@ def asset_page_form(request):
         
 
 def asset_page(request, ticket):
+    print('here')
     query_matches = Stock.objects.filter(ticket=ticket)
     if len(query_matches) != 1:
         return render(request, 'home.html', {})
@@ -96,12 +97,41 @@ def asset_page(request, ticket):
         if len(dates) > 7: 
             value_history = value_history[7:]
             dates = dates[7:]
-
-
-
-    
+    if request.user.is_authenticated:
+        # activity feed
+        activityFeedTitle = "Activity Feed"
+        thisStock = Stock.objects.filter(ticket=ticket)[0]
+        allTransactions = Transaction.objects.filter(stock_id = thisStock)
+        activityFeed = []
+        transactions = []
+        for transac in allTransactions:
+            if transac.portfolio_id.owner == request.user:
+                activityFeed.append(transac)
+            elif transac.portfolio_id.owner in request.user.profile.friends.all():
+                activityFeed.append(transac)
+            else:
+                pass
+        for transac in activityFeed:
+            transactions.append([])
+            newtransacaction = transactions[-1]
+            newtransacaction.append(transac.portfolio_id.owner.username)
+            if transac.buy == True:
+                newtransacaction.append('bought')
+            else:
+                newtransacaction.append('sold')
+            newtransacaction.append(round(transac.buy_price * transac.volume,2))
+            newtransacaction.append(transac.stock_id.ticket)
+            newtransacaction.append(transac.stock_id.current_price)
+            newtransacaction.append(transac.time)
+        transactions = transactions[::-1]
+        transactions = transactions[:6]
+    else:
+        transactions = []
+        activityFeedTitle = ''    
     return render(request, 'trading/stock_listing.html', {
         'stock': stock,
+        'activity': activityFeedTitle,
+        'transactions': transactions,
         'data': str({
             "value_history": value_history,
             "dates": dates

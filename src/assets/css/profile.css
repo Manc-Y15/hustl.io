@@ -45,6 +45,30 @@
     transition: 0.2s ease-in;
 }
 
+.add-friend-button {
+    text-decoration: none;
+    border-radius: 5px;
+    background: var(--emerald);
+    border: 1px solid transparent;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: var(--asphalt);
+    transition: 0.2s ease-in;
+    min-width: 50px;
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    max-width: 175px;
+    margin-left: 3px;
+}
+
+.add-friend-button:hover {
+    background: transparent;
+    border: 1px solid var(--emerald);
+    color: var(--emerald);
+    transition: 0.2s ease-in;
+}
+
 .default-button {
     text-decoration: none;
     border-radius: 5px;

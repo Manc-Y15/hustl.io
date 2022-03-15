@@ -149,55 +149,33 @@
         </div>
     </div>
 </div>
-
-<!-- Activity Feed -->
-<div class="container" style="margin-top: 30px; max-width: 1100px">
-    <div class="row">
-        <div class="col-12">
-            <div class="display-1" style="border-bottom: 1px solid #95a5a6;">
-                <h1>Activity Feed</h1>
-
+    {% if user.is_authenticated %}
+    <!-- Activity Feed -->
+    <div class="container" style="margin-top: 30px; max-width: 1100px">
+        <div class="row">
+            <div class="col" style="margin: 25px auto; padding: 0 !important;">
+                <div class="display-1 section-heading ">
+                    <h1>{{ activity }}</h1>
+                </div>
             </div>
-            <div class="list-group list-group-flush" style="margin-top: 20px">
+        </div>
+        <div class="row" style="margin-top: 15px; ">
+            <div class="list-group list-group-flush" style="margin-top: 20px"></div>
+            {% for transac in transactions %}
                 <li class="list-group-item activity-item">
                     <h5 class="activity-item-text">
-                        <font style="color: #f39c12">Someone1391</font> sold
-                        <font style="color: #3498db">$TSLA</font> @
-                        <font style="color: #3498db">$1100.00</font>, making
-                        <font style="color: #2ecc71">$100.78</font>
-                        <font style="float: right; color: #95a5a6">Monday 6th December, 2021</font>
+                        <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}
+                        <font style="color: #2ecc71">${{ transac.2 }}</font> of
+                        <font style="color: #3498db">{{ transac.3 }}</font> at
+                        <font style="color: #3498db">${{ transac.4 }}</font>
+                        <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
                     </h5>
                 </li>
-                <li class="list-group-item activity-item">
-                    <h5 class="activity-item-text">
-                        <font style="color: #f39c12">Someone1391</font> bought
-                        <font style="color: #3498db">$TSLA</font> @
-                        <font style="color: #3498db">$999.22</font>
-                        <font style="float: right; color: #95a5a6">Sunday 5th December, 2021</font>
-                    </h5>
-                </li>
-                <li class="list-group-item activity-item">
-                    <h5 class="activity-item-text">
-                        <font style="color: #f39c12">SomeoneElse02</font> sold
-                        <font style="color: #3498db">$TSLA</font> @
-                        <font style="color: #3498db">$968.12</font>, making
-                        <font style="color: #e74c3c">-$22.31</font>
-                        <font style="float: right; color: #95a5a6">Saturday 4th December, 2021</font>
-                    </h5>
-                </li>
-                <li class="list-group-item activity-item">
-                    <h5 class="activity-item-text">
-                        <font style="color: #f39c12">SomeoneElse02</font> bought
-                        <font style="color: #3498db">$TSLA</font> @
-                        <font style="color: #3498db">$990.43</font>
-                        <font style="float: right; color: #95a5a6">Friday 3rd December, 2021</font>
-                    </h5>
-                </li>
+            {% endfor %}
             </div>
         </div>
     </div>
-</div>
-
+    {% endif %}
 <script src="{% static 'js/asset-page-chart.js' %}"></script>
 <script src="https://unpkg.com/htmx.org@1.7.0"></script>
 
