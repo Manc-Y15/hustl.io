@@ -16,5 +16,6 @@ urlpatterns = [
     path('portfolio/', trading_views.portfolio_view),
     path('settings/', main_views.settings_view),
     path('friends/', main_views.friends_view),
-    path('friends/search', main_views.friends_search_form)
+    path('friends/search', main_views.friends_search_form),
+    path('friends/request', main_views.request_friend)
 ]

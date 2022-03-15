@@ -61,20 +61,39 @@ def settings_view(request):
 
 	return render(request, 'accounts/account_settings.html', {})
 
-def request_friend(request,friend_name):
-	if User.objects.filter(username = friend_name).exists():
-		newFriend =  User.objects.filter(username = friend_name)[0]
-		if newFriend not in request.user.profile.requested_friends.all():
-			request.user.profile.requested_friends.add(newFriend)
-			request.user.profile.save()
-			newFriend.profile.friends.add(request.user)
-			newFriend.profile.save()
-			return(True,"")
+def friends_search_form(request):
+	if request.method == "POST":
+		form = {}
+		username_search = request.POST.get("friend_search", "")
+		print(User.objects.all())
+		print(username_search)
+		if User.objects.filter(username = username_search).exists():
+			search_result_name =  User.objects.filter(username = username_search)[0]
+			form['success'] = True
 		else:
-			return(False,f"You've already requested to be friends with {friend_name}")
-	else:
-		return(False,"This user does not exist")
-	# add user to friend names requested list
+			form['success'] = False
+			search_result_name = ""
+		return render(request, 'accounts/friends_response.html', {"form": form, "search_result_name":search_result_name})
+
+def request_friend(request):
+	if request.method == "POST":
+		friend_name = request.POST.get("username", "")
+		if User.objects.filter(username = friend_name).exists():
+			newFriend =  User.objects.filter(username = friend_name)[0]
+			if newFriend not in request.user.profile.requested_friends.all():
+				request.user.profile.requested_friends.add(newFriend)
+				request.user.profile.save()
+				newFriend.profile.friends.add(request.user)
+				newFriend.profile.save()
+				return(True,"")
+				print("worked")
+			else:
+				return(False,f"You've already requested to be friends with {friend_name}")
+				print("failed")
+		else:
+			return(False,"This user does not exist")
+		# add user to friend names requested list
+
 def add_friend(request,friend_name):
 	if User.objects.filter(username = friend_name).exists():
 		newFriend =  User.objects.filter(username = friend_name)[0]
@@ -136,8 +155,5 @@ def friends_view(request):
 		})
 	
 
-def friends_search_form(request):
-	form = {}
-	form['success'] = True
-	return render(request, 'accounts/friends_response.html', {"form": form})
+
 

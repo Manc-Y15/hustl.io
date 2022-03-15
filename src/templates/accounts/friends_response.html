@@ -1,21 +1,28 @@
 {% if form.success %}
+{% csrf_token %}
 <div class="profile-input row" style="margin-bottom: 45px; padding: 10px;">
-	<input class="profile-search col-10" placeholder="Find friends">
-	<button class="btn btn-link col-2" name="Friend_search" type="button" type="submit" style=" padding-left: 1em; padding-top: 0.4em;">
+	<input class="profile-search col-10" placeholder="Find friends" name="friend_search">
+	<button class="btn btn-link col-2" type="submit" style=" padding-left: 1em; padding-top: 0.4em;">
 		<i class="fas fa-search" style="font-size:1.5em; color: var(--clouds);"></i>
 	</button>
 </div>
-<div class="profile-input row" id="SomeoneNew123" style="margin-top: -30px; margin-bottom: 45px;">
+<div class="profile-input row" id="{{search_result_name}}" style="margin-top: -30px; margin-bottom: 45px;">
 	<h4 class="profile-input-text col-10 flex-wrap">
-		<span style="color: #f39c12">SomeoneNew123</span>
+		<span style="color: #f39c12">{{search_result_name}}</span>
 	</h4>
-	<button style="margin-top: 10px;" class="default-button col-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
-	<button style="margin-top: 10px;" class="add-friend-button col-6" type="button" name="Add_friend" onclick="addFriend(this);">Add friend</button>
+	<form class="col-6">
+		<button style="margin-top: 10px;" class="default-button col-12" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
+	</form>
+	<form hx-swap="/friends/request" hx-swap="afterend" class="col-6">
+		<input type="hidden" name="username" value="{{search_result_name}}">
+		<button style="margin-top: 10px;" class="add-friend-button col-12" type="submit" name="Add_friend">Add friend</button>
+	</form>
 </div>
 {% else %}
+{% csrf_token %}
 <div class="profile-input row" style="margin-bottom: 45px; padding: 10px;">
-	<input class="profile-search col-10" placeholder="Find friends">
-	<button class="btn btn-link col-2" name="Friend_search" type="button" type="submit" style=" padding-left: 1em; padding-top: 0.4em;">
+	<input class="profile-search col-10" placeholder="Find friends" name="friend_search">
+	<button class="btn btn-link col-2" type="submit" style=" padding-left: 1em; padding-top: 0.4em;">
 		<i class="fas fa-search" style="font-size:1.5em; color: var(--clouds);"></i>
 	</button>
 </div>
