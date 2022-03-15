@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from .models import Stock, Holding, Portfolio, Transaction
 from django.contrib.auth.decorators import login_required
-from .transactions import user_buy
+from .transactions import user_buy, user_sell_all
 from random import randint, choice
 import json
 from datetime import datetime
@@ -31,19 +31,39 @@ def choose_background(stock):
 
 def asset_page_form(request):
     if request.method == "POST":
-        transaction = {
-            "is_buy": True if (request.POST.get("transaction", "") == "buy") else False,
-            "stock_id": request.POST.get("ticket", ""), 
-            "amount": request.POST.get("amount", "")
-        }
         form = {}
-        order = user_buy(request.user, transaction['is_buy'], transaction['stock_id'], float(transaction['amount']))
-        if order[0]:
-            form['success'] = True
+        transaction = {}
+        if request.POST.get("transaction", "") == "sellall":
+            stock = Stock.objects.filter(ticket =  request.POST.get("ticket", ""))[0]
+            if Holding.objects.filter(owner = request.user, stock_id = stock).exists():
+                holding =  Holding.objects.filter(owner =  request.user, stock_id = stock)[0]
+                transaction['amount'] = holding.amount * stock.current_price
+
+                order = user_sell_all(request.user, request.POST.get("ticket", ""))
+
+                if order[0]:
+                    form['success'] = True
+                else:
+                    transaction['error'] = order[1]
+                    form['success'] = False
+                transaction['is_buy'] = False
+                transaction['stock_id'] = request.POST.get("ticket", "")
+            else:
+                form['success'] = False
+            
         else:
-            transaction['error'] = order[1]
-            form['success'] = False
-        stock = Stock.objects.filter(ticket=transaction['stock_id'])[0]
+            transaction = {
+                "is_buy": True if (request.POST.get("transaction", "") == "buy") else False,
+                "stock_id": request.POST.get("ticket", ""), 
+                "amount": request.POST.get("amount", "")
+            }
+            order = user_buy(request.user, transaction['is_buy'], transaction['stock_id'], float(transaction['amount']))
+            if order[0]:
+                form['success'] = True
+            else:
+                transaction['error'] = order[1]
+                form['success'] = False
+        stock = Stock.objects.filter(ticket=request.POST.get("ticket", ""))[0]
         cols = stock.display_colour.split(' ')
         stock.col1 = cols[0].split('(')[1][:-1]
         stock.col2 = cols[1].split('(')[1][:-1]

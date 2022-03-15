@@ -1,4 +1,7 @@
-{% extends 'base/base_layout.html' %} {% load static %} {% load humanize %} {% block content %}
+{% extends 'base/base_layout.html' %} 
+{% load static %}
+ {% load humanize %} 
+{% block content %}
 <link rel="stylesheet" href="{% static 'css/chart_page.css' %}">
 
 <div class="form-response-container" id="responseModal"></div>
@@ -72,6 +75,18 @@
                                 <button type="submit" class="trade-form-btn">
                                     <i class="fa-solid fa-circle-minus" style="margin-right: 5px;"></i>
                                     Sell
+                                </button>
+                            </div>
+                        </form>
+                        <form hx-post="/trading/transaction" hx-swap="afterend" class="row g-3">
+                            {% csrf_token %}
+                            <div class="col-auto">
+                                <input type="hidden" name="transaction" value="sellall">
+                                <input type="hidden" name="ticket" value="{{ stock.ticket }}">
+
+                                <button type="submit" class="trade-form-btn">
+                                    <i class="fa-solid fa-circle-minus" style="margin-right: 5px;"></i>
+                                    Sell All
                                 </button>
                             </div>
                         </form>
