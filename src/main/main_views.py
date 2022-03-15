@@ -2,13 +2,28 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
 from .models import Stock,Profile,Portfolio,Holding,User
-
+from .generic_functions import getPortfolioValue
 from .holdings import get_holdings, holdings_distribution, holdings_total
+import json
 
-
-def home(request):
-    return render(request, 'home.html', {'holdings': get_holdings(request.user), 'total': holdings_total(request.user),
-	'distribution': holdings_distribution(request.user)})
+def home_view(request):
+	request.user.portfolio_value = getPortfolioValue(request.user)
+	stocks = [stock for stock in Stock.objects.all()]
+	positive = {}
+	for stock in stocks:
+		historical_prices = json.loads(stock.historical)['history']
+		if historical_prices[7]['oldData'] > historical_prices[len(historical_prices)-1]['oldData']:
+			stock.pos = False
+		else: stock.pos = True
+		cols = stock.display_colour.split(' ')
+		stock.col1 = cols[0]
+		stock.col2 = cols[1]
+	errors = []
+	return render(request, 'accounts/home.html', {
+		'portfolio_value': request.user.portfolio_value,
+		'stocks': stocks[:4],
+		'errors': errors,
+		})
 
 def signup_view(request):
 	if request.user.is_authenticated:
@@ -121,10 +136,7 @@ def remove_friend(request,friend_name):
 		return(False,"This user does not exist")
 
 def friends_view(request):
-	userHoldings = [holding for holding in Holding.objects.filter(owner = request.user)]
-	request.user.portfolio_value = request.user.portfolio.balance
-	for holding in userHoldings:
-		request.user.portfolio_value += round((holding.stock_id.current_price * holding.amount),2)
+	request.user.portfolio_value = getPortfolioValue(request.user)
 	friends = []
 	print(request.user.profile.friends.all())
 	for friend in request.user.profile.friends.all():
@@ -132,10 +144,7 @@ def friends_view(request):
 		friends.append([])
 		friendinfo = friends[-1]
 		friendinfo.append(friend.username)
-		friendHoldings = [holding for holding in Holding.objects.filter(owner = friend)]
-		friend.portfolio_value = friend.portfolio.balance
-		for holding in friendHoldings:
-			friend.portfolio_value += round((holding.stock_id.current_price * holding.amount),2)
+		friend.portfolio_value = getPortfolioValue(friend)
 		friendinfo.append(friend.portfolio_value)
 		friendinfo.append("21-02-2022")
 		winvslose = request.user.portfolio_value - friend.portfolio_value

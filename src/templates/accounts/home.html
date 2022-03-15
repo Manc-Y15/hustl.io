@@ -1,0 +1,55 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
+<div class="container" id="dashboard_container" style="margin-bottom: 50px">
+    <div class="row">
+        <div class="col" style="margin-bottom: 15px; padding: 5px !important;text-align: center;">
+            <div class="display-1 section-heading ">
+                <h1>Welcome back, Alex</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="col portfolio-summary d-flex justify-content-center ">
+            <h1 class="activity-item-text ">
+                Your portfolio is currently worth <span style="color: var(--emerald); ">${{ portfolio_value }}</span> which ranks
+                <span style="color: var(--amethyst); ">15th</span> globally, nice work!<br>
+                <span style="color: var(--sun-flower); ">Fawaz</span> was this weeks top trader<br>
+            </h1>
+        </div>
+    </div>
+    <div class="col portfolio-summary " style="margin-bottom: 15px; padding: 5px ;margin-top: 15px">
+        <div class="row" style="margin-bottom: 5px; padding: 0px !important;text-align: center;">
+            <div>
+                <h1 style="text-align: center;">Hot and Cold</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <h3 class="activity-item-text " style="text-align: center;">The best and worst performing stocks on the market</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% for stock in stocks %}
+            <div class="col-12 col-sm-6">
+                <div class="activity-item d-flex justify-content-between" style="padding: 5px;">
+                    <a class="col-12 col-md-8" style="text-decoration: none;" href="/trading/{{ stock.ticket }}">
+                        <h5 class="activity-item-text">
+                            <span style="width: fit-content;font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, {{ stock.col1 }} 23%, {{ stock.col2 }} 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</span>
+                            <span style="color: var(--concrete); font-size:1rem">{{ stock.name }}</span>
+                        </h5>
+                    </a>
+                    <span class="price" style="max-width: fit-content; margin-right: 5px;">
+                        {% if stock.pos %}<span style="color: var(--nephritis);">${{ stock.current_price|intcomma }}<i style="margin-left:5px; position: relative; bottom:0px;"
+                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price|intcomma }}<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
+                        class="fas fa-caret-down"></i>{% endif %}</span></span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div><h1>hi</h1></div>
+{% endblock %}
