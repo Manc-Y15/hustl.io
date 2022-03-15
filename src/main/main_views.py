@@ -1,7 +1,8 @@
+from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
-from .models import Stock,Profile,Portfolio,Holding,User
+from .models import Stock,Profile,Portfolio,Holding,User,Transaction
 from .generic_functions import getPortfolioValue, percentage_change
 from .holdings import get_holdings, holdings_distribution, holdings_total
 import json
@@ -29,9 +30,36 @@ def home_view(request):
 		cols = stock.display_colour.split(' ')
 		stock.col1 = cols[0]
 		stock.col2 = cols[1]
+	# get activity feeds for user and friends
+	usertransactions= []
+	allTransactions = Transaction.objects.filter(portfolio_id = request.user.portfolio)
+	activityFeed = []
+	transactions = []
+	for transac in allTransactions:
+		if transac.portfolio_id.owner == request.user:
+			activityFeed.append(transac)
+		else:
+			pass
+	for transac in activityFeed:
+		transactions.append([])
+		newtransacaction = transactions[-1]
+		newtransacaction.append(transac.portfolio_id.owner.username)
+		if transac.buy == True:
+			newtransacaction.append('bought')
+		else:
+			newtransacaction.append('sold')
+		newtransacaction.append(round(transac.buy_price * transac.volume,2))
+		newtransacaction.append(transac.stock_id.ticket)
+		newtransacaction.append(transac.stock_id.current_price)
+		newtransacaction.append(transac.time)
+	transactions = transactions[:6]
+	usertransactions = transactions
+
+
 	errors = []
 	return render(request, 'accounts/home.html', {
 		'portfolio_value': request.user.portfolio_value,
+		'user_transactions': usertransactions,
 		'stocks': stocks[:4],
 		'errors': errors,
 		})

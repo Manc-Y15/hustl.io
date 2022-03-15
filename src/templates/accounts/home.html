@@ -50,14 +50,41 @@
                             class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.week_change}}% (7d)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
                         class="fas fa-caret-down"></i>{% endif %}</span></span>
                     <span class="price" style="max-width: fit-content; margin-right: 5px;">
-                        {% if stock.price_pos %}<span style="color: var(--nephritis);">${{ stock.current_price|intcomma }}<i style="margin-left:5px; position: relative; bottom:0px;"
-                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price|intcomma }}<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
+                        {% if stock.price_pos %}<span style="color: var(--nephritis);">${{ stock.current_price|intcomma }} ($)<i style="margin-left:5px; position: relative; bottom:0px;"
+                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price|intcomma }} ($)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
                         class="fas fa-caret-down"></i>{% endif %}</span></span>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
+    {% if user.is_authenticated %}
+    <!-- Activity Feed -->
+    <div class="container portfolio-summary" style="margin-top: 30px;">
+        <div class="row">
+            <div class="col" style="margin: 15px auto; padding: 0 !important;">
+                <div>
+                    <h1 style="text-align: center;"> Your Activity </h1>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px;margin-left: 15px;;max-width: 700px ">
+            <div class="list-group list-group-flush" style="margin-top: 20px;max-width: 700px"></div>
+            {% for transac in user_transactions %}
+                <li class="list-group-item activity-item">
+                    <h5 class="activity-item-text">
+                        <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}
+                        <font style="color: #2ecc71">${{ transac.2 }}</font> of
+                        <font style="color: #3498db">{{ transac.3 }}</font> at
+                        <font style="color: #3498db">${{ transac.4 }}</font>
+                        <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
+                    </h5>
+                </li>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 <div><h1>hi</h1></div>
 {% endblock %}
