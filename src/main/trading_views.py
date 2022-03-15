@@ -98,13 +98,14 @@ def asset_page(request, ticket):
             value_history = value_history[7:]
             dates = dates[7:]
     # activity feed
-    allTransactions = Transaction.objects.all()
+    thisStock = Stock.objects.filter(ticket=ticket)[0]
+    allTransactions = Transaction.objects.filter(stock_id = thisStock)
     activityFeed = []
     transactions = []
     for transac in allTransactions:
-        if transac.portfolio_id.owner() == request.user:
+        if transac.portfolio_id.owner == request.user:
             activityFeed.append(transac)
-        elif transac.portfolio_id.owner() in request.user.profile.friends.all():
+        elif transac.portfolio_id.owner in request.user.profile.friends.all():
             activityFeed.append(transac)
         else:
             pass
@@ -120,7 +121,7 @@ def asset_page(request, ticket):
         newtransacaction.append(transac.stock_id.ticket)
         newtransacaction.append(transac.stock_id.current_price)
         newtransacaction.append(transac.time)
-    transactions = [['louis','bought',5000,'TSLA',898.50,"Monday 6th March, 2022"],['torin','sold',10000,'TSLA',898.50,"Monday 6th March, 2022"]]
+    #transactions = [['louis','bought',5000,'TSLA',898.50,"Monday 6th March, 2022"],['torin','sold',10000,'TSLA',898.50,"Monday 6th March, 2022"]]
     print(transactions)
     
     return render(request, 'trading/stock_listing.html', {
