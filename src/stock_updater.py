@@ -71,8 +71,8 @@ def update_portfolios():
         elif len(history) == 0:
             # fill blanks
             for i in range(0, 6):
-                history['history'].append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
-        history['history'].append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
+                history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
+        history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
         successful.append(user_portfolio.owner.username)
 
     success_output = ','.join(successful)
