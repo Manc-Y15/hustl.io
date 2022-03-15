@@ -3,7 +3,7 @@
 {% load humanize %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
-<div class="container" id="dashboard_container" style="margin-bottom: 50px">
+<div class="container" id="dashboard_container" style="margin-bottom: 50px;max-width: 1300px">
     <div class="row">
         <div class="col" style="margin-bottom: 15px; padding: 5px !important;text-align: center;">
             <div class="display-1 section-heading ">
@@ -59,28 +59,54 @@
         </div>
     </div>
     {% if user.is_authenticated %}
+    <div class = "row">
     <!-- Activity Feed -->
-    <div class="container portfolio-summary" style="margin-top: 30px;">
-        <div class="row">
-            <div class="col" style="margin: 15px auto; padding: 0 !important;">
-                <div>
-                    <h1 style="text-align: center;"> Your Activity </h1>
+        <div class="col portfolio-info-box" style="margin-top: 30px;;max-width: 500px">
+            <div class="row">
+                <div class="col" style="margin: 5px auto; padding: 0px !important;">
+                    <div>
+                        <h1 style="text-align: center;"> Your Activity </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;max-width: 613px ">
+                <div class="list-group list-group-flush" style="margin-top: 20px;max-width: 613px"></div>
+                {% for transac in user_transactions %}
+                    <li class="list-group-item activity-item">
+                        <h5 class="activity-item-text">
+                            <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}
+                            <font style="color: #2ecc71">${{ transac.2 }}</font> of
+                            <font style="color: #3498db">{{ transac.3 }}</font> at
+                            <font style="color: #3498db">${{ transac.4 }}</font>
+                            <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
+                        </h5>
+                    </li>
+                {% endfor %}
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 15px;margin-left: 15px;;max-width: 700px ">
-            <div class="list-group list-group-flush" style="margin-top: 20px;max-width: 700px"></div>
-            {% for transac in user_transactions %}
-                <li class="list-group-item activity-item">
-                    <h5 class="activity-item-text">
-                        <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}
-                        <font style="color: #2ecc71">${{ transac.2 }}</font> of
-                        <font style="color: #3498db">{{ transac.3 }}</font> at
-                        <font style="color: #3498db">${{ transac.4 }}</font>
-                        <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
-                    </h5>
-                </li>
-            {% endfor %}
+        <div class="col portfolio-info-box" style="margin-top: 30px;;max-width: 400px">
+            <div class="row">
+                <div class="col" style="margin: 5px auto; padding: 0px !important;">
+                    <div>
+                        <h1 style="text-align: center;"> Your Friends' Activity </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;max-width: 613px ">
+                <div class="list-group list-group-flush" style="margin-top: 20px;max-width: 613px"></div>
+                {% for transac in user_transactions %}
+                    <li class="list-group-item activity-item">
+                        <h5 class="activity-item-text">
+                            <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}
+                            <font style="color: #2ecc71">${{ transac.2 }}</font> of
+                            <font style="color: #3498db">{{ transac.3 }}</font> at
+                            <font style="color: #3498db">${{ transac.4 }}</font>
+                            <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
+                        </h5>
+                    </li>
+                {% endfor %}
+                </div>
             </div>
         </div>
     </div>
