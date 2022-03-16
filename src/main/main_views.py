@@ -1,3 +1,4 @@
+from email import message
 from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -6,9 +7,19 @@ from .models import Stock,Profile,Portfolio,Holding,User,Transaction
 from .generic_functions import getPortfolioValue, percentage_change
 from .holdings import get_holdings, holdings_distribution, holdings_total
 import json
+import random
 
 def home_view(request):
 	request.user.portfolio_value = getPortfolioValue(request.user)
+	winner = ["nice work!","good job!"]
+	loser = ["Don't worry, it'll go up tomorrow. Right??",
+			"Oh dear...",
+			"We can't all be the best",
+			"Maybe trading isn't for you."]
+	if request.user.portfolio_value > 50000:
+		message = random.choice(winner)
+	else:
+		message = random.choice(loser)
 	stocks = [stock for stock in Stock.objects.all()]
 	positive = {}
 	for stock in stocks:
@@ -86,6 +97,7 @@ def home_view(request):
 	errors = []
 	return render(request, 'accounts/home.html', {
 		'portfolio_value': request.user.portfolio_value,
+		'message': message,
 		'user_transactions': usertransactions,
 		'friend_transactions': friendtransactions,
 		'stocks': stocks[:4],
@@ -94,7 +106,7 @@ def home_view(request):
 
 def signup_view(request):
 	if request.user.is_authenticated:
-		return redirect('/portfolio')
+		return redirect('/home')
 	errors = []
 
 	if request.method == 'POST':
@@ -106,14 +118,14 @@ def signup_view(request):
 		if form.is_valid():
 			user = form.save() # Create account
 			login(request, user)
-			return redirect('/portfolio')
+			return redirect('/home')
 
 	return render(request, 'accounts/signup.html', {'errors': errors})
 
 
 def login_view(request):
 	if request.user.is_authenticated:
-		return redirect('/portfolio')
+		return redirect('/home')
 	errors = []
 
 	if request.method == 'POST':
@@ -126,7 +138,7 @@ def login_view(request):
 			# login
 			user = form.get_user()
 			login(request, user)
-		return redirect('/portfolio')
+		return redirect('/home')
 	return render(request, "accounts/login.html", {'errors': errors})
 
 def logout_view(request):
