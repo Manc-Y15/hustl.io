@@ -30,7 +30,7 @@ def home_view(request):
 		cols = stock.display_colour.split(' ')
 		stock.col1 = cols[0]
 		stock.col2 = cols[1]
-	# get activity feeds for user and friends
+	# get activity feeds for user
 	usertransactions= []
 	allTransactions = Transaction.objects.filter(portfolio_id = request.user.portfolio)
 	activityFeed = []
@@ -52,14 +52,42 @@ def home_view(request):
 		newtransacaction.append(transac.stock_id.ticket)
 		newtransacaction.append(transac.stock_id.current_price)
 		newtransacaction.append(transac.time)
+	transactions.reverse()
 	transactions = transactions[:6]
 	usertransactions = transactions
-
+	# friend activity feed
+	friendtransactions = []
+	allTransactions = Transaction.objects.all()
+	activityFeed = []
+	transactions = []
+	for transac in allTransactions:
+		if transac.portfolio_id.owner in request.user.profile.friends.all():
+			activityFeed.append(transac)
+		else:
+			pass
+	for transac in activityFeed:
+		transactions.append([])
+		newtransacaction = transactions[-1]
+		newtransacaction.append(transac.portfolio_id.owner.username)
+		if transac.buy == True:
+			newtransacaction.append('bought')
+		else:
+			newtransacaction.append('sold')
+		newtransacaction.append(round(transac.buy_price * transac.volume,2))
+		newtransacaction.append(transac.stock_id.ticket)
+		newtransacaction.append(transac.stock_id.current_price)
+		newtransacaction.append(transac.time)
+	print(transactions)
+	transactions.reverse()
+	transactions = transactions[:6]
+	print(transactions)
+	friendtransactions = transactions
 
 	errors = []
 	return render(request, 'accounts/home.html', {
 		'portfolio_value': request.user.portfolio_value,
 		'user_transactions': usertransactions,
+		'friend_transactions': friendtransactions,
 		'stocks': stocks[:4],
 		'errors': errors,
 		})

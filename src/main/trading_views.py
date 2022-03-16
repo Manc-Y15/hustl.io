@@ -126,6 +126,8 @@ def asset_page(request, ticket):
             newtransacaction.append(transac.stock_id.ticket)
             newtransacaction.append(transac.stock_id.current_price)
             newtransacaction.append(transac.time)
+        transactions.reverse()
+        transactions = transactions[:6]
     else:
         transactions = []
         activityFeed = ''
@@ -134,7 +136,7 @@ def asset_page(request, ticket):
     return render(request, 'trading/stock_listing.html', {
         'stock': stock,
         'transactions': transactions,
-        '{activity}': activityFeed,
+        'activity': activityFeed,
         'data': str({
             "value_history": value_history,
             "dates": dates

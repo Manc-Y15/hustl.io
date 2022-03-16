@@ -16,7 +16,9 @@
             <h1 class="activity-item-text ">
                 Your portfolio is currently worth <span style="color: var(--emerald); ">${{ portfolio_value }}</span> which ranks
                 <span style="color: var(--amethyst); ">15th</span> globally, nice work!<br>
-                <span style="color: var(--sun-flower); ">Fawaz</span> was this weeks top trader<br>
+                <span style="width: fit-content;background: linear-gradient(90deg, var(--sun-flower) 23%, var(--carrot) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Fawaz</span> was this weeks top trader<br>
+                <a href="/portfolio"><button  class="regular-btn " style ="max-width: 240px;font-size: 1rem;"><i class="fa fa-cogs" aria-hidden="true"></i>
+                    Manage your portfolio</button></a>
             </h1>
         </div>
     </div>
@@ -44,11 +46,11 @@
                             <span style="color: var(--concrete); font-size:1rem">{{ stock.name }}</span>
                         </h5>
                     </a>
-                    <span class="24hr" style="max-width: fit-content; margin-right: 5px;">
+                    <span class="price" style="max-width: fit-content; margin-right: 5px;">
                         {% if stock.day_pos %}<span style="color: var(--nephritis);">{{ stock.day_change}}% (24hr)<i style="margin-left:5px; position: relative; bottom:0px;"
                             class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.day_change }}% (24hr)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
                         class="fas fa-caret-down"></i>{% endif %}</span></span>
-                    <span class="7d" style="max-width: fit-content; margin-right: 5px;">
+                    <span class="price" style="max-width: fit-content; margin-right: 5px;">
                         {% if stock.week_pos %}<span style="color: var(--nephritis);">{{ stock.week_change}}% (7d)<i style="margin-left:5px; position: relative; bottom:0px;"
                             class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.week_change}}% (7d)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
                         class="fas fa-caret-down"></i>{% endif %}</span></span>
@@ -62,17 +64,17 @@
         </div>
     </div>
     {% if user.is_authenticated %}
-    <div class = "row">
+    <div class = "col">
     <!-- Activity Feed -->
-        <div class="col portfolio-info-box" style="margin-top: 30px;;max-width: 500px">
+        <div class="row portfolio-info-box" style="margin-top: 30px;padding: 5px ;;max-width: 500px">
             <div class="row">
                 <div class="col" style="margin: 5px auto; padding: 0px !important;">
                     <div>
-                        <h1 style="text-align: center;"> Your Activity </h1>
+                        <h1 style="text-align: center;"> Your recent trades </h1>
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;max-width: 613px ">
+            <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;margin-right: 15px;">
                 <div class="list-group list-group-flush" style="margin-top: 20px;max-width: 613px"></div>
                 {% for transac in user_transactions %}
                     <li class="list-group-item activity-item">
@@ -88,17 +90,17 @@
                 </div>
             </div>
         </div>
-        <div class="col portfolio-info-box" style="margin-top: 30px;;max-width: 400px">
+        <div class="row portfolio-info-box" style="margin-top: 30px;padding: 5px ;;max-width: 500px">
             <div class="row">
-                <div class="col" style="margin: 5px auto; padding: 0px !important;">
+                <div class="col" style="margin: 5px auto; padding: 5px !important;">
                     <div>
-                        <h1 style="text-align: center;"> Your Friends' Activity </h1>
+                        <h1 style="text-align: center;"> Your friends' recent trades</h1>
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;max-width: 613px ">
-                <div class="list-group list-group-flush" style="margin-top: 20px;max-width: 613px"></div>
-                {% for transac in user_transactions %}
+            <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;margin-right: 15px;">
+                <div class="list-group list-group-flush" style="margin-top: 20px;max-width: 500px"></div>
+                {% for transac in friend_transactions %}
                     <li class="list-group-item activity-item">
                         <h5 class="activity-item-text">
                             <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}

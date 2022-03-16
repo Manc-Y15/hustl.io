@@ -12,11 +12,8 @@ def getPortfolioValue(player):
 
 #Function to calculate percentage price between previous and currrent price
 def percentage_change(prev_price, current_price):
-    print('prev' + str(prev_price))
-    print('now' + str(current_price))
     change_in_price = current_price-prev_price
     percentage_change = round((change_in_price/prev_price)*100,2)
-    print(percentage_change)
     return (percentage_change)
     # print(percentage_change),"%"
 
