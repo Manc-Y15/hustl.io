@@ -145,7 +145,7 @@ def login_view(request):
 			# login
 			user = form.get_user()
 			login(request, user)
-		return redirect('/home')
+			return redirect('/home')
 	return render(request, "accounts/login.html", {'errors': errors})
 
 def logout_view(request):
