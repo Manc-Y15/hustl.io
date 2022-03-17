@@ -3,49 +3,62 @@
 {% load humanize %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
+
+
 <div class="container" id="dashboard_container" style="margin-bottom: 50px;max-width: 1300px">
-    <div class="row">
+    <div class="row" style="margin-top:15px;">
         <div class="col" style="margin-bottom: 15px; padding: 5px !important;text-align: center;">
             <div class="display-1 section-heading ">
-                <h1>Welcome back, Alex</h1>
+                <h1>Welcome, Alex</h1>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="col portfolio-summary d-flex justify-content-center ">
+    <div class="row" style="margin-top:15px">
+        <div class="col-12 portfolio-summary d-flex flex-column justify-content-center ">
             <h1 class="activity-item-text ">
-                Your portfolio is currently worth <span style="color: var(--emerald); ">${{ portfolio_value }}</span> which ranks
-                <span style="color: var(--amethyst); ">15th</span> globally, <br>{{ message }}<br>
-                <span style="width: fit-content;background: linear-gradient(90deg, var(--sun-flower) 23%, var(--carrot) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Fawaz</span> was this weeks top trader<br>
-                <a href="/portfolio"><button  class="regular-btn " style ="max-width: 240px;font-size: 1rem;"><i class="fa fa-cogs" aria-hidden="true"></i>
-                    Manage your portfolio</button></a>
+                Your portfolio is currently worth <span style="color: var(--emerald); ">${{ portfolio_value }}</span> ranking
+                <span style="color: var(--amethyst); ">15th</span> globally. <br>
+            </h1>
+            <small style="font-family: 'Comfortaa'; font-size: 1rem; color:white">{{ message }}</small>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 15px; gap: 15px; ">
+        <div class="col portfolio-info-box ">
+            <h3>Top Trader</h3>
+            <h1 class="showcase-number "><span style="color: var(--orange); ">Fawaz</span>
+            </h1>
+        </div>
+        <div class="col portfolio-info-box ">
+            <h3>Market Direction</h3>
+            <h1 class="showcase-number "><span style="color: var(--orange); ">$10,000</span>
+            </h1>
+        </div>
+        <div class="col portfolio-info-box ">
+            <h3>Total Profit</h3>
+            <h1 class="showcase-number "><span style="color: var(--orange); ">$10,000</span>
             </h1>
         </div>
     </div>
-    <div class="col portfolio-summary " style="margin-bottom: 15px; padding: 5px ;margin-top: 15px">
-        <div class="row" style="margin-bottom: 5px; padding: 0px !important;text-align: center;">
-            <div>
-                <h1 style="text-align: center;">
+    <div class="row" style="margin-top:40px;">
+        <div class="col" style="margin-bottom: 15px; padding: 5px !important;text-align: center;">
+            <div class="display-1 section-heading ">
+                <h1 style="text-align: center;font-size:3rem;">
                     <span style="width: fit-content;background: linear-gradient(90deg, var(--sun-flower) 30%,var(--carrot) 70%, var(--pomegranate) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hot</span> and 
                     <span style="width: fit-content;background: linear-gradient(90deg, var(--silver) 23%, var(--river) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Cold</span>
-                </h2>
+                </h1>
             </div>
         </div>
-        <div class="row">
-            <div>
-                <h3 class="activity-item-text " style="text-align: center;">The best and worst performing stocks on the market</h2>
-            </div>
-        </div>
-        <div class="row">
-            {% for stock in stocks %}
-            <div class="col-12 col-sm-6">
-                <div class="activity-item d-flex justify-content-between" style="padding: 15px;">
+    </div>
+    <div class="row" style="margin-top:15px; gap:15px;">
+        {% for stock in stocks %}
+            <div class="col portfolio-info-box">
                     <a class="col-12 col-md-8" style="text-decoration: none;" href="/trading/{{ stock.ticket }}">
-                        <h5 class="activity-item-text">
-                            <span style="width: fit-content;font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, {{ stock.col1 }} 23%, {{ stock.col2 }} 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</span>
+                        <h2 class="activity-item-text" style="text-align: left;">
+                            <span style="width: fit-content;font-weight: 900; background: linear-gradient(90deg, {{ stock.col1 }} 23%, {{ stock.col2 }} 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</span>
                             <span style="color: var(--concrete); font-size:1rem">{{ stock.name }}</span>
-                        </h5>
+                        </h2>
                     </a>
+                    
                     <span class="price" style="max-width: fit-content; margin-right: 5px;">
                         {% if stock.day_pos %}<span style="color: var(--nephritis);">{{ stock.day_change}}% (24hr)<i style="margin-left:5px; position: relative; bottom:0px;"
                             class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.day_change }}% (24hr)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
@@ -58,11 +71,11 @@
                         {% if stock.price_pos %}<span style="color: var(--nephritis);">${{ stock.current_price|intcomma }} ($)<i style="margin-left:5px; position: relative; bottom:0px;"
                             class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price|intcomma }} ($)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
                         class="fas fa-caret-down"></i>{% endif %}</span></span>
-                </div>
             </div>
-            {% endfor %}
-        </div>
+        {% endfor %}
     </div>
+    
+    <div class="row">
     {% if user.is_authenticated %}
     <div class = "col">
     <!-- Activity Feed -->
@@ -113,9 +126,7 @@
                 {% endfor %}
                 </div>
             </div>
-        </div>
     </div>
     {% endif %}
 </div>
-<div><h1>hi</h1></div>
 {% endblock %}
