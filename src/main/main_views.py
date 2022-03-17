@@ -21,6 +21,7 @@ def home_view(request):
 	else:
 		message = random.choice(loser)
 	stocks = [stock for stock in Stock.objects.all()]
+	stocklist = []
 	positive = {}
 	for stock in stocks:
 		historical_prices = json.loads(stock.historical)['history']
@@ -41,6 +42,12 @@ def home_view(request):
 		cols = stock.display_colour.split(' ')
 		stock.col1 = cols[0]
 		stock.col2 = cols[1]
+		stocklist.append([])
+		stocklist[0].append(stock)
+		stocklist[0].append(stock.day_change)
+		stocklist[0].append(stock.week_change)
+
+
 	# get activity feeds for user
 	usertransactions= []
 	allTransactions = Transaction.objects.filter(portfolio_id = request.user.portfolio)
