@@ -4,7 +4,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
 from stock_updater import update_user_portfolio
-from .models import Stock,Profile,Portfolio,Holding,User
+from .models import Stock,Profile,Portfolio,Holding,User, Transaction
+
+from .generic_functions import getPortfolioValue, percentage_change
 
 from .holdings import get_holdings, holdings_distribution, holdings_total
 import json
