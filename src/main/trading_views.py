@@ -72,7 +72,6 @@ def asset_page_form(request):
         
 
 def asset_page(request, ticket):
-    print('here')
     query_matches = Stock.objects.filter(ticket=ticket)
     if len(query_matches) != 1:
         return render(request, 'home.html', {})

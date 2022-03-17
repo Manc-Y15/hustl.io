@@ -35,11 +35,9 @@ def home_view(request):
 			stock.price_pos = False
 		else: stock.price_pos = True
 		stock.day_change = percentage_change(yesterdayPrice,todayPrice)
-		print(stock.day_change)
 		if stock.day_change > 0:stock.day_pos = True
 		else: stock.day_pos = False
 		stock.week_change = percentage_change(lastWeekPrice,todayPrice)
-		print(stock.week_change)
 		if stock.week_change > 0:stock.week_pos = True
 		else: stock.week_pos = False
 		cols = stock.display_colour.split(' ')
@@ -98,10 +96,8 @@ def home_view(request):
 		newtransacaction.append(transac.stock_id.ticket)
 		newtransacaction.append(transac.stock_id.current_price)
 		newtransacaction.append(transac.time)
-	print(transactions)
 	transactions.reverse()
 	transactions = transactions[:6]
-	print(transactions)
 	friendtransactions = transactions
 
 	errors = []
@@ -224,9 +220,7 @@ def remove_friend(request,friend_name):
 def friends_view(request):
 	request.user.portfolio_value = getPortfolioValue(request.user)
 	friends = []
-	print(request.user.profile.friends.all())
 	for friend in request.user.profile.friends.all():
-		print(friend.username)
 		friends.append([])
 		friendinfo = friends[-1]
 		friendinfo.append(friend.username)

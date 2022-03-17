@@ -152,7 +152,7 @@
     <!-- Activity Feed -->
     <div class="container" style="margin-top: 30px; max-width: 1100px">
         <div class="row">
-            <div class="col" style="margin: 25px auto; padding: 0 !important;">
+            <div class="col" style="margin: 10px auto; padding: 0 !important;">
                 <div class="display-1 section-heading ">
                     <h1>Activity Feed</h1>
                 </div>
@@ -160,15 +160,15 @@
         </div>
         {% if user.is_authenticated %}
 
-        <div class="row" style="margin-top: 15px; ">
-            <div class="list-group list-group-flush" style="margin-top: 20px"></div>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="list-group list-group-flush"></div>
             {% for transac in transactions %}
                 <li class="list-group-item activity-item">
                     <h5 class="activity-item-text">
-                        <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}
-                        <font style="color: #2ecc71">${{ transac.2 }}</font> of
-                        <font style="color: #3498db">{{ transac.3 }}</font> at
-                        <font style="color: #3498db">${{ transac.4 }}</font>
+                        <font style="color: var(--orange)">{{ transac.0 }}</font> {{ transac.1 }}
+                        <font style="color: var(--emerald)">${{ transac.2 }}</font> of
+                        <font style="color: var(--river)">{{ transac.3 }}</font> at
+                        <font style="color: var(--river)">${{ transac.4 }}</font>
                         <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
                     </h5>
                 </li>
