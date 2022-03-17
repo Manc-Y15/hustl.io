@@ -1,0 +1,22 @@
+.big-button {
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    text-decoration: none !important;
+    text-align: center;
+    height: 25vh;
+    opacity: 1;
+
+}
+
+.big-button-icon {
+    font-size: 4rem;
+    color: white;
+}
+
+.big-button:hover {
+    box-shadow: none !important;
+    opacity: .7;
+    transition: opacity 0.1s;
+    -webkit-transition: opacity 0.1s ease;
+}

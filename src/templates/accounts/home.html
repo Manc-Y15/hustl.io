@@ -3,13 +3,13 @@
 {% load humanize %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
-
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 <div class="container" id="dashboard_container" style="margin-bottom: 50px;max-width: 1300px">
     <div class="row" style="margin-top:15px;">
         <div class="col" style="margin-bottom: 15px; padding: 5px !important;text-align: center;">
             <div class="display-1 section-heading ">
-                <h1>Welcome, Alex</h1>
+                <h1>Welcome, <span style="color: var(--orange)">{{ user.username }}</span></h1>
             </div>
         </div>
     </div>
@@ -21,23 +21,52 @@
             </h1>
             <small style="font-family: 'Comfortaa'; font-size: 1rem; color:white">{{ message }}</small>
         </div>
+        <div class="col-12 portfolio-info-box text-center" style="margin-top: 15px;">
+            <h1>This week's top trader is <span style="width: fit-content;background: linear-gradient(90deg, var(--sun-flower) 23%, var(--carrot) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Fawaz</span>
+            </h1>
+        </div>
     </div>
     <div class="row" style="margin-top: 15px; gap: 15px; ">
-        <div class="col portfolio-info-box ">
-            <h3>Top Trader</h3>
-            <h1 class="showcase-number "><span style="color: var(--orange); ">Fawaz</span>
+        <a href="/portfolio" class="col-12 col-sm big-button" style="background: var(--amethyst);">
+            <div class="d-flex flex-column justify-content-center align-self-center" style="height: 100%">
+                <i class="fas fa-chart-pie big-button-icon"></i>
+                <br>
+                <h3>Portfolio</h3>
+            </div>
+        </a>
+
+        <a href="/friends" class="col-12 col-sm big-button" style="background: var(--belize-hole);">
+            <div class="d-flex flex-column justify-content-center" style="height: 100%">
+                <i class="fas fa-users big-button-icon"></i>
+                <br>
+                <h3>Friends</h3>
+            </div>
+        </a>
+        <a href="/leagues" class="col-12 col-sm big-button" style="background: var(--turquoise);">
+            <div class="d-flex flex-column justify-content-center" style="height: 100%">
+                <i class="fas fa-list big-button-icon"></i>
+                <br>
+                <h3>Leagues</h3>
+            </div>
+        </a>
+    </div>
+    <div class="row" style="margin-top: 15px; gap: 15px;">
+
+        <div class="col portfolio-info-box">
+            <h3>Overall Total Trades</h3>
+            <h1 class="showcase-number "><span style="color: var(--river); ">293</span>
             </h1>
         </div>
-        <div class="col portfolio-info-box ">
-            <h3>Market Direction</h3>
-            <h1 class="showcase-number "><span style="color: var(--orange); ">$10,000</span>
+        <div class="col portfolio-info-box">
+            <h3>Weekly Market Direction</h3>
+            <h1 class="showcase-number ">{% if stock.pos %}<span style="color: var(--nephritis);"><i
+                style="margin-right:5px; position: relative; bottom:1px;"
+                class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);"><i
+                    style="color: var(--alizarin); margin-right:5px; position: relative; bottom:1px;"
+                    class="fas fa-caret-down"></i>{% endif %}0.84%</span>
             </h1>
         </div>
-        <div class="col portfolio-info-box ">
-            <h3>Total Profit</h3>
-            <h1 class="showcase-number "><span style="color: var(--orange); ">$10,000</span>
-            </h1>
-        </div>
+
     </div>
     <div class="row" style="margin-top:40px;">
         <div class="col" style="margin-bottom: 15px; padding: 5px !important;text-align: center;">
