@@ -28,23 +28,29 @@
     </div>
     <div class="row" style="margin-top: 15px; gap: 15px; ">
         <a href="/portfolio" class="col-12 col-sm big-button" style="background: var(--amethyst);">
-            <div class="d-flex flex-column justify-content-center align-self-center" style="height: 100%">
-                <i class="fas fa-chart-pie big-button-icon"></i>
+            <div class="icon-box d-flex flex-column justify-content-center align-self-center" style="height: 100%">
+                <i class="fas fa-arrow-right big-button-icon secondary-icon"></i>
+
+                <i class="fas fa-chart-pie big-button-icon primary-icon"></i>
                 <br>
                 <h3>Portfolio</h3>
             </div>
         </a>
 
         <a href="/friends" class="col-12 col-sm big-button" style="background: var(--belize-hole);">
-            <div class="d-flex flex-column justify-content-center" style="height: 100%">
-                <i class="fas fa-users big-button-icon"></i>
+            <div class="icon-box d-flex flex-column justify-content-center" style="height: 100%">
+                <i class="fas fa-arrow-right big-button-icon secondary-icon"></i>
+
+                <i class="fas fa-users big-button-icon primary-icon"></i>
                 <br>
                 <h3>Friends</h3>
             </div>
         </a>
         <a href="/leagues" class="col-12 col-sm big-button" style="background: var(--turquoise);">
-            <div class="d-flex flex-column justify-content-center" style="height: 100%">
-                <i class="fas fa-list big-button-icon"></i>
+            <div class="icon-box d-flex flex-column justify-content-center" style="height: 100%">
+                <i class="fas fa-arrow-right big-button-icon secondary-icon"></i>
+                <i class="fas fa-list big-button-icon primary-icon"></i>
+
                 <br>
                 <h3>Leagues</h3>
             </div>
@@ -104,11 +110,9 @@
         {% endfor %}
     </div>
     
-    <div class="row">
-    {% if user.is_authenticated %}
-    <div class = "col">
-    <!-- Activity Feed -->
-        <div class="row portfolio-info-box" style="margin-top: 30px;padding: 5px ;;max-width: 500px">
+    <div class="row" style="margin-top: 15px; gap: 15px;">
+        <div class="col portfolio-info-box">
+            <!-- Activity Feed -->
             <div class="row">
                 <div class="col" style="margin: 5px auto; padding: 0px !important;">
                     <div>
@@ -117,9 +121,8 @@
                 </div>
             </div>
             <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;margin-right: 15px;">
-                <div class="list-group list-group-flush" style="margin-top: 20px;max-width: 613px"></div>
                 {% for transac in user_transactions %}
-                    <li class="list-group-item activity-item">
+                    <li class="list-group-item activity-item" style="box-shadow: 5px 5px 20px;">
                         <h5 class="activity-item-text">
                             <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}
                             <font style="color: #2ecc71">${{ transac.2 }}</font> of
@@ -129,21 +132,20 @@
                         </h5>
                     </li>
                 {% endfor %}
-                </div>
             </div>
         </div>
-        <div class="row portfolio-info-box" style="margin-top: 30px;padding: 5px ;;max-width: 500px">
+        <div class="col portfolio-info-box">
+            <!-- Activity Feed -->
             <div class="row">
-                <div class="col" style="margin: 5px auto; padding: 5px !important;">
+                <div class="col" style="margin: 5px auto; padding: 0px !important;">
                     <div>
-                        <h1 style="text-align: center;"> Your friends' recent trades</h1>
+                        <h1 style="text-align: center;"> Your recent trades </h1>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;margin-right: 15px;">
-                <div class="list-group list-group-flush" style="margin-top: 20px;max-width: 500px"></div>
                 {% for transac in friend_transactions %}
-                    <li class="list-group-item activity-item">
+                    <li class="list-group-item activity-item" style="box-shadow: 5px 5px 20px;">
                         <h5 class="activity-item-text">
                             <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}
                             <font style="color: #2ecc71">${{ transac.2 }}</font> of
@@ -153,9 +155,8 @@
                         </h5>
                     </li>
                 {% endfor %}
-                </div>
             </div>
+        </div>
     </div>
-    {% endif %}
 </div>
 {% endblock %}
