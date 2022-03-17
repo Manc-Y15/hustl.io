@@ -98,8 +98,11 @@ def asset_page(request, ticket):
             value_history = value_history[7:]
             dates = dates[7:]
     if request.user.is_authenticated:
+        transactions = []
+        activity = ''
+        
         # activity feed
-        activityFeedTitle = "Activity Feed"
+        activity = "Activity Feed"
         thisStock = Stock.objects.filter(ticket=ticket)[0]
         allTransactions = Transaction.objects.filter(stock_id = thisStock)
         activityFeed = []
@@ -123,15 +126,18 @@ def asset_page(request, ticket):
             newtransacaction.append(transac.stock_id.ticket)
             newtransacaction.append(transac.stock_id.current_price)
             newtransacaction.append(transac.time)
-        transactions = transactions[::-1]
+        transactions.reverse()
         transactions = transactions[:6]
     else:
         transactions = []
-        activityFeedTitle = ''    
+        activity = ''
+
+    
     return render(request, 'trading/stock_listing.html', {
         'stock': stock,
         'activity': activityFeedTitle,
         'transactions': transactions,
+        'activity': activity,
         'data': str({
             "value_history": value_history,
             "dates": dates

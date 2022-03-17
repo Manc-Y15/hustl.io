@@ -9,6 +9,7 @@ urlpatterns = [
     path('signup/', main_views.signup_view),
     path('login/', main_views.login_view),
     path('logout/', main_views.logout_view),
+    path('home/', main_views.home_view),
     path('trading/transaction', trading_views.asset_page_form),
     path('trading/<str:ticket>', trading_views.asset_page),
     path('leaderboard/', leaderboards_views.leaderboard_view),
@@ -16,5 +17,6 @@ urlpatterns = [
     path('portfolio/', trading_views.portfolio_view),
     path('settings/', main_views.settings_view),
     path('friends/', main_views.friends_view),
-    path('friends/search', main_views.friends_search_form)
+    path('friends/search', main_views.friends_search_form),
+    path('friends/request', main_views.request_friend)
 ]
