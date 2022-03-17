@@ -20,10 +20,14 @@ from .constants import *
 @login_required
 def home_view(request):
 	request.user.portfolio_value = getPortfolioValue(request.user)
+
+	# Formulate witty response for if they're makign profit/loss
 	if request.user.portfolio_value > 50000:
 		message = random.choice(WINING_RESPONSE)
 	else:
 		message = random.choice(LOSING_RESPONSE)
+
+	# Determine hot and cold stocks
 	stocks = [stock for stock in Stock.objects.all()]
 	stocklist = []
 	positive = {}
@@ -61,20 +65,21 @@ def home_view(request):
 		else:
 			pass
 	for transac in activityFeed:
-		transactions.append([])
-		newtransacaction = transactions[-1]
-		newtransacaction.append(transac.portfolio_id.owner.username)
+		new_transacaction = []
+		new_transacaction.append(transac.portfolio_id.owner.username)
 		if transac.buy == True:
-			newtransacaction.append('bought')
+			new_transacaction.append('bought')
 		else:
-			newtransacaction.append('sold')
-		newtransacaction.append(round(transac.buy_price * transac.volume,2))
-		newtransacaction.append(transac.stock_id.ticket)
-		newtransacaction.append(transac.stock_id.current_price)
-		newtransacaction.append(transac.time)
+			new_transacaction.append('sold')
+		new_transacaction.append(round(transac.buy_price * transac.volume,2))
+		new_transacaction.append(transac.stock_id.ticket)
+		new_transacaction.append(transac.stock_id.current_price)
+		new_transacaction.append(transac.time)
+		transactions.append(new_transacaction)
 	transactions.reverse()
 	transactions = transactions[:6]
 	usertransactions = transactions
+
 	# friend activity feed
 	friendtransactions = []
 	allTransactions = Transaction.objects.all()
@@ -111,6 +116,7 @@ def home_view(request):
 		'errors': errors,
 		})
 
+# signup_view (view func)
 def signup_view(request):
 	if request.user.is_authenticated:
 		return redirect('/home')
@@ -130,7 +136,7 @@ def signup_view(request):
 
 	return render(request, 'accounts/signup.html', {'errors': errors})
 
-
+# login_view (view func)
 def login_view(request):
 	if request.user.is_authenticated:
 		return redirect('/home')
@@ -143,12 +149,13 @@ def login_view(request):
 				for error in form.errors.as_data()[error_field]:
 					errors.append((str(error)[:len(str(error))-2])[2:])
 		if form.is_valid():
-			# login
+			# login the user
 			user = form.get_user()
 			login(request, user)
 			return redirect('/home')
 	return render(request, "accounts/login.html", {'errors': errors})
 
+# logout_view: Not an actual page, just a redirect passthrough to log them out
 def logout_view(request):
 	logout(request)
 	return redirect('/')
