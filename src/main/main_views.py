@@ -53,10 +53,6 @@ def logout_view(request):
 	logout(request)
 	return redirect('/')
 
-def logout(request):
-	if request.method == 'POST':
-		logout(request)
-		return redirect('/')
 
 def settings_view(request):
 	errors = []
