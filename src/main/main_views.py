@@ -3,6 +3,7 @@ from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from stock_updater import update_user_portfolio
 from .models import Stock,Profile,Portfolio,Holding,User, Transaction
 
@@ -11,18 +12,18 @@ from .generic_functions import getPortfolioValue, percentage_change
 from .holdings import get_holdings, holdings_distribution, holdings_total
 import json
 import random
+from .constants import *
 
+# home_view (view func)
+# User homepage, not viewable if not logged in.
+# Displays both global and user-related information
+@login_required
 def home_view(request):
 	request.user.portfolio_value = getPortfolioValue(request.user)
-	winner = ["nice work!","good job!"]
-	loser = ["Don't worry, it'll go up tomorrow. Right??",
-			"Oh dear...",
-			"We can't all be the best",
-			"Maybe trading isn't for you."]
 	if request.user.portfolio_value > 50000:
-		message = random.choice(winner)
+		message = random.choice(WINING_RESPONSE)
 	else:
-		message = random.choice(loser)
+		message = random.choice(LOSING_RESPONSE)
 	stocks = [stock for stock in Stock.objects.all()]
 	stocklist = []
 	positive = {}
