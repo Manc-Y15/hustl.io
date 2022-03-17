@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Stock, Holding, Portfolio, Transaction
+from .models import Stock, Holding, Portfolio, Transaction,User
 from django.contrib.auth.decorators import login_required
 from .transactions import user_buy, user_sell_all
 from random import randint, choice
+from .generic_functions import getPortfolioValue
 import json
 from datetime import datetime
 import calendar
@@ -244,6 +245,95 @@ def portfolio_view(request):
         'totalPortValue': portValue,
         'lastTraded': lastTrade,
         'userstocks': userHoldings,
+        'portfolio': portfolio,
+        'valueData':str({
+                "value_history": value_history,
+                "dates": dates
+            }),
+        'assetData':str(asset_data)
+    })
+def other_user_portfolio(request,name):
+    player = User.objects.filter(username = name)[0]
+    player.value = getPortfolioValue(player)
+    if len(Transaction.objects.filter(portfolio_id = player.portfolio)) > 0:
+        lastTrade = Transaction.objects.filter(portfolio_id = player.portfolio).last().stock_id
+    
+        cols = lastTrade.display_colour.split(' ')
+        lastTrade.col1 = cols[0].split('(')[1][:-1]
+        lastTrade.col2 = cols[1].split('(')[1][:-1]
+    else:
+        lastTrade = None
+    name = name
+    userTrades = len(Transaction.objects.filter(portfolio_id = player.portfolio))
+    portfolio = player.portfolio
+    historical_balance = json.loads(portfolio.bal_hist)['history']
+    if len(historical_balance) > 8 and historical_balance[8]['oldData'] > historical_balance[len(historical_balance)-1]['oldData']:
+            portfolio.pos = False
+    else: portfolio.pos = True
+
+    portfolio.display_colour = "var(--turquoise) var(--amethyst)"
+    cols = portfolio.display_colour.split(' ')
+    portfolio.col1 = cols[0].split('(')[1][:-1]
+    portfolio.col2 = cols[1].split('(')[1][:-1]
+
+    raw_day_dates = [datum['oldTime'].split(' ')[0] for datum in historical_balance]
+    dates = []
+    for raw in raw_day_dates:
+        split = raw.split('-')
+        dates.append(calendar.month_name[int(split[1])][:3].upper() + " " + split[2])
+        
+    value_history = [f"{datum['oldData']:.2f}" for datum in historical_balance]
+    if len(dates) > 7: 
+        value_history = value_history[7:]
+        dates = dates[7:]
+    userFriend = False
+    if player in request.user.profile.friends.all():
+        userFriend = True
+        # asset graph 
+        ticket_list = []
+        data_list = []
+        userHoldings = [holding for holding in Holding.objects.filter(owner = player)]
+        sorting_list = [['Cash',float(round((portfolio.balance / player.value ) * 100 ,2))]]
+        for holding in userHoldings:
+            if holding.amount > 0:
+                sorting_list.append([])
+                sorting_list[-1].append(holding.stock_id.ticket)
+                sorting_list[-1].append( float( round(((holding.stock_id.current_price *holding.amount) / player.value ) * 100,2)))
+        sorting_list.sort(key = lambda x: x[1])
+        for item in sorting_list:
+            ticket_list.append(item[0])
+            data_list.append(item[1])
+
+        colour_list = [
+        "--river", 
+        "--emerald", 
+        "--turquoise", 
+        "--amethyst",
+        "--green-sea",
+        "--nephritis",
+        "--wisteria",
+        "--sun-flower",
+        "--carrot",
+        "--alizarin",
+        "--orange"
+        ]
+
+        asset_data = {'tickets': ticket_list ,'data' :data_list,'colours': colour_list }
+        print(asset_data)
+    
+    else:
+        userFriend = False
+        asset_data = 'nothing'   
+    errors = []
+    return render(request, "trading/other_portfolio.html",{
+        'playerName': name,
+        'numOfTrades': userTrades,
+        'rankRegional': '13',
+        'rankOverall': '78',
+        'totalProfit': (player.value - 50000),
+        'totalPortValue': player.value,
+        'userFriend': userFriend,
+        'lastTraded': lastTrade,
         'portfolio': portfolio,
         'valueData':str({
                 "value_history": value_history,

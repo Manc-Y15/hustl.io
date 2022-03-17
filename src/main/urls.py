@@ -15,6 +15,7 @@ urlpatterns = [
     path('leaderboard/', leaderboards_views.leaderboard_view),
     path('trading/', trading_views.asset_list_page),
     path('portfolio/', trading_views.portfolio_view),
+    path('portfolio/<str:name>', trading_views.other_user_portfolio),
     path('settings/', main_views.settings_view),
     path('friends/', main_views.friends_view),
     path('friends/search', main_views.friends_search_form),
