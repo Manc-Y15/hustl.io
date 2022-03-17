@@ -135,6 +135,7 @@ def asset_page(request, ticket):
     
     return render(request, 'trading/stock_listing.html', {
         'stock': stock,
+        'activity': activityFeedTitle,
         'transactions': transactions,
         'activity': activity,
         'data': str({

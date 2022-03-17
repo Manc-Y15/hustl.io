@@ -3,8 +3,9 @@ from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
-from .models import Stock,Profile,Portfolio,Holding,User,Transaction
-from .generic_functions import getPortfolioValue, percentage_change
+from stock_updater import update_user_portfolio
+from .models import Stock,Profile,Portfolio,Holding,User
+
 from .holdings import get_holdings, holdings_distribution, holdings_total
 import json
 import random
@@ -125,7 +126,8 @@ def signup_view(request):
 		if form.is_valid():
 			user = form.save() # Create account
 			login(request, user)
-			return redirect('/home')
+			update_user_portfolio(user.portfolio)
+			return redirect('/portfolio')
 
 	return render(request, 'accounts/signup.html', {'errors': errors})
 
