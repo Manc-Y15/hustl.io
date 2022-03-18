@@ -1,0 +1,167 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<div class="container" id="dashboard_container" style="margin-bottom: 50px;max-width: 1300px">
+    <div class="row" style="margin-top:15px;">
+        <div class="col" style="margin-bottom: 15px; padding: 5px !important;text-align: center;">
+            <div class="display-1 section-heading ">
+                <h1>Welcome, <span style="color: var(--orange)">{{ user.username }}</span></h1>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:15px">
+        <div class="col-12 portfolio-summary d-flex flex-column justify-content-center ">
+            <h1 class="activity-item-text ">
+                Your portfolio is currently worth <span style="color: var(--emerald); ">${{ portfolio_value|intcomma }}</span> ranking
+                <span style="color: var(--amethyst); ">15th</span> globally. <br>
+            </h1>
+            <small style="font-family: 'Comfortaa'; font-size: 1rem; color:white">{{ message }}</small>
+        </div>
+        <div class="col-12 portfolio-info-box text-center" style="margin-top: 15px;">
+            <h1>This week's top trader is <span style="width: fit-content;background: linear-gradient(90deg, var(--sun-flower) 23%, var(--carrot) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Fkh08</span>
+            </h1>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 15px; gap: 15px; ">
+        <a href="/portfolio" class="col-12 col-sm big-button" style="background: var(--amethyst);">
+            <div class="icon-box d-flex flex-column justify-content-center align-self-center" style="height: 100%">
+                <i class="fas fa-arrow-right big-button-icon secondary-icon"></i>
+
+                <i class="fas fa-chart-pie big-button-icon primary-icon"></i>
+                <br>
+                <h3>Portfolio</h3>
+            </div>
+        </a>
+
+        <a href="/friends" class="col-12 col-sm big-button" style="background: var(--belize-hole);">
+            <div class="icon-box d-flex flex-column justify-content-center" style="height: 100%">
+                <i class="fas fa-arrow-right big-button-icon secondary-icon"></i>
+
+                <i class="fas fa-users big-button-icon primary-icon"></i>
+                <br>
+                <h3>Friends</h3>
+            </div>
+        </a>
+        <a href="/" class="col-12 col-sm big-button" style="background: var(--turquoise);">
+            <div class="icon-box d-flex flex-column justify-content-center" style="height: 100%">
+                <i class="fas fa-arrow-right big-button-icon secondary-icon"></i>
+                <i class="fas fa-list big-button-icon primary-icon"></i>
+
+                <br>
+                <h3>Leagues</h3>
+            </div>
+        </a>
+    </div>
+    <div class="row" style="margin-top: 15px; gap: 15px;">
+
+        <div class="col portfolio-info-box">
+            <h3>Overall Total Trades</h3>
+            <h1 class="showcase-number "><span style="color: var(--river); ">293</span>
+            </h1>
+        </div>
+        <div class="col portfolio-info-box">
+            <h3>Weekly Market Direction</h3>
+            <h1 class="showcase-number ">{% if stock.pos %}<span style="color: var(--nephritis);"><i
+                style="margin-right:5px; position: relative; bottom:1px;"
+                class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);"><i
+                    style="color: var(--alizarin); margin-right:5px; position: relative; bottom:1px;"
+                    class="fas fa-caret-down"></i>{% endif %}0.84%</span>
+            </h1>
+        </div>
+
+    </div>
+    <div class="row" style="margin-top:40px;">
+        <div class="col" style="margin-bottom: 15px; padding: 5px !important;text-align: center;">
+            <div class="display-1 section-heading ">
+                <h1 style="text-align: center;font-size:3rem;">
+                    <span style="width: fit-content;background: linear-gradient(90deg, var(--pomegranate) 0%, var(--orange) 20%, var(--pomegranate) 30%, var(--river) 60%, var(--silver)  100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        <i class="fas fa-fire"></i>
+                        Hot & 
+                        Cold
+                        <i class="fas fa-snowflake"></i>
+
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:15px; gap:15px;">
+        {% for stock in stocks %}
+            <div class="col portfolio-info-box">
+                    <a class="col-12 col-md-8" style="text-decoration: none;" href="/trading/{{ stock.ticket }}">
+                        <h2 class="activity-item-text" style="text-align: left;">
+                            <span style="width: fit-content;font-weight: 900; background: linear-gradient(90deg, {{ stock.col1 }} 23%, {{ stock.col2 }} 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ stock.ticket }}</span>
+                            <span style="color: var(--concrete); font-size:1rem">{{ stock.name }}</span>
+                        </h2>
+                    </a>
+                    
+                    <span class="price" style="max-width: fit-content; margin-right: 5px;">
+                        {% if stock.day_pos %}<span style="color: var(--nephritis);">{{ stock.day_change}}% (24hr)<i style="margin-left:5px; position: relative; bottom:0px;"
+                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.day_change }}% (24hr)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
+                        class="fas fa-caret-down"></i>{% endif %}</span></span>
+                    <span class="price" style="max-width: fit-content; margin-right: 5px;">
+                        {% if stock.week_pos %}<span style="color: var(--nephritis);">{{ stock.week_change}}% (7d)<i style="margin-left:5px; position: relative; bottom:0px;"
+                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.week_change}}% (7d)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
+                        class="fas fa-caret-down"></i>{% endif %}</span></span>
+                    <span class="price" style="max-width: fit-content; margin-right: 5px;">
+                        {% if stock.price_pos %}<span style="color: var(--nephritis);">${{ stock.current_price|intcomma }} ($)<i style="margin-left:5px; position: relative; bottom:0px;"
+                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price|intcomma }} ($)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
+                        class="fas fa-caret-down"></i>{% endif %}</span></span>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="row" style="margin-top: 15px; gap: 15px;">
+        <div class="col-12 col-md portfolio-info-box">
+            <!-- Activity Feed -->
+            <div class="row">
+                <div class="col" style="margin: 5px auto; padding: 0px !important;">
+                    <div>
+                        <h1 style="text-align: center;"> Your Recent Trades </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;margin-right: 15px;">
+                {% for transac in user_transactions %}
+                    <li class="list-group-item activity-item" style="box-shadow: 5px 5px 20px;">
+                        <h5 class="activity-item-text">
+                            <font style="color: #f39c12">You</font> {{ transac.1 }}
+                            <font style="color: #2ecc71">${{ transac.2 }}</font> of
+                            <font style="color: #3498db">{{ transac.3 }}</font> at
+                            <font style="color: #3498db">${{ transac.4 }}</font>
+                            <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
+                        </h5>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-12 col-md portfolio-info-box">
+            <!-- Activity Feed -->
+            <div class="row">
+                <div class="col" style="margin: 5px auto; padding: 0px !important;">
+                    <div>
+                        <h1 style="text-align: center;"> Friends' Recent Trades </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center" style="margin-top: 15px;margin-left: 15px;margin-right: 15px;">
+                {% for transac in friend_transactions %}
+                    <li class="list-group-item activity-item" style="box-shadow: 5px 5px 20px;">
+                        <h5 class="activity-item-text">
+                            <font style="color: #f39c12">{{ transac.0 }}</font> {{ transac.1 }}
+                            <font style="color: #2ecc71">${{ transac.2 }}</font> of
+                            <font style="color: #3498db">{{ transac.3 }}</font> at
+                            <font style="color: #3498db">${{ transac.4 }}</font>
+                            <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
+                        </h5>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
