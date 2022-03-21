@@ -40,15 +40,15 @@
 								<a class="col-4" style="padding: 5px;" href="/portfolio/{{request.0}}">
 									<button style="margin-top: 10px;" class="default-button col-12" type="submit" name="view_profile">Profile</button>
 								</a>
-								<form class="col-4" style="padding: 5px;">
+								<form action="/friends/request" method="post" class="col-4" style="padding: 5px;">
 									{% csrf_token %}
 									<input type="hidden" name="username" value="{{request.0}}">
 									<button style="margin-top: 10px;" class="add-friend-button col-12" type="submit" name="Add_friend">Accept</button>
 								</form>
-								<form class="col-4" style="padding: 5px;">
+								<form action="/friends/remove" method="post" class="col-4" style="padding: 5px;">
 									{% csrf_token %}
 									<input type="hidden" name="username" value="{{request.0}}">
-									<button style="margin-top: 10px;" class="remove-friend-button" type="button" name="Remove_friend" onclick="removeFriend(this);">Reject</button>
+									<button style="margin-top: 10px;" class="remove-friend-button" type="submit" name="Remove_friend">Reject</button>
 								</form>
 							</div>
 
@@ -82,7 +82,11 @@
 										<a style="padding-top: 10px;" class="col-6" href="/portfolio/{{friend.0}}">
 											<button class="default-button col-12" type="button" name="view_profile" style="margin:0">View profile</button>
 										</a>
-										<button style="margin-top: 10px;" class="remove-friend-button col-6" type="button" name="Remove_friend" onclick="removeFriend(this);">Remove friend</button>
+										<form action="/friends/remove" method="post" class="col-6" style="margin-top: 10px;">
+											{% csrf_token %}
+											<input type="hidden" name="username" value="{{friend.0}}">
+											<button class="remove-friend-button col-12" type="submit" name="Remove_friend">Remove friend</button>
+										</form>
 									</div>
 								</div>
 							</div>

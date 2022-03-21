@@ -29,6 +29,37 @@
 </div>
 
 {% else %}
+{% if form.friends%}
+<div class="form-response-container" hx-swap-oob="innerHTML:#responseModal">
+    <div class="toast form-response-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+        <h1 class="form-response-h1">You are already friends with {{friend_name}}
+        </h1>
+        
+
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="CrossPopup">
+            <circle id="CrossCircle" cx="100" cy="100" r="40"/>
+            <g id="Cross">
+            <rect id="crossPart2" x="79" y="114.355" width="50" height="10" transform="rotate(-45 79 114.355)"/>
+            <rect id="crossPart1" x="86.0711" y="79" width="50" height="10" transform="rotate(45 86.0711 79)"/>
+            </g>
+            </g>
+            </svg>
+
+    </div>
+    <script>
+        $(".toast").toast("show");
+        //$(".offcanvas-backdrop").hide();
+        $(".offcanvas").hide();
+
+        setTimeout(function() {
+            //$(".offcanvas-backdrop").show();
+            $(".offcanvas").show();
+
+        }, 3000);
+    </script>
+</div>
+{% else %}
 <div class="form-response-container" hx-swap-oob="innerHTML:#responseModal">
     <div class="toast form-response-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
         <h1 class="form-response-h1">You have already requested to be friends with {{friend_name}}
@@ -58,4 +89,5 @@
         }, 3000);
     </script>
 </div>
+{% endif %}
 {% endif %}

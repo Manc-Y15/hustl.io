@@ -35,7 +35,8 @@ while also extending the user's attributes
 '''
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    requested_friends = models.ManyToManyField(User, related_name='received_requests',default=None,blank=True)
+    # requested_friends = models.ManyToManyField(User, related_name='sent_requests',default=None,blank=True)
+    requested_me = models.ManyToManyField(User, related_name='received_requests',default=None,blank=True)
     friends = models.ManyToManyField(User, related_name='friends',default=None,blank=True)
 
 # These functions just update the Profile data when User data is updated

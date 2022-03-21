@@ -19,5 +19,6 @@ urlpatterns = [
     path('settings/', main_views.settings_view),
     path('friends/', main_views.friends_view),
     path('friends/search', main_views.friends_search_form),
-    path('friends/request', main_views.request_friend)
+    path('friends/request', main_views.request_friend),
+    path('friends/remove', main_views.remove_friend)
 ]

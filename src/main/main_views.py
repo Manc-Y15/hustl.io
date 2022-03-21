@@ -184,49 +184,64 @@ def request_friend(request):
 		friend_name = request.POST.get("username")
 		if User.objects.filter(username = friend_name).exists():
 			newFriend =  User.objects.filter(username = friend_name)[0]
-			if newFriend not in request.user.profile.requested_friends.all():
-				request.user.profile.requested_friends.add(newFriend)
-				request.user.profile.save()
-				newFriend.profile.friends.add(request.user)
-				newFriend.profile.save()
-				# return(True,"")
-				form['success'] = True
-			else:
-				# return(False,f"You've already requested to be friends with {friend_name}")
+			if request.user in newFriend.profile.requested_me.all():
 				form['success'] = False
+			elif newFriend in request.user.profile.friends.all():
+				form['friends'] = True
+			elif newFriend in request.user.profile.requested_me.all():
+				request.user.profile.friends.add(newFriend)
+				request.user.profile.requested_me.remove(newFriend)
+				newFriend.profile.friends.add(request.user)
+				# newFriend.profile.requested_friends.remove(request.user)
+				newFriend.profile.save()
+				request.user.profile.save()
+				form['success'] = True
+				return redirect("/friends")
+			else:
+				# request.user.profile.requested_friends.add(newFriend)
+				newFriend.profile.requested_me.add(request.user)
+				request.user.profile.save()
+				newFriend.profile.save()
+				form['success'] = True
 			return render(request, 'accounts/friend_request_response.html', {"form": form, "friend_name":friend_name})			
 		else:
 			return(False,"This user does not exist")
 		# add user to friend names requested list
 
-def add_friend(request,friend_name):
-	if User.objects.filter(username = friend_name).exists():
-		newFriend =  User.objects.filter(username = friend_name)[0]
-		if newFriend  in request.user.profile.requested_friends.all():
-			request.user.profile.friends.add(newFriend)
-			request.user.profile.save()
-			newFriend.profile.friends.add(request.user)
-			newFriend.profile.save()
-			return(True,"")
+# def add_friend(request,friend_name):
+# 	if User.objects.filter(username = friend_name).exists():
+# 		newFriend =  User.objects.filter(username = friend_name)[0]
+# 		if newFriend  in request.user.profile.requested_friends.all():
+# 			request.user.profile.friends.add(newFriend)
+# 			request.user.profile.save()
+# 			newFriend.profile.friends.add(request.user)
+# 			newFriend.profile.save()
+# 			return(True,"")
+# 		else:
+# 			return(False,f"You're already friends with {friend_name}")
+# 	else:
+# 		return(False,"This user does not exist")
+
+def remove_friend(request):
+	if request.method == "POST":
+		friend_name = request.POST.get("username")
+		if User.objects.filter(username = friend_name).exists():
+			oldFriend =  User.objects.filter(username = friend_name)[0]
+			if oldFriend in request.user.profile.friends.all():
+				request.user.profile.friends.remove(oldFriend)
+				request.user.profile.save()
+				oldFriend.profile.friends.remove(request.user)
+				oldFriend.profile.save()
+				# return(True,"")
+			if oldFriend in request.user.profile.requested_me.all():
+				request.user.profile.requested_me.remove(oldFriend)
+			return redirect("/friends")
+			# else:
+			# 	return(False,f"You're not friends with {friend_name}")
 		else:
-			return(False,f"You're already friends with {friend_name}")
-	else:
-		return(False,"This user does not exist")
-def remove_friend(request,friend_name):
-	if User.objects.filter(username = friend_name).exists():
-		oldFriend =  User.objects.filter(username = friend_name)[0]
-		if oldFriend in request.user.profile.friends.all():
-			request.user.profile.friends.remove(oldFriend)
-			request.user.profile.save()
-			oldFriend.profile.save()
-			return(True,"")
-		else:
-			return(False,f"You're not friends with {friend_name}")
-	else:
-		return(False,"This user does not exist")
+			return(False,"This user does not exist")
 
 def friends_view(request):
-	print(request.user.profile.requested_friends.all())
 	request.user.portfolio_value = getPortfolioValue(request.user)
 	friends = []
 	for friend in request.user.profile.friends.all():
@@ -246,7 +261,7 @@ def friends_view(request):
 
 	requests=[]
 
-	for friend_request in request.user.profile.requested_friends.all():
+	for friend_request in request.user.profile.requested_me.all():
 		mutuals = []
 		for friend in request.user.profile.friends.all():
 			if friend_request in friend.profile.friends.all():
@@ -262,8 +277,8 @@ def friends_view(request):
 		print(requests)
 
 	leagues = [["Y15 League",["Someone1191","Up"],["Someone1391","Down"],["Someone1237","Same"]],["Y20 League",["Someone2054","Same"],["Someone2978","Up"],["Someone2453","Down"]]]
-	add_friend(request,"alex")
-	remove_friend(request,'louis')
+	# add_friend(request,"alex")
+	# remove_friend(request,'louis')
 	return render(request, 'accounts/friends.html', {
 		'friends':friends,
 		'leagues':leagues,
