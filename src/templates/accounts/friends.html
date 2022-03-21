@@ -58,6 +58,7 @@
 						<div class="row" style="border-bottom:1px solid #95a5a6;">
 							<h3 style="text-align: left;">My friends</h3>
 						</div>
+							{% if friends %}
 							{% for friend in friends %}
 							<div class="profile-input row" id={{ friend.0 }}>
 								<h4 class="profile-input-text col-10 flex-wrap">
@@ -91,6 +92,9 @@
 								</div>
 							</div>
 							{% endfor %}
+							{% else %}
+								<p style="text-align: center; color: white; margin-top: 25px;font-family: 'Comfortaa'">You don't have any friends yet :(</p>
+							{% endif %}
 						</div>
 					</div>
 					<div class="col" style="margin-left: 10px;padding-top: 20px;">
