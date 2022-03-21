@@ -58,7 +58,6 @@ def user_buy(user, is_buy, stock_id, amount):
                 thisHolding = Holding.objects.filter(owner = user, stock_id = stock)[0]
                 if is_buy:
                     x = float(thisHolding.amount) + volume
-                    print(type(x))
                     thisHolding.amount = Decimal.from_float(x)
                     thisHolding.save()
                 else:
