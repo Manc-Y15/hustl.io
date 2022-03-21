@@ -79,15 +79,17 @@
 										<span style="color: var(--emerald);">
 										{% endif %}
 									{{friend.3}}</span>&nbsp;by&nbsp;<span style="color: #2ecc71">${{friend.4}}</span></h4>
-									<div class="justify-content-center" style="padding: 0;">
+									<div class="justify-content-center row" style="padding: 0;">
 										<a style="padding-top: 10px;" class="col-6" href="/portfolio/{{friend.0}}">
 											<button class="default-button col-12" type="button" name="view_profile" style="margin:0">View profile</button>
 										</a>
-										<form action="/friends/remove" method="post" class="col-6" style="margin-top: 10px;">
-											{% csrf_token %}
-											<input type="hidden" name="username" value="{{friend.0}}">
-											<button class="remove-friend-button col-12" type="submit" name="Remove_friend">Remove friend</button>
-										</form>
+										<div class="col-6">
+											<form action="/friends/remove" method="post" style="margin-top: 10px;">
+												{% csrf_token %}
+												<input type="hidden" name="username" value="{{friend.0}}">
+												<button class="remove-friend-button col-12" type="submit" name="Remove_friend">Remove friend</button>
+											</form>
+										</div>
 									</div>
 								</div>
 							</div>

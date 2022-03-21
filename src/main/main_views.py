@@ -274,7 +274,6 @@ def friends_view(request):
 			n=0
 			mutuals.append(False)
 		requests.append([friend_request.username,mutuals[0],n])
-		print(requests)
 
 	leagues = [["Y15 League",["Someone1191","Up"],["Someone1391","Down"],["Someone1237","Same"]],["Y20 League",["Someone2054","Same"],["Someone2978","Up"],["Someone2453","Down"]]]
 	# add_friend(request,"alex")
