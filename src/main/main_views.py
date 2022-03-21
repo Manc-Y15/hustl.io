@@ -181,7 +181,7 @@ def friends_search_form(request):
 def request_friend(request):
 	if request.method == "POST":
 		form={}
-		friend_name = request.POST.get("username", "")
+		friend_name = request.POST.get("username")
 		if User.objects.filter(username = friend_name).exists():
 			newFriend =  User.objects.filter(username = friend_name)[0]
 			if newFriend not in request.user.profile.requested_friends.all():
@@ -189,12 +189,12 @@ def request_friend(request):
 				request.user.profile.save()
 				newFriend.profile.friends.add(request.user)
 				newFriend.profile.save()
-				return(True,"")
+				# return(True,"")
 				form['success'] = True
 			else:
-				return(False,f"You've already requested to be friends with {friend_name}")
+				# return(False,f"You've already requested to be friends with {friend_name}")
 				form['success'] = False
-			return render(request, 'accounts/friends_response.html', {"form": form, "search_result_name":search_result_name})			
+			return render(request, 'accounts/friend_request_response.html', {"form": form, "friend_name":friend_name})			
 		else:
 			return(False,"This user does not exist")
 		# add user to friend names requested list
@@ -226,6 +226,7 @@ def remove_friend(request,friend_name):
 		return(False,"This user does not exist")
 
 def friends_view(request):
+	print(request.user.profile.requested_friends.all())
 	request.user.portfolio_value = getPortfolioValue(request.user)
 	friends = []
 	for friend in request.user.profile.friends.all():
@@ -241,14 +242,32 @@ def friends_view(request):
 			friendinfo.append(winvslose)
 		else:
 			friendinfo.append("Losing")
-			friendinfo.append( winvslose * -1)			
+			friendinfo.append( winvslose * -1)	
+
+	requests=[]
+
+	for friend_request in request.user.profile.requested_friends.all():
+		mutuals = []
+		for friend in request.user.profile.friends.all():
+			if friend_request in friend.profile.friends.all():
+				mutuals.append(friend.username)
+		if len(mutuals) > 1:
+			n = len(mutuals)-1
+		elif len(mutuals) == 1:
+			n=0
+		else:
+			n=0
+			mutuals.append(False)
+		requests.append([friend_request.username,mutuals[0],n])
+		print(requests)
 
 	leagues = [["Y15 League",["Someone1191","Up"],["Someone1391","Down"],["Someone1237","Same"]],["Y20 League",["Someone2054","Same"],["Someone2978","Up"],["Someone2453","Down"]]]
 	add_friend(request,"alex")
 	remove_friend(request,'louis')
 	return render(request, 'accounts/friends.html', {
 		'friends':friends,
-		'leagues':leagues
+		'leagues':leagues,
+		'requests':requests #change to requests once requests info is imported
 		})
 	
 

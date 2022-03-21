@@ -13,7 +13,7 @@
 	<form class="col-6">
 		<button style="margin-top: 10px;" class="default-button col-12" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
 	</form>
-	<form hx-post="/friends/request" hx-swap="innerHTML" class="col-6">
+	<form hx-post="/friends/request" hx-swap="afterend" class="col-6">
 		{% csrf_token %}
 		<input type="hidden" name="username" value="{{search_result_name}}">
 		<button style="margin-top: 10px;" class="add-friend-button col-12" type="submit" name="Add_friend">Add friend</button>

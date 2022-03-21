@@ -2,8 +2,12 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}"> 
+<link rel="stylesheet" href="{% static 'css/chart_page.css' %}">
+<link rel="stylesheet" href="{% static 'css/stock_list.css' %}">
 
-<div class="container" style="margin-top: 20px;max-width:800px;">
+<div class="form-response-container" id="responseModal"></div>
+
+<div class="container" style="margin-top: 20px;max-width:1000px;">
 	<div class="row">
 		<div class="container-lg" style="margin-top: 20px;">
 			<div class="row" style="border-bottom:1px solid #95a5a6">
@@ -21,10 +25,39 @@
 								</button>
 							</div>
 						</form>
-						
-						<div class="row" style="border-bottom:1px solid #95a5a6">
-							<h3 style="text-align: left;">My friends</h3>
+						{% if requests %}
+						<div class="row" style="border-bottom:1px solid #95a5a6;">
+							<h3 style="text-align: left;">Requests</h3>
+						</div>
+							{% for request in requests %}
+							<div class="profile-input row" id="{{friend.0}}_result">
+								<div class="profile-input-text col-10 flex-wrap">
+									<h4 style="margin: 0;">
+										<span style="color: #f39c12">{{ request.0 }}</span></h4>{% if request.1 %}<h6 style="padding-left: 1em; margin: 0;">friends with
+										<span style="color: #2ecc71"> {{ request.1 }}</span>{% if request.2 != 0 %} + {{ request.2 }} others{% endif %}</h6>{% endif %}
+									
+								</div>
+								<a class="col-4" style="padding: 5px;" href="/portfolio/{{request.0}}">
+									<button style="margin-top: 10px;" class="default-button col-12" type="submit" name="view_profile">Profile</button>
+								</a>
+								<form class="col-4" style="padding: 5px;">
+									{% csrf_token %}
+									<input type="hidden" name="username" value="{{request.0}}">
+									<button style="margin-top: 10px;" class="add-friend-button col-12" type="submit" name="Add_friend">Accept</button>
+								</form>
+								<form class="col-4" style="padding: 5px;">
+									{% csrf_token %}
+									<input type="hidden" name="username" value="{{request.0}}">
+									<button style="margin-top: 10px;" class="remove-friend-button" type="button" name="Remove_friend" onclick="removeFriend(this);">Reject</button>
+								</form>
 							</div>
+
+							{% endfor %}
+						<div style=" padding-bottom: 35px;"></div>
+						{% endif %}
+						<div class="row" style="border-bottom:1px solid #95a5a6;">
+							<h3 style="text-align: left;">My friends</h3>
+						</div>
 							{% for friend in friends %}
 							<div class="profile-input row" id={{ friend.0 }}>
 								<h4 class="profile-input-text col-10 flex-wrap">
@@ -46,7 +79,9 @@
 										{% endif %}
 									{{friend.3}}</span>&nbsp;by&nbsp;<span style="color: #2ecc71">${{friend.4}}</span></h4>
 									<div class="justify-content-center" style="padding: 0;">
-										<button style="margin-top: 10px;" class="default-button col-6" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
+										<a style="padding-top: 10px;" class="col-6" href="/portfolio/{{friend.0}}">
+											<button class="default-button col-12" type="button" name="view_profile" style="margin:0">View profile</button>
+										</a>
 										<button style="margin-top: 10px;" class="remove-friend-button col-6" type="button" name="Remove_friend" onclick="removeFriend(this);">Remove friend</button>
 									</div>
 								</div>
@@ -56,14 +91,14 @@
 					</div>
 					<div class="col" style="margin-left: 10px;padding-top: 20px;">
 						<div class="grid">
-							<div class="row justify-content-center">
+							<div class="row">
 								{% for league in leagues %}
 								<div class="league-preview col-sm-12 col-6">
 									<h4 class="league-preview-text" style="padding-bottom: 10px;">{{league.0}}</h4>
 									{% for user in league|slice:"1:" %}
 									{% cycle '1' '2' '3' as position silent %}
 									<div class="league-preview-row row">
-										<h5 class="league-preview-text col-9 col-md-8">{{position}}. {{user.0}}</h5>
+										<h4 class="league-preview-text col-9 col-md-8">{{position}}. {{user.0}}</h4>
 										{% if user.1 == 'Up' %}
 										<i class="fa fa-solid fa-caret-up col" style="font-size: 1.5em; color: var(--emerald);"></i>
 										{% elif user.1 == 'Down' %}
