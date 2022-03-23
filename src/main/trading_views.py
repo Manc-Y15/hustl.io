@@ -140,7 +140,7 @@ def asset_page(request, ticket):
             new_transacaction.append('bought' if transac.buy else 'sold')
             new_transacaction.append(round(transac.buy_price * transac.volume,2))
             new_transacaction.append(transac.stock_id.ticket)
-            new_transacaction.append(transac.stock_id.current_price)
+            new_transacaction.append(transac.buy_price)
             new_transacaction.append(transac.time)
             transactions.append(new_transacaction)
         transactions.reverse()
