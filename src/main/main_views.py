@@ -29,82 +29,48 @@ def home_view(request):
 
 	# Determine hot and cold stocks
 	stocks = [stock for stock in Stock.objects.all()]
-	stocklist = []
-	positive = {}
-	for stock in stocks:
-		historical_prices = json.loads(stock.historical)['history']
-		lastWeekPrice = float(historical_prices[len(historical_prices)-4]['oldData'])
-		yesterdayPrice =  float(historical_prices[len(historical_prices)-2]['oldData'])
-		todayPrice =  float(stock.current_price)
-		if yesterdayPrice > todayPrice:
-			stock.price_pos = False
-		else: stock.price_pos = True
-		stock.day_change = percentage_change(yesterdayPrice,todayPrice)
-		if stock.day_change > 0:stock.day_pos = True
-		else: stock.day_pos = False
-		stock.week_change = percentage_change(lastWeekPrice,todayPrice)
-		if stock.week_change > 0:stock.week_pos = True
-		else: stock.week_pos = False
+	daySortStocks = sorted(stocks, key = lambda stock: stock.day_change)
+	weekSortStocks = sorted(stocks, key = lambda stock: stock.week_change)
+	HotandCold = [daySortStocks[::-1][0],daySortStocks[::-1][-1],weekSortStocks[::-1][0],weekSortStocks[::-1][-1]]
+	for stock in HotandCold:
 		cols = stock.display_colour.split(' ')
 		stock.col1 = cols[0]
 		stock.col2 = cols[1]
-		stocklist.append([])
-		stocklist[0].append(stock)
-		stocklist[0].append(stock.day_change)
-		stocklist[0].append(stock.week_change)
 
-
+	
 	# get activity feeds for user
 	usertransactions= []
-	allTransactions = Transaction.objects.filter(portfolio_id = request.user.portfolio)
-	activityFeed = []
-	transactions = []
+	friendtransactions = []
+	allTransactions = list(Transaction.objects.filter(portfolio_id = request.user.portfolio))
+	
+	for transac in Transaction.objects.exclude(portfolio_id = request.user.portfolio):
+		if transac.portfolio_id.owner in request.user.profile.friends.all():
+			allTransactions.append(transac)
+	
 	for transac in allTransactions:
 		if transac.portfolio_id.owner == request.user:
-			activityFeed.append(transac)
-		else:
-			pass
-	for transac in activityFeed:
-		new_transacaction = []
-		new_transacaction.append(transac.portfolio_id.owner.username)
-		if transac.buy == True:
-			new_transacaction.append('bought')
-		else:
-			new_transacaction.append('sold')
-		new_transacaction.append(round(transac.buy_price * transac.volume,2))
-		new_transacaction.append(transac.stock_id.ticket)
-		new_transacaction.append(transac.stock_id.current_price)
-		new_transacaction.append(transac.time)
-		transactions.append(new_transacaction)
-	transactions.reverse()
-	transactions = transactions[:6]
-	usertransactions = transactions
+			usertransactions.append([])
+			usertransactions[-1] += [
+				transac.portfolio_id.owner.username,
+				'bought' if transac.buy else 'sold',
+				round(transac.buy_price * transac.volume,2),
+				transac.stock_id.ticket,
+				transac.stock_id.current_price,
+				transac.time
+			]		
+		elif transac.portfolio_id.owner in request.user.profile.friends.all():
+			friendtransactions.append([])
+			friendtransactions[-1] += [
+				transac.portfolio_id.owner.username,
+				'bought' if transac.buy else 'sold',
+				round(transac.buy_price * transac.volume,2),
+				transac.stock_id.ticket,
+				transac.stock_id.current_price,
+				transac.time
+			]
 
-	# friend activity feed
-	friendtransactions = []
-	allTransactions = Transaction.objects.all()
-	activityFeed = []
-	transactions = []
-	for transac in allTransactions:
-		if transac.portfolio_id.owner in request.user.profile.friends.all():
-			activityFeed.append(transac)
-		else:
-			pass
-	for transac in activityFeed:
-		transactions.append([])
-		newtransacaction = transactions[-1]
-		newtransacaction.append(transac.portfolio_id.owner.username)
-		if transac.buy == True:
-			newtransacaction.append('bought')
-		else:
-			newtransacaction.append('sold')
-		newtransacaction.append(round(transac.buy_price * transac.volume,2))
-		newtransacaction.append(transac.stock_id.ticket)
-		newtransacaction.append(transac.stock_id.current_price)
-		newtransacaction.append(transac.time)
-	transactions.reverse()
-	transactions = transactions[:6]
-	friendtransactions = transactions
+	usertransactions = usertransactions[::-1][:6]
+	friendtransactions = usertransactions[::-1][:6]
 
 	errors = []
 	return render(request, 'accounts/home.html', {
@@ -112,7 +78,7 @@ def home_view(request):
 		'message': message,
 		'user_transactions': usertransactions,
 		'friend_transactions': friendtransactions,
-		'stocks': stocks[:4],
+		'stocks': HotandCold,
 		'errors': errors,
 		})
 

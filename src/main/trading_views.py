@@ -8,41 +8,8 @@ from .leagues import add_user
 import json
 from datetime import datetime
 import calendar
+from .constants import *
 
-# For reference; possible gradient combos for stocks
-backgrounds = [
-    "var(--emerald) var(--turquoise)",
-    "var(--turquoise) var(--amethyst)",
-    "var(--sun-flower) var(--carrot)",
-    "var(--wisteria) var(--pumpkin)",
-    "var(--clouds) var(--river) ",
-]
-
-# List of colours for pie chart to cycle through
-circular_colour_list = [
-"--river", 
-"--emerald", 
-"--turquoise", 
-"--amethyst",
-"--green-sea",
-"--nephritis",
-"--wisteria",
-"--sun-flower",
-"--carrot",
-"--alizarin",
-"--orange",
-"--river", 
-"--emerald", 
-"--turquoise", 
-"--amethyst",
-"--green-sea",
-"--nephritis",
-"--wisteria",
-"--sun-flower",
-"--carrot",
-"--alizarin",
-"--orange",
-]
 
 # asset_page_form (view func)
 # Only used for receiving post request from asset_page; validates transaction and returns partial HTML response.
@@ -254,7 +221,7 @@ def portfolio_view(request):
         ticket_list.append(item[0])
         data_list.append(item[1])
 
-    colour_list = circular_colour_list
+    colour_list = CIRCULAR_COLOUR_LIST
 
     asset_data = {'tickets': ticket_list ,'data' :data_list,'colours': colour_list }
     return render(request, "trading/portfolio.html",{

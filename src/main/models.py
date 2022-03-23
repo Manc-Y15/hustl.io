@@ -13,6 +13,10 @@ class Stock(models.Model):
     historical = models.TextField() # Stored as JSON, needs to be large text file
     display_colour = models.TextField(null=True, blank=True)
 
+    day_change = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, blank=True)
+    week_change = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, blank=True)
+
+
 class Holding(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=4)    
