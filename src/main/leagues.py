@@ -1,13 +1,12 @@
 from .models import Stock, Portfolio, Holding, Profile, Transaction, League, LeaguePortfolio
 
-def create_league(owner, name, starting_balance, start_date, icon):
+def create_league(owner, name, starting_balance, icon):
     if name in [league.name for league in League.objects.all()]:
         return (False, "Name already in use")
     new_league = League()
     new_league.owner = owner
     new_league.name = name
     new_league.starting_balance = starting_balance
-    new_league.start_date = start_date
     new_league.icon = icon
     new_league.save()
     return (True, "Successfully created league.")

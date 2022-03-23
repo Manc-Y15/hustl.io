@@ -1,6 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import login, logout
 from .models import Stock,Profile,Portfolio,Holding,User
 
 def leaderboard_view(request):

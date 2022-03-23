@@ -1,0 +1,131 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+    
+    <!--Title of Page-->
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="container" style="margin-top: 20px;">
+                <div class="row" style="border-bottom:1px solid #95a5a6">
+                    <h2 style="text-align: left;">My Leagues</h2> 
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ <!--Style-->
+ <style>
+    .activity-item {
+        background: #34495e;
+        border: 1px solid transparent !important;
+        border-radius: 5px !important;
+        margin-top: 15px;
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+    }
+    
+    .activity-item-text {
+        margin: 5px;
+    }
+
+    .btn-secondary {
+        border-radius: 5px;
+        padding: 5px 10px;
+        background-color: var(--river);
+        border: 1px solid transparent;
+        margin-bottom: 10px;
+        color: var(--midnight-blue);
+        font-family: 'Comfortaa';
+        font-weight: 700;
+        transition: 0.1s ease-in;
+    }
+    
+    .btn-secondary:hover {
+        background: transparent;
+        border: 1px solid var(--river);
+        color: var(--river);
+        transition: 0.1s ease-in;
+    }
+    .btn-secondary:focus
+    {
+        background:transparent;
+
+    }
+    
+    .action-btn {
+                    border-radius: 5px;
+                    background: linear-gradient(90deg, rgba(26, 188, 156, 1) 23%, rgba(46, 204, 113, 1) 100%);
+                    border: 1px solid transparent;
+                    padding: 5px 10px;
+                    color: #34495e;
+                    transition: 0.2s ease-in;
+                    /* Transition makes background change smoother */
+                    min-width: 50px;
+                    font-family: 'Comfortaa';
+                    font-weight: 700;
+                    margin-top: 15px;
+                }
+                
+                .action-btn:hover {
+                    background: transparent;
+                    border: 1px solid #2ecc71;
+                    color: #2ecc71;
+                    /* Transition makes background change smoother */
+                    transition: 0.2s ease-in;
+                }
+            
+
+</style>
+
+<div class="container" style = "margin-bottom: 40px;">
+<div class="row">
+
+    <!-- Column 1 Entries-->
+  <div class="col">
+    <div class="list-group list-group-flush" style="margin-top: 20px">
+        {% for league in userLeagues %}
+            <li class="list-group-item activity-item">
+                <h5 class="activity-item-text">
+                    <span style="color: #f39c12">{{ league.name }}</span> League as
+                    {% if league.owner == user %}
+                        <span style="color: #9b59b6">(Owner)</span>
+                    {% else %}
+                        <span style="color: #2ecc71">(Member)</span>
+                    {% endif %}
+                    <div class="btn-group" role="group" aria-label="Basic example" style="float: right;">
+
+                        <button class="btn btn-secondary" style="align-items: right;" onClick = "window.location = 'league/{{ league.name }}';">
+                            <i class="fas fa-list big-button-icon primary-icon"></i>
+                            Leaderboard
+                        </button> 
+
+                        <button class="btn btn-secondary" style="align-items: right;" onClick = "window.location = 'league/{{ league.name }}/portfolio';">
+                            <i class="fas fa-chart-pie big-button-icon primary-icon"></i>
+                            Portfolio
+                        </button>        
+                </h5>
+            </li>
+        {% endfor %}
+
+        <button class="action-btn" style = "float: left;" onClick = "window.location = '/leagues/create';">
+            <!-- Search 'font awesome icons' for icon list + usage -->
+            <i class="fas fa-plus" style="margin-right: 5px;"></i>
+            Create a new league
+        </button>
+    </div>
+  </div>
+
+
+
+
+   
+</body>
+
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+{% endblock %}
