@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Stock, Holding, Portfolio, Transaction,User
+from .models import Stock, Holding, Portfolio, Transaction,User, League
 from django.contrib.auth.decorators import login_required
 from .transactions import user_buy, user_sell_all
 from random import randint, choice
 from .generic_functions import getPortfolioValue
+from .leagues import add_user
 import json
 from datetime import datetime
 import calendar
