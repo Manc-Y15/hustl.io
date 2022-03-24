@@ -31,8 +31,6 @@ def create_league_view(request):
 
 def league_leaderboard(request,league_name):
     league = League.objects.filter(name = league_name)[0]
-    print(league.name)
-    print(league.participants.all())
     memberlist = []
     # owner
     totalPortValue = 0
