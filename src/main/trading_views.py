@@ -292,7 +292,7 @@ def other_user_portfolio(request,name):
             ticket_list.append(item[0])
             data_list.append(item[1])
 
-        colour_list = circular_colour_list
+        colour_list = CIRCULAR_COLOUR_LIST
 
 
         asset_data = {'tickets': ticket_list ,'data' :data_list,'colours': colour_list }
