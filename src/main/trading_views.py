@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Stock, Holding, Portfolio, Transaction,User, League
+from .models import Stock, Holding, Portfolio, Transaction,User, League, LeagueHolding
 from django.contrib.auth.decorators import login_required
 from .transactions import user_buy, user_sell_all
 from random import randint, choice
@@ -17,24 +17,43 @@ def asset_page_form(request):
     if request.method == "POST":
         form = {}
         transaction = {}
+        league = request.POST.get("league", "")
         if request.POST.get("transaction", "") == "sellall": # sellall needs to be handled separately 
             stock = Stock.objects.filter(ticket =  request.POST.get("ticket", ""))[0] # find stock in db
-            if Holding.objects.filter(owner = request.user, stock_id = stock).exists():
-                holding =  Holding.objects.filter(owner =  request.user, stock_id = stock)[0]
-                transaction['amount'] = holding.amount * stock.current_price
+            if league == "global":
+                if Holding.objects.filter(owner = request.user, stock_id = stock).exists():
+                    holding =  Holding.objects.filter(owner =  request.user, stock_id = stock)[0]
+                    transaction['amount'] = holding.amount * stock.current_price
 
-                order = user_sell_all(request.user, request.POST.get("ticket", ""))
+                    order = user_sell_all(request.user, request.POST.get("ticket", "")) # autos to global league
 
-                if order[0]:
-                    form['success'] = True
+                    if order[0]:
+                        form['success'] = True
+                    else:
+                        transaction['error'] = order[1] # Error msg to send back in HTML
+                        form['success'] = False
+                    transaction['is_buy'] = False
+                    transaction['stock_id'] = request.POST.get("ticket", "")
                 else:
-                    transaction['error'] = order[1] # Error msg to send back in HTML
+                    # Fail if user has no holding in stock
                     form['success'] = False
-                transaction['is_buy'] = False
-                transaction['stock_id'] = request.POST.get("ticket", "")
             else:
-                # Fail if user has no holding in stock
-                form['success'] = False
+                if LeagueHolding.objects.filter(owner = request.user, stock_id = stock).exists():
+                    holding =  LeagueHolding.objects.filter(owner =  request.user, stock_id = stock)[0]
+                    transaction['amount'] = holding.amount * stock.current_price
+
+                    order = user_sell_all(request.user, request.POST.get("ticket", ""), league)
+
+                    if order[0]:
+                        form['success'] = True
+                    else:
+                        transaction['error'] = order[1] # Error msg to send back in HTML
+                        form['success'] = False
+                    transaction['is_buy'] = False
+                    transaction['stock_id'] = request.POST.get("ticket", "")
+                else:
+                    # Fail if user has no holding in stock
+                    form['success'] = False
             
         else: # Must be either buy or sell
             transaction = {
@@ -42,7 +61,7 @@ def asset_page_form(request):
                 "stock_id": request.POST.get("ticket", ""), 
                 "amount": request.POST.get("amount", "")
             }
-            order = user_buy(request.user, transaction['is_buy'], transaction['stock_id'], float(transaction['amount']))
+            order = user_buy(request.user, transaction['is_buy'], transaction['stock_id'], float(transaction['amount']), league)
             if order[0]: # if order is success
                 form['success'] = True
             else:
@@ -115,6 +134,7 @@ def asset_page(request, ticket):
     else:
         transactions = []
 
+    if not request.league: request.league = "global"
     
     return render(request, 'trading/stock_listing.html', {
         'stock': stock,
@@ -123,6 +143,7 @@ def asset_page(request, ticket):
             "value_history": value_history,
             "dates": dates
         }),
+        'league': request.league
     }
     )
 

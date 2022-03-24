@@ -64,7 +64,7 @@ body {
         border: 1px solid white;
         width:1px;
         padding: 0px !important;
-        height: 20vh; /* keep proportion to view height when resizing */
+        height: 18vh; /* keep proportion to view height when resizing */
         margin-left: auto; /* magic to center it */ 
     }
 }

@@ -53,13 +53,32 @@
   z-index:10;
 }
 
-.fixed-account-btn:focus, .fixed-account-btn:active {
+.fixed-league-btn {
+  background:linear-gradient(90deg, var(--orange) 23%, var(--alizarin) 100%);
+  display:block;
+  height:60px;
+  width:60px;
+  border-radius:50%;
+  position:fixed;
+  bottom:0;
+  left:0;
+  margin:20px;
+  border:none;
+  padding:16px;
+  font-size:16px;
+  border:none;
+  cursor:pointer;
+  transition:0.1s;
+  z-index:10;
+}
+
+.fixed-account-btn:focus, .fixed-account-btn:active, .fixed-league-btn:focus, .fixed-league-btn:active {
   outline:none !important;
   border:none !important;
   box-shadow:none !important;
 }
 
-.fixed-account-btn:hover {
+.fixed-account-btn:hover, .fixed-league-btn:hover {
   transform:translate(-2px, -2px);
   transition:0.1s;
 }
