@@ -79,7 +79,7 @@ def home_view(request):
 		'user_transactions': usertransactions,
 		'friend_transactions': friendtransactions,
 		'stocks': HotandCold,
-		'errors': errors,
+		'errors': errors
 		})
 
 # signup_view (view func)
