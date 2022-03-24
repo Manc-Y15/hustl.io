@@ -41,7 +41,7 @@ class League(models.Model):
 
 class LeaguePortfolio(models.Model):
     # below needs to be one to many
-    owner = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     # Means user-portfolio is 1-1 and if portfolio is deleted then owner (user) is too.
     # This relationship is the primary key
