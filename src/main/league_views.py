@@ -38,19 +38,21 @@ def league_leaderboard(request,league_name):
     # owner
     totalPortValue = 0
     player = league.owner
+    playerPortfolio = LeaguePortfolio.objects.filter(owner = player,league = league)[0]
     playerHoldings = [holding for holding in LeagueHolding.objects.filter(owner = player,league = league)]
     for holding in playerHoldings:
         totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
-    totalPortValue +=  player.leagueportfolio.balance
+    totalPortValue +=  playerPortfolio.balance
     player.league_portfolio_value = totalPortValue
     memberlist.append(player)
     # all other members    
     for participant in league.participants.all():
+        playerPortfolio = LeaguePortfolio.objects.filter(owner = participant,league = league)[0]
         playerHoldings = [holding for holding in LeagueHolding.objects.filter(owner = participant,league = league)]
         totalPortValue = 0
         for holding in playerHoldings:
             totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
-        totalPortValue +=  participant.leagueportfolio.balance
+        totalPortValue +=  playerPortfolio.balance
         participant.league_portfolio_value = totalPortValue
         memberlist.append(participant)
     memberlist.sort(key = lambda x: x.league_portfolio_value)
