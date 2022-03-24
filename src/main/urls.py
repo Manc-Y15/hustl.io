@@ -32,6 +32,6 @@ urlpatterns = [
     path('leagues/<str:league_name>/trading', trading_views.asset_list_page),
     # Asset listing page needs a separate variable but still routes to same page
     path('leagues/<str:league_name>/trading/<str:ticket>', league_views.league_asset_listing_page),
-    #path('leagues/<str:league_name>/portfolio', league_views.league_portfolio),
+    path('leagues/<str:league_name>/portfolio', league_views.league_portfolio),
     #path('leagues/<str:league_name>/portfolio/<str:name>', league_views.league_other_portfolio)
 ]
