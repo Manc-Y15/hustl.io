@@ -31,7 +31,7 @@
 						</div>
 							{% for request in requests %}
 							<div class="profile-input row" id="{{friend.0}}_result">
-								<div class="profile-input-text col-10 flex-wrap">
+								<div class="profile-input-text col-12 flex-wrap">
 									<h4 style="margin: 0;">
 										<span style="color: #f39c12">{{ request.0 }}</span></h4>{% if request.1 %}<h6 style="padding-left: 1em; margin: 0;">friends with
 										<span style="color: #2ecc71"> {{ request.1 }}</span>{% if request.2 != 0 %} + {{ request.2 }} others{% endif %}</h6>{% endif %}
@@ -105,16 +105,18 @@
 								<h3 style="text-align: left;">Suggested users</h3>
 							</div>
 							{% for suggestion in suggestions %}
-								<div class="profile-input row" id="{{search_result_name}}_result" style="margin-bottom: 15px;">
-									<h4 class="profile-input-text col-10 flex-wrap">
-										<span style="color: #f39c12">{{suggestion}}</span>
-									</h4>
-									<a class="col-6" href="/portfolio/{{suggestion}}" style="padding:0">
+								<div class="profile-input row" id="{{suggestion.0}}_result" style="margin-bottom: 15px;">
+									<div class="profile-input-text col-12 flex-wrap">
+										<h4 style="margin: 0;">
+											<span style="color: #f39c12">{{ suggestion.0 }}</span></h4>{% if suggestion.1 %}<h6 style="padding-left: 1em; margin: 0;">friends with
+											<span style="color: #2ecc71"> {{ suggestion.1 }}</span>{% if suggestion.2 != 0 %} + {{ suggestion.2 }} others{% endif %}</h6>{% endif %}
+									</div>
+									<a class="col-6" href="/portfolio/{{suggestion.0}}" style="padding:0">
 										<button style="margin-top: 10px;" class="default-button col-12" type="button" name="view_profile">View profile</button>
 									</a>
 									<form hx-post="/friends/request" hx-swap="afterend" class="col-6" style="padding: 0;">
 										{% csrf_token %}
-										<input type="hidden" name="username" value="{{suggestion}}">
+										<input type="hidden" name="username" value="{{suggestion.0}}">
 										<button style="margin-top: 10px;" class="add-friend-button col-12" type="submit" name="Add_friend">Add friend</button>
 									</form>
 								</div>

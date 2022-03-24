@@ -1,7 +1,8 @@
 {% if form.success %}
+
 <div class="form-response-container" hx-swap-oob="innerHTML:#responseModal">
     <div class="toast form-response-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
-        <h1 class="form-response-h1">Successfully added {{friend_name}}
+        <h1 class="form-response-h1">Successfully {% if form.friends %}added{% else %}requested to be friends with {% endif %} {{friend_name}}
         </h1>
 
         <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,8 +29,7 @@
     </script>
 </div>
 
-{% else %}
-{% if form.friends%}
+{% elif form.friends %}
 <div class="form-response-container" hx-swap-oob="innerHTML:#responseModal">
     <div class="toast form-response-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
         <h1 class="form-response-h1">You are already friends with {{friend_name}}
@@ -89,5 +89,4 @@
         }, 3000);
     </script>
 </div>
-{% endif %}
 {% endif %}

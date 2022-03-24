@@ -151,7 +151,7 @@ def request_friend(request):
 		if User.objects.filter(username = friend_name).exists():
 			newFriend =  User.objects.filter(username = friend_name)[0]
 			if request.user in newFriend.profile.requested_me.all():
-				form['success'] = False
+				form['friends'] = False
 			elif newFriend in request.user.profile.friends.all():
 				form['friends'] = True
 			elif newFriend in request.user.profile.requested_me.all():
@@ -162,6 +162,7 @@ def request_friend(request):
 				newFriend.profile.save()
 				request.user.profile.save()
 				form['success'] = True
+				form['friends'] = True
 				return redirect("/friends")
 			else:
 				# request.user.profile.requested_friends.add(newFriend)
@@ -226,8 +227,12 @@ def friends_view(request):
 			friendinfo.append("Losing")
 			friendinfo.append( winvslose * -1)	
 		for suggested in friend.profile.friends.all():
-			if suggested.username not in suggested_users and suggested != request.user and suggested not in request.user.profile.friends.all():
-				suggested_users.append(suggested.username)
+			if not any(suggested.username in sublist for sublist in suggested_users) and suggested != request.user and suggested not in request.user.profile.friends.all() and request.user not in suggested.profile.requested_me.all() and suggested not in request.user.profile.requested_me.all():
+				n=-1
+				for existing_friend in request.user.profile.friends.all():
+					if suggested in existing_friend.profile.friends.all():
+						n+=1
+				suggested_users.append([suggested.username,friend.username,n])
 
 	
 	random.shuffle(suggested_users)
@@ -247,8 +252,8 @@ def friends_view(request):
 
 	n=0
 	while len(suggested_users)<3 and n<len(userlist):
-		if userlist[n].username not in suggested_users and userlist[n] != request.user and userlist[n] not in request.user.profile.friends.all():
-			suggested_users.append(userlist[n].username)
+		if not any(userlist[n].username in sublist for sublist in suggested_users) and userlist[n] != request.user and userlist[n] not in request.user.profile.friends.all() and request.user not in userlist[n].profile.requested_me.all() and userlist[n] not in request.user.profile.requested_me.all():
+			suggested_users.append([userlist[n].username,False,0])
 		n+=1
 
 	requests=[]
