@@ -9,7 +9,7 @@ import json
 from datetime import datetime
 import calendar
 from .constants import *
-
+from .main_views import error_view
 
 # asset_page_form (view func)
 # Only used for receiving post request from asset_page; validates transaction and returns partial HTML response.
@@ -78,6 +78,17 @@ def asset_page_form(request):
 # Main page for a stock listing.
 # ticket = The stock you are requesting to see.
 def asset_page(request, ticket):
+    if request.league != "global" and len(League.objects.filter(name=request.league)) == 0:
+        return error_view(request, error="This league doesn't exist.")
+    
+    leagueobj = League.objects.filter(name = request.league)[0]
+
+    if not request.user.is_authenticated:
+        return error_view(request, error="You need to be logged in to view your leagues.")
+    elif not (request.user in leagueobj.participants.all() or leagueobj.owner == request.user):
+        return error_view(request, error="You are not in this league.")
+
+
     query_matches = Stock.objects.filter(ticket=ticket)
     if len(query_matches) != 1:
         # TODO: Change to error page
@@ -150,7 +161,18 @@ def asset_page(request, ticket):
 
 # asset_list_page (view func)
 # List of all stocks available & price information
-def asset_list_page(request):
+def asset_list_page(request, league_name="global"):
+    if league_name != "global" and len(League.objects.filter(name=league_name)) == 0:
+        return error_view(request, error="This league doesn't exist.")
+
+    leagueobj = League.objects.filter(name = league_name)[0]
+
+    if not request.user.is_authenticated:
+        return error_view(request, error="You need to be logged in to view your leagues.")
+    elif not (request.user in leagueobj.participants.all() or leagueobj.owner == request.user):
+        return error_view(request, error="You are not in this league.")
+
+
     stocks = [stock for stock in Stock.objects.all()]
     positive = {}
     for stock in stocks:
@@ -165,7 +187,8 @@ def asset_list_page(request):
         stock.col2 = cols[1]
         #stock.background = choose_background(stock)
     return render(request, "trading/stock_list.html", {
-        'stocks': stocks
+        'stocks': stocks,
+        'league': league_name
     })
 
 # portfolio_view (view func)

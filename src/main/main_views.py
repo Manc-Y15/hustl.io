@@ -174,19 +174,7 @@ def request_friend(request):
 			return(False,"This user does not exist")
 		# add user to friend names requested list
 
-# def add_friend(request,friend_name):
-# 	if User.objects.filter(username = friend_name).exists():
-# 		newFriend =  User.objects.filter(username = friend_name)[0]
-# 		if newFriend  in request.user.profile.requested_friends.all():
-# 			request.user.profile.friends.add(newFriend)
-# 			request.user.profile.save()
-# 			newFriend.profile.friends.add(request.user)
-# 			newFriend.profile.save()
-# 			return(True,"")
-# 		else:
-# 			return(False,f"You're already friends with {friend_name}")
-# 	else:
-# 		return(False,"This user does not exist")
+
 
 def remove_friend(request):
 	if request.method == "POST":
@@ -251,5 +239,5 @@ def friends_view(request):
 		})
 	
 
-
-
+def error_view(request, error="Page doesn't exist"):
+	return render(request, 'base/error.html', {'error': error})
