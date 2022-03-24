@@ -28,7 +28,6 @@ def gen_data(amount):
 
         user.portfolio.balance += random.randint(-5000, 5000)
         user.portfolio.save()
-        update_user_portfolio(user.portfolio)
 
         print(user.username)
         

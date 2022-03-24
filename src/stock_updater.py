@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.utils import timezone
 from main.models import Stock, Portfolio, Holding
+from main.generic_functions import getPortfolioValue, percentage_change
 
 
 
@@ -45,6 +46,14 @@ def update_stocks():
         else:
             history['history'] = [{"oldTime": str(stock.current_datetime), "oldData": float(stock.current_price)}] # If history doesn't exist for some reason
         stock.historical = json.dumps(history) # Saved as text due to SQLite not supporting JSONField
+
+        historical_prices = json.loads(stock.historical)['history']
+        lastWeekPrice = float(historical_prices[len(historical_prices)-4]['oldData'])
+        yesterdayPrice =  float(historical_prices[len(historical_prices)-2]['oldData'])
+        todayPrice =  float(stock.current_price)
+        stock.day_change = percentage_change(yesterdayPrice,todayPrice)
+        stock.week_change = percentage_change(lastWeekPrice,todayPrice)
+
 
         if(stock.save()): successfully_updated += 1
     

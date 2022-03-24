@@ -1,47 +1,15 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Stock, Holding, Portfolio, Transaction,User
+from .models import Stock, Holding, Portfolio, Transaction,User, League
 from django.contrib.auth.decorators import login_required
 from .transactions import user_buy, user_sell_all
 from random import randint, choice
 from .generic_functions import getPortfolioValue
+from .leagues import add_user
 import json
 from datetime import datetime
 import calendar
+from .constants import *
 
-# For reference; possible gradient combos for stocks
-backgrounds = [
-    "var(--emerald) var(--turquoise)",
-    "var(--turquoise) var(--amethyst)",
-    "var(--sun-flower) var(--carrot)",
-    "var(--wisteria) var(--pumpkin)",
-    "var(--clouds) var(--river) ",
-]
-
-# List of colours for pie chart to cycle through
-circular_colour_list = [
-"--river", 
-"--emerald", 
-"--turquoise", 
-"--amethyst",
-"--green-sea",
-"--nephritis",
-"--wisteria",
-"--sun-flower",
-"--carrot",
-"--alizarin",
-"--orange",
-"--river", 
-"--emerald", 
-"--turquoise", 
-"--amethyst",
-"--green-sea",
-"--nephritis",
-"--wisteria",
-"--sun-flower",
-"--carrot",
-"--alizarin",
-"--orange",
-]
 
 # asset_page_form (view func)
 # Only used for receiving post request from asset_page; validates transaction and returns partial HTML response.
@@ -139,7 +107,7 @@ def asset_page(request, ticket):
             new_transacaction.append('bought' if transac.buy else 'sold')
             new_transacaction.append(round(transac.buy_price * transac.volume,2))
             new_transacaction.append(transac.stock_id.ticket)
-            new_transacaction.append(transac.stock_id.current_price)
+            new_transacaction.append(transac.buy_price)
             new_transacaction.append(transac.time)
             transactions.append(new_transacaction)
         transactions.reverse()
@@ -253,7 +221,7 @@ def portfolio_view(request):
         ticket_list.append(item[0])
         data_list.append(item[1])
 
-    colour_list = circular_colour_list
+    colour_list = CIRCULAR_COLOUR_LIST
 
     asset_data = {'tickets': ticket_list ,'data' :data_list,'colours': colour_list }
     return render(request, "trading/portfolio.html",{
@@ -338,8 +306,8 @@ def other_user_portfolio(request,name):
         'numOfTrades': userTrades,
         'rankRegional': '13',
         'rankOverall': '78',
-        'totalProfit': (player.value - 50000),
-        'totalPortValue': player.value,
+        'totalProfit': f"${(player.value - 50000):,}",
+        'totalPortValue': f"${player.value:,}",
         'userFriend': userFriend,
         'lastTraded': lastTrade,
         'portfolio': portfolio,

@@ -62,53 +62,75 @@
             background: transparent;
 
         }
+
+        a {
+            text-decoration: none !important;
+            
+        }
     </style>
     <div class="container" style="margin-bottom: 40px;">
         <div class="row">
             <div class="col-12">
                 <li class="list-group-item activity-item">
+                    <a href="/portfolio/{{ gold.username }}">
+
                     <h3 class="activity-item-text text-center">
+
                         <span style="font-size: 1.8rem; width: fit-content;background: linear-gradient(90deg, var(--sun-flower) 23%, var(--carrot) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                             <i class="fas fa-medal"></i>
                         </span>
                         <br>{{ gold.username }}<br>
-                        
                         <span style="color: var(--emerald);">${{ gold.portfolio_value|intcomma }}</span>
                     </h3>
+                </a>
+
                 </li>
             </div>
             <div class="col-12 col-sm-6">
                 <li class="list-group-item activity-item">
+                    <a href="/portfolio/{{ silver.username }}">
+
                     <h3 class="activity-item-text text-center">
                         <span style="font-size: 1.8rem; width: fit-content;background: linear-gradient(90deg, var(--concrete) 23%, var(--clouds) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                             <i class="fas fa-medal"></i>
                         </span>
                         <br>{{ silver.username }}<br>
-                        
-                        <span style="color: var(--emerald);">${{ silver.portfolio_value|intcomma }}</span>
+                        <span style="color: var(--emerald);">${{ silver.portfolio_value|intcomma }}</span>                        
+
                     </h3>
+                </a>
+
                 </li>
             </div>
             <div class="col-12 col-sm-6">
                 <li class="list-group-item activity-item">
+                    <a href="/portfolio/{{ bronze.username }}">
+
                     <h3 class="activity-item-text text-center">
+
                         <span style="font-size: 1.8rem; width: fit-content;background: linear-gradient(90deg, var(--carrot) 23%, var(--pumpkin) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                             <i class="fas fa-medal"></i>
                         </span>
                         <br>{{ bronze.username }}<br>
-                        
                         <span style="color: var(--emerald);">${{ bronze.portfolio_value|intcomma }}</span>
                     </h3>
+                </a>
+
                 </li>
             </div>
             {% for player in users %}
             <div class="col-12 col-sm-6">
                 <li class="list-group-item activity-item">
+                    <a href="/portfolio/{{ player.username }}">
+
                     <h5 class="activity-item-text">
                         {{ forloop.counter|add:3 }}.
                         <span style="color: var(--orange);">{{ player.username }}</span> valued at 
                         <span style="color: var(--emerald);">${{ player.portfolio_value|intcomma }}</span>
                     </h5>
+
+                    </a>
+
                 </li>
             </div>
             {% endfor %}
