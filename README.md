@@ -5,8 +5,8 @@ Leagues Plan:
 
 ## Pages:
 - [x] View all leagues
-- [ ] Create new league
-- [ ] League leaderboard w/ per-user management options (only shows if you're owner) and add user button
+- [x] Create new league
+- [x] League leaderboard w/ per-user management options (only shows if you're owner) and add user button
 - [ ] Add user form (copy of friends page)
 - [ ] User's portfolio for that league (copy of portfolio page)
 
