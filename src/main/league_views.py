@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Stock, Profile, Portfolio, Holding, User, League, LeaguePortfolio
+from .models import Stock, Profile, Portfolio, Holding, User, League, LeaguePortfolio, LeagueHolding
 from .leagues import create_league, add_user,remove_user 
 import random
 def view_leagues(request):
@@ -28,3 +28,29 @@ def create_league_view(request):
     return render(request, 'leagues/league_creation.html', {
         'errors': errors,
     })
+def leaderboard_view(request,league):
+    memberlist = []
+    for participant in league.participants.all():
+        playerHoldings = [holding for holding in LeagueHolding.objects.filter(owner = participant,league = league)]
+        totalPortValue = 0
+        for holding in playerHoldings:
+            totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
+        totalPortValue +=  participant.leagueportfolio.balance
+        participant.league_portfolio_value = totalPortValue
+        memberlist.append(participant)
+    memberlist.sort(key = lambda x: x.league_portfolio_value)
+    userlist = memberlist[::-1]
+    
+    winner = memberlist[0]
+    del memberlist[0]
+    silver = memberlist[0]
+    del memberlist[0]
+    bronze = memberlist[0]
+    del memberlist[0]
+    return render(request, "leaderboards/leaderboard.html", {
+        "league": league,
+        "members": memberlist,
+        "gold": winner,
+        "silver": silver,
+        "bronze": bronze,
+        })

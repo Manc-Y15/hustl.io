@@ -24,7 +24,7 @@ urlpatterns = [
     path('friends/remove', main_views.remove_friend),
     path('leagues/', league_views.view_leagues),
     path('leagues/create', league_views.create_league_view),
-    #path('leagues/<str:league_name>', league_views.league_leaderboard),
+    path('leagues/<str:league_name>', league_views.league_leaderboard),
     #path('leagues/<str:league_name>/portfolio', league_views.league_portfolio),
     #path('leagues/<str:league_name>/portfolio/<str:name>', league_views.league_other_portfolio)
 ]

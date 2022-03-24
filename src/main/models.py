@@ -48,6 +48,12 @@ class LeaguePortfolio(models.Model):
     balance = models.DecimalField(max_digits=10, decimal_places=2)
     bal_hist = models.TextField() # JSON
 
+class LeagueHolding(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=4)    
+    stock_id = models.ForeignKey(Stock, on_delete=models.DO_NOTHING)
+
 @receiver(post_save, sender=League)
 def create_league(sender, instance, created, **kwargs):
     if created:
