@@ -33,8 +33,17 @@ def league_leaderboard(request,league_name):
     league = League.objects.filter(name = league_name)[0]
     print(league.name)
     print(league.participants.all())
-    # how do i pass league into this function
     memberlist = []
+    # owner
+    totalPortValue = 0
+    player = league.owner
+    playerHoldings = [holding for holding in LeagueHolding.objects.filter(owner = player,league = league)]
+    for holding in playerHoldings:
+        totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
+    totalPortValue +=  player.leagueportfolio.balance
+    player.league_portfolio_value = totalPortValue
+    memberlist.append(player)
+    # all other members    
     for participant in league.participants.all():
         playerHoldings = [holding for holding in LeagueHolding.objects.filter(owner = participant,league = league)]
         totalPortValue = 0
@@ -44,15 +53,16 @@ def league_leaderboard(request,league_name):
         participant.league_portfolio_value = totalPortValue
         memberlist.append(participant)
     memberlist.sort(key = lambda x: x.league_portfolio_value)
-    userlist = memberlist[::-1]
-    
+    memberlist = memberlist[::-1]
+    print(memberlist)
     winner = memberlist[0]
     del memberlist[0]
     silver = memberlist[0]
     del memberlist[0]
     bronze = memberlist[0]
     del memberlist[0]
-    return render(request, "leaderboards/leaderboard.html", {
+    print(memberlist)
+    return render(request, "leagues/league_leaderboard.html", {
         "league": league,
         "members": memberlist,
         "gold": winner,
