@@ -1,5 +1,4 @@
 {% if form.success %}
-
 <div class="form-response-container" hx-swap-oob="innerHTML:#responseModal">
     <div class="toast form-response-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
         <h1 class="form-response-h1">Successfully {% if form.friends %}added{% else %}requested to be friends with {% endif %} {{friend_name}}
@@ -59,6 +58,7 @@
         }, 3000);
     </script>
 </div>
+
 {% else %}
 <div class="form-response-container" hx-swap-oob="innerHTML:#responseModal">
     <div class="toast form-response-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">

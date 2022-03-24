@@ -97,31 +97,30 @@
 							{% else %}
 								<p style="text-align: center; color: white; margin-top: 25px;font-family: 'Comfortaa'">You don't have any friends yet :(</p>
 							{% endif %}
-						</div>
 					</div>
-					<div class="col" style="margin-left: 10px;padding-top: 20px;">
-						<div class="grid">
-							<div class="row" style="border-bottom:1px solid #95a5a6;">
-								<h3 style="text-align: left;">Suggested users</h3>
-							</div>
-							{% for suggestion in suggestions %}
-								<div class="profile-input row" id="{{suggestion.0}}_result" style="margin-bottom: 15px;">
-									<div class="profile-input-text col-12 flex-wrap">
-										<h4 style="margin: 0;">
-											<span style="color: #f39c12">{{ suggestion.0 }}</span></h4>{% if suggestion.1 %}<h6 style="padding-left: 1em; margin: 0;">friends with
-											<span style="color: #2ecc71"> {{ suggestion.1 }}</span>{% if suggestion.2 != 0 %} + {{ suggestion.2 }} others{% endif %}</h6>{% endif %}
-									</div>
-									<a class="col-6" href="/portfolio/{{suggestion.0}}" style="padding:0">
-										<button style="margin-top: 10px;" class="default-button col-12" type="button" name="view_profile">View profile</button>
-									</a>
-									<form hx-post="/friends/request" hx-swap="afterend" class="col-6" style="padding: 0;">
-										{% csrf_token %}
-										<input type="hidden" name="username" value="{{suggestion.0}}">
-										<button style="margin-top: 10px;" class="add-friend-button col-12" type="submit" name="Add_friend">Add friend</button>
-									</form>
-								</div>
-							{% endfor %}
+				</div>
+				<div class="col" style="margin-left: 10px;padding-top: 20px;">
+					<div class="grid">
+						<div class="row" style="border-bottom:1px solid #95a5a6;">
+							<h3 style="text-align: left;">Suggested users</h3>
 						</div>
+						{% for suggestion in suggestions %}
+							<div class="profile-input row" id="{{suggestion.0}}_result" style="margin-bottom: 15px;">
+								<div class="profile-input-text col-12 flex-wrap">
+									<h4 style="margin: 0;">
+										<span style="color: #f39c12">{{ suggestion.0 }}</span></h4>{% if suggestion.1 %}<h6 style="padding-left: 1em; margin: 0;">friends with
+										<span style="color: #2ecc71"> {{ suggestion.1 }}</span>{% if suggestion.2 != 0 %} + {{ suggestion.2 }} others{% endif %}</h6>{% endif %}
+								</div>
+								<a class="col-6" href="/portfolio/{{suggestion.0}}" style="padding:0">
+									<button style="margin-top: 10px;" class="default-button col-12" type="button" name="view_profile">View profile</button>
+								</a>
+								<form hx-post="/friends/request" hx-swap="afterend" class="col-6" style="padding: 0;">
+									{% csrf_token %}
+									<input type="hidden" name="username" value="{{suggestion.0}}">
+									<button style="margin-top: 10px;" class="add-friend-button col-12" type="submit" name="Add_friend">Add friend</button>
+								</form>
+							</div>
+						{% endfor %}
 					</div>
 				</div>
 			</div>

@@ -235,7 +235,7 @@ def friends_view(request):
 				suggested_users.append([suggested.username,friend.username,n])
 
 	
-	random.shuffle(suggested_users)
+	suggested_users.sort(key=lambda l:l[2], reverse=True)
 	print(suggested_users)
 	userlist = []
 
