@@ -28,7 +28,12 @@ def create_league_view(request):
     return render(request, 'leagues/league_creation.html', {
         'errors': errors,
     })
-def leaderboard_view(request,league):
+
+def league_leaderboard(request,league_name):
+    league = League.objects.filter(name = league_name)[0]
+    print(league.name)
+    print(league.participants.all())
+    # how do i pass league into this function
     memberlist = []
     for participant in league.participants.all():
         playerHoldings = [holding for holding in LeagueHolding.objects.filter(owner = participant,league = league)]
