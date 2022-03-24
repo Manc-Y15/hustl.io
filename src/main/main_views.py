@@ -210,6 +210,7 @@ def remove_friend(request):
 def friends_view(request):
 	request.user.portfolio_value = getPortfolioValue(request.user)
 	friends = []
+	suggested_users = []
 	for friend in request.user.profile.friends.all():
 		friends.append([])
 		friendinfo = friends[-1]
@@ -224,6 +225,31 @@ def friends_view(request):
 		else:
 			friendinfo.append("Losing")
 			friendinfo.append( winvslose * -1)	
+		for suggested in friend.profile.friends.all():
+			if suggested.username not in suggested_users and suggested != request.user and suggested not in request.user.profile.friends.all():
+				suggested_users.append(suggested.username)
+
+	
+	random.shuffle(suggested_users)
+	print(suggested_users)
+	userlist = []
+
+	for player in User.objects.all():
+		userHoldings = [holding for holding in Holding.objects.filter(owner = player)]
+		totalPortValue = 0
+		for holding in userHoldings:
+			totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
+		totalPortValue +=  player.portfolio.balance
+		player.portfolio_value = totalPortValue
+		userlist.append(player)
+	userlist.sort(key = lambda x: x.portfolio_value)
+	userlist = userlist[::-1]
+
+	n=0
+	while len(suggested_users)<3 and n<len(userlist):
+		if userlist[n].username not in suggested_users and userlist[n] != request.user and userlist[n] not in request.user.profile.friends.all():
+			suggested_users.append(userlist[n].username)
+		n+=1
 
 	requests=[]
 
@@ -247,7 +273,8 @@ def friends_view(request):
 	return render(request, 'accounts/friends.html', {
 		'friends':friends,
 		'leagues':leagues,
-		'requests':requests #change to requests once requests info is imported
+		'requests':requests,
+		'suggestions':suggested_users
 		})
 	
 

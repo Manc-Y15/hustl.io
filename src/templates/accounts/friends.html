@@ -101,27 +101,24 @@
 					</div>
 					<div class="col" style="margin-left: 10px;padding-top: 20px;">
 						<div class="grid">
-							<div class="row">
-								{% for league in leagues %}
-								<div class="league-preview col-sm-12 col-6">
-									<h4 class="league-preview-text" style="padding-bottom: 10px;">{{league.0}}</h4>
-									{% for user in league|slice:"1:" %}
-									{% cycle '1' '2' '3' as position silent %}
-									<div class="league-preview-row row">
-										<h4 class="league-preview-text col-9 col-md-8">{{position}}. {{user.0}}</h4>
-										{% if user.1 == 'Up' %}
-										<i class="fa fa-solid fa-caret-up col" style="font-size: 1.5em; color: var(--emerald);"></i>
-										{% elif user.1 == 'Down' %}
-										<i class="fa fa-solid fa-caret-down col" style="font-size: 1.5em; color: var(--pomegranate);"></i>
-										{% else %}
-										<i class="fa fa-solid fa-equals col" style="font-size: 1em; color: var(--river);"></i>
-										{% endif %}
-									</div>
-									{% endfor %}
+							<div class="row" style="border-bottom:1px solid #95a5a6;">
+								<h3 style="text-align: left;">Suggested users</h3>
+							</div>
+							{% for suggestion in suggestions %}
+								<div class="profile-input row" id="{{search_result_name}}_result" style="margin-bottom: 15px;">
+									<h4 class="profile-input-text col-10 flex-wrap">
+										<span style="color: #f39c12">{{suggestion}}</span>
+									</h4>
+									<a class="col-6" href="/portfolio/{{suggestion}}" style="padding:0">
+										<button style="margin-top: 10px;" class="default-button col-12" type="button" name="view_profile">View profile</button>
+									</a>
+									<form hx-post="/friends/request" hx-swap="afterend" class="col-6" style="padding: 0;">
+										{% csrf_token %}
+										<input type="hidden" name="username" value="{{suggestion}}">
+										<button style="margin-top: 10px;" class="add-friend-button col-12" type="submit" name="Add_friend">Add friend</button>
+									</form>
 								</div>
 							{% endfor %}
-							</div>
-							<a href="leagues.html" class="default-button row justify-content-center" style="padding-top: 0.488em;padding-bottom: 0.488em; max-width: 200px; max-height: 160px; margin-top: 10px; margin-left: 0;">View all leagues</a>
 						</div>
 					</div>
 				</div>

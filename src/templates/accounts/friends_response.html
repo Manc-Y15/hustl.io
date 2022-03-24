@@ -10,9 +10,9 @@
 	<h4 class="profile-input-text col-10 flex-wrap">
 		<span style="color: #f39c12">{{search_result_name}}</span>
 	</h4>
-	<form class="col-6">
-		<button style="margin-top: 10px;" class="default-button col-12" type="button" name="view_profile" onclick="viewProfile(this);">View profile</button>
-	</form>
+	<a class="col-6" href="/portfolio/{{search_result_name}}">
+		<button style="margin-top: 10px;" class="default-button col-12" type="button" name="view_profile">View profile</button>
+	</a>
 	<form hx-post="/friends/request" hx-swap="afterend" class="col-6">
 		{% csrf_token %}
 		<input type="hidden" name="username" value="{{search_result_name}}">
