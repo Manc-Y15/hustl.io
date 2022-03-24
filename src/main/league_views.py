@@ -86,8 +86,7 @@ def league_leaderboard(request,league_name):
         })
 
 def league_asset_listing_page(request, league_name, ticket):
-    request.league = league_name
-    return trading_views.asset_page(request, ticket)
+    return trading_views.asset_page(request, ticket, league_name)
 
 def league_portfolio(request,league_name):
     league = League.objects.filter(name = league_name)[0]

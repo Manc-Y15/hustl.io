@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="row" style="margin-top: 15px; gap: 15px; ">
-        <a href="/portfolio" class="col-12 col-sm big-button" style="background: var(--amethyst);">
+        <a href="/portfolio" class="col-12 col-sm big-button" style="background: var(--turquoise);">
             <div class="icon-box d-flex flex-column justify-content-center align-self-center" style="height: 100%">
                 <i class="fas fa-arrow-right big-button-icon secondary-icon"></i>
 
@@ -46,7 +46,7 @@
                 <h3>Friends</h3>
             </div>
         </a>
-        <a href="/leagues" class="col-12 col-sm big-button" style="background: var(--turquoise);">
+        <a href="/leagues" class="col-12 col-sm big-button" style="background: var(--amethyst);">
             <div class="icon-box d-flex flex-column justify-content-center" style="height: 100%">
                 <i class="fas fa-arrow-right big-button-icon secondary-icon"></i>
                 <i class="fas fa-list big-button-icon primary-icon"></i>
@@ -66,10 +66,10 @@
         <div class="col portfolio-info-box">
             <h3>Weekly Market Direction</h3>
             <h1 class="showcase-number ">{% if stock.pos %}<span style="color: var(--nephritis);"><i
-                style="margin-right:5px; position: relative; bottom:1px;"
-                class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);"><i
-                    style="color: var(--alizarin); margin-right:5px; position: relative; bottom:1px;"
-                    class="fas fa-caret-down"></i>{% endif %}0.84%</span>
+                style="margin-right:5px; position: relative; bottom:8px;font-size: 2.5rem; transform: rotate(-45deg);"
+                class="fas fa-rocket"></i>{% else %}<span style="color: var(--alizarin);"><i
+                    style="color: var(--alizarin); margin-right:5px; position: relative; bottom:18px;font-size: 2.5rem; transform: rotate(135deg);"
+                    class="fas fa-rocket"></i>{% endif %}0.84%</span>
             </h1>
         </div>
 
@@ -100,17 +100,17 @@
                     </a>
                     
                     <span class="price" style="max-width: fit-content; margin-right: 5px;">
-                        {% if stock.day_change > 0 %}<span style="color: var(--nephritis);">{{ stock.day_change}}% (24hr)<i style="margin-left:5px; position: relative; bottom:0px;"
-                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.day_change }}% (24hr)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
-                        class="fas fa-caret-down"></i>{% endif %}</span></span>
+                        {% if stock.day_change > 0 %}<span style="color: var(--nephritis);">{{ stock.day_change}}% (24hr)<i style="margin-left:5px; position: relative; bottom:0px;transform: rotate(-45deg);"
+                            class="fas fa-rocket"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.day_change }}% (24hr)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;transform: rotate(135deg);"
+                        class="fas fa-rocket"></i>{% endif %}</span></span>
                     <span class="price" style="max-width: fit-content; margin-right: 5px;">
-                        {% if stock.week_change > 0 %}<span style="color: var(--nephritis);">{{ stock.week_change}}% (7d)<i style="margin-left:5px; position: relative; bottom:0px;"
-                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.week_change}}% (7d)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
-                        class="fas fa-caret-down"></i>{% endif %}</span></span>
+                        {% if stock.week_change > 0 %}<span style="color: var(--nephritis);">{{ stock.week_change}}% (7d)<i style="margin-left:5px; position: relative; bottom:0px;transform: rotate(-45deg);"
+                            class="fas fa-rocket"></i>{% else %}<span style="color: var(--alizarin);">{{ stock.week_change}}% (7d)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;transform: rotate(135deg);"
+                        class="fas fa-rocket"></i>{% endif %}</span></span>
                     <span class="price" style="max-width: fit-content; margin-right: 5px;">
-                        {% if stock.day_change > 0 %}<span style="color: var(--nephritis);">${{ stock.current_price|intcomma }} ($)<i style="margin-left:5px; position: relative; bottom:0px;"
-                            class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price|intcomma }} ($)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;"
-                        class="fas fa-caret-down"></i>{% endif %}</span></span>
+                        {% if stock.day_change > 0 %}<span style="color: var(--nephritis);">${{ stock.current_price|intcomma }} ($)<i style="margin-left:5px; position: relative; bottom:0px;transform: rotate(-45deg);"
+                            class="fas fa-rocket"></i>{% else %}<span style="color: var(--alizarin);">${{ stock.current_price|intcomma }} ($)<i style="color: var(--alizarin); margin-left:5px; position: relative; bottom:0px;transform: rotate(135deg);"
+                        class="fas fa-rocket"></i>{% endif %}</span></span>
             </div>
         {% endfor %}
     </div>

@@ -77,16 +77,17 @@ def asset_page_form(request):
 # asset_page (view function)
 # Main page for a stock listing.
 # ticket = The stock you are requesting to see.
-def asset_page(request, ticket):
-    if request.league != "global" and len(League.objects.filter(name=request.league)) == 0:
-        return error_view(request, error="This league doesn't exist.")
-    
-    leagueobj = League.objects.filter(name = request.league)[0]
-
-    if not request.user.is_authenticated:
+def asset_page(request, ticket, league_name="global"):
+    if league_name != "global" and not request.user.is_authenticated:
         return error_view(request, error="You need to be logged in to view your leagues.")
-    elif not (request.user in leagueobj.participants.all() or leagueobj.owner == request.user):
-        return error_view(request, error="You are not in this league.")
+
+    if league_name != "global":
+        if len(League.objects.filter(name=league_name)) == 0:
+            return error_view(request, error="This league doesn't exist.")
+        
+        leagueobj = League.objects.filter(name = league_name)[0]
+        if not (request.user in leagueobj.participants.all() or leagueobj.owner == request.user):
+                return error_view(request, error="You are not in this league.")
 
 
     query_matches = Stock.objects.filter(ticket=ticket)
@@ -145,7 +146,6 @@ def asset_page(request, ticket):
     else:
         transactions = []
 
-    if not request.league: request.league = "global"
     
     return render(request, 'trading/stock_listing.html', {
         'stock': stock,
@@ -154,7 +154,7 @@ def asset_page(request, ticket):
             "value_history": value_history,
             "dates": dates
         }),
-        'league': request.league
+        'league': league_name
     }
     )
 
@@ -162,15 +162,18 @@ def asset_page(request, ticket):
 # asset_list_page (view func)
 # List of all stocks available & price information
 def asset_list_page(request, league_name="global"):
-    if league_name != "global" and len(League.objects.filter(name=league_name)) == 0:
-        return error_view(request, error="This league doesn't exist.")
-
-    leagueobj = League.objects.filter(name = league_name)[0]
-
-    if not request.user.is_authenticated:
+    if league_name != "global" and not request.user.is_authenticated:
         return error_view(request, error="You need to be logged in to view your leagues.")
-    elif not (request.user in leagueobj.participants.all() or leagueobj.owner == request.user):
-        return error_view(request, error="You are not in this league.")
+
+    if league_name != "global":
+        if len(League.objects.filter(name=league_name)) == 0:
+            return error_view(request, error="This league doesn't exist.")
+        
+        leagueobj = League.objects.filter(name = league_name)[0]
+        if not (request.user in leagueobj.participants.all() or leagueobj.owner == request.user):
+                return error_view(request, error="You are not in this league.")
+    
+    
 
 
     stocks = [stock for stock in Stock.objects.all()]

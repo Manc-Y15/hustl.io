@@ -64,6 +64,12 @@ ICON_LIST = [
     "fa-flushed",
     "fa-football-ball",
     "fa-frog",
-    "fa-gem"
-
+    "fa-gem",
+    "fa-hamburger",
+    "fa-hat-cowboy",
+    "fa-hat-wizard",
+    "fa-head-side-virus",
+    "fa-hippo",
+    "fa-jedi",
+    "fa-lemon"
 ]
