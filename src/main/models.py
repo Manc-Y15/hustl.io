@@ -29,7 +29,7 @@ class Portfolio(models.Model):
     # This relationship is the primary key
     balance = models.DecimalField(max_digits=10, decimal_places=2)
     bal_hist = models.TextField() # JSON
-    #rank = models.IntegerField(blank = False,default = 999)
+    rank = models.IntegerField(blank = False,default = 999)
 
 class League(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="league_owner")
@@ -42,13 +42,13 @@ class League(models.Model):
 
 class LeaguePortfolio(models.Model):
     # below needs to be one to many
-    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     # Means user-portfolio is 1-1 and if portfolio is deleted then owner (user) is too.
     # This relationship is the primary key
     balance = models.DecimalField(max_digits=10, decimal_places=2)
     bal_hist = models.TextField() # JSON
-    #rank = models.IntegerField(blank = False,default = 999)
+    rank = models.IntegerField(blank = False,default = 999)
 
 class LeagueHolding(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)

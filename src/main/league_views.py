@@ -29,7 +29,7 @@ def create_league_view(request):
         created = create_league(request.user, newleagueName, startBal, icon)
         
         if created:
-            return render(request, f'leagues/{newleagueName}')
+            return redirect(f'/leagues/{newleagueName}')
         else:
             errors.append(created[1])
 
