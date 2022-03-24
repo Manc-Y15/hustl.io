@@ -54,16 +54,23 @@ def league_leaderboard(request,league_name):
         memberlist.append(participant)
     memberlist.sort(key = lambda x: x.league_portfolio_value)
     memberlist = memberlist[::-1]
-    print(memberlist)
-    winner = memberlist[0]
-    del memberlist[0]
-    silver = memberlist[0]
-    del memberlist[0]
-    bronze = memberlist[0]
-    del memberlist[0]
-    print(memberlist)
+    leagueSizeBig = True
+    if len(memberlist) > 3:
+        winner = memberlist[0]
+        del memberlist[0]
+        silver = memberlist[0]
+        del memberlist[0]
+        bronze = memberlist[0]
+        del memberlist[0]
+    else:
+        leagueSizeBig = False
+        winner = None
+        silver = None
+        bronze = None
+
     return render(request, "leagues/league_leaderboard.html", {
         "league": league,
+        "league_size": leagueSizeBig,
         "members": memberlist,
         "gold": winner,
         "silver": silver,
