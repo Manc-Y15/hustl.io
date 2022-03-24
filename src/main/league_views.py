@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
+
+from main import trading_views
 from .models import Stock, Profile, Portfolio, Holding, User, League, LeaguePortfolio, LeagueHolding
 from .leagues import create_league, add_user,remove_user 
 import random
+
 def view_leagues(request):
     allLeagues = list(League.objects.filter(owner = request.user))
     for league in League.objects.exclude(owner = request.user):
@@ -74,3 +77,7 @@ def league_leaderboard(request,league_name):
         "silver": silver,
         "bronze": bronze,
         })
+
+def league_asset_listing_page(request, league_name, ticket):
+    request.league = league_name
+    return trading_views.asset_page(request, ticket)
