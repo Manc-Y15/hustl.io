@@ -129,7 +129,7 @@
                         {% if league_size == True %}
                             {{ forloop.counter|add:3 }}.
                         {% endif %}
-                        <span style="color: var(--orange);">{{ member.username }}</span> valued at 
+                        <span style="color: {% if player.username == user.username %}var(--wisteria);font-weight:900;{% else %}var(--orange);{% endif %}">{{ member.username }}</span> valued at 
                         <span style="color: var(--emerald);">${{ member.league_portfolio_value|intcomma }}</span>
                     </h5>
 

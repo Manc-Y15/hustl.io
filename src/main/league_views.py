@@ -79,7 +79,7 @@ def league_leaderboard(request,league_name):
     return render(request, "leagues/league_leaderboard.html", {
         "league": league,
         "league_size": leagueSizeBig,
-        "members": memberlist,
+        "members": memberlist[:37],
         "gold": winner,
         "silver": silver,
         "bronze": bronze,
