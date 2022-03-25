@@ -8,7 +8,6 @@
   border-radius:0px;
   border-color:transparent;
   background-color:transparent;
-  border-bottom:3px solid #2ecc71;
   color:#ecf0f1;
 }
 
@@ -27,6 +26,9 @@
 
 .nav-link:hover {
   border:none;
+  background: linear-gradient(90deg, var(--turquoise) 0%, var(--emerald) 100%); 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent;
   transition:0.5s;
 }
 

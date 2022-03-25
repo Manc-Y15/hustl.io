@@ -39,19 +39,37 @@
 
                         </a>
                     </div>
+                    {% if league_info.current_league == "global" %}
                     <div class="col-12 collapse navbar-collapse justify-content-center" id="navbarCollapseToggle">
-                        <ul class="nav nav-elems justify-content-center">
+                        <ul class="nav nav-elems justify-content-center" style="border-bottom: 3px solid #2ecc71;">
                             <li class="nav-item">
-                                <a class="nav-link active" href="/home">HOME</a>
+                                <a class="nav-link" href="/home"><i style="padding-left:0" class="fas fa-house nav-account-icon"></i>HOME</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/trading">TRADE</a>
+                                <a class="nav-link" href="/leaderboard"><i style="padding-left:0" class="fas fa-list-ol nav-account-icon"></i>LEADERBOARD</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/leaderboard">LEADERBOARD</a>
+                                <a class="nav-link" href="/trading"><i style="padding-left:0" class="fas fa-chart-line nav-account-icon"></i>TRADE</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    {% else %}
+                    <div class="col-12 collapse navbar-collapse justify-content-center" id="navbarCollapseToggle">
+                        <ul class="nav nav-elems justify-content-center" style="border-bottom: 3px solid #2ecc71;">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/home"><i style="padding-left:0" class="fas fa-house nav-account-icon"></i>HOME</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/leagues/{{ league_info.current_league }}"><i style="padding-left:0" class="fas fa-list-ol nav-account-icon"></i>LEADERBOARD</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/leagues/{{ league_info.current_league }}/trading"><i style="padding-left:0" class="fas fa-chart-line nav-account-icon"></i>TRADE</a>
                             </li>
                         </ul>
                     </div>
+                    {% endif %}
+                    
                     <div class="col-12 text-center">
                     </div>
                 </div>
@@ -81,11 +99,19 @@
         <div class="offcanvas-body">
             <ul class="nav flex-column">
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link nav-account-link hover-underline" href="/portfolio">
-                        <i class="fas fa-chart-bar nav-account-icon"></i> Your Portfolio
-                    </a>
-                </li>
+                {% if league_info.current_league == "global" %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-account-link hover-underline" href="/portfolio">
+                            <i class="fas fa-chart-bar nav-account-icon"></i> Your Portfolio
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-account-link hover-underline" href="/leagues/{{ league_info.current_league }}/portfolio">
+                            <i class="fas fa-chart-bar nav-account-icon"></i> Your Portfolio
+                        </a>
+                    </li>
+                {% endif %}                
                 <li class="nav-item">
                     <a class="nav-link nav-account-link hover-underline" href="/friends">
                         <i class="fas fa-user-friends nav-account-icon"></i> Friends
