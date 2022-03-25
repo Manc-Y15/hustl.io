@@ -48,3 +48,28 @@ LOSING_RESPONSE = [
     "Maybe trading isn't your strong suit...",
     "Yikes...",
 ]
+
+ICON_LIST = [
+    "fa-apple-alt",
+    "fa-atom",
+    "fa-baby",
+    "fa-bomb",
+    "fa-brain",
+    "fa-carrot",
+    "fa-bug",
+    "fa-cocktail",
+    "fa-dragon",
+    "fa-fighter-jet",
+    "fa-faucet",
+    "fa-flushed",
+    "fa-football-ball",
+    "fa-frog",
+    "fa-gem",
+    "fa-hamburger",
+    "fa-hat-cowboy",
+    "fa-hat-wizard",
+    "fa-head-side-virus",
+    "fa-hippo",
+    "fa-jedi",
+    "fa-lemon"
+]

@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Stock, Holding, Portfolio, Transaction,User, League
+from .models import Stock, Holding, Portfolio, Transaction,User, League, LeagueHolding
 from django.contrib.auth.decorators import login_required
 from .transactions import user_buy, user_sell_all
 from random import randint, choice
-from .generic_functions import getPortfolioValue
-from .leagues import add_user
 import json
 from datetime import datetime
 import calendar
+from .generic_functions import getPortfolioValue, percentage_change, get_user_leagues
 from .constants import *
-
+from .main_views import error_view
 
 # asset_page_form (view func)
 # Only used for receiving post request from asset_page; validates transaction and returns partial HTML response.
@@ -17,24 +16,43 @@ def asset_page_form(request):
     if request.method == "POST":
         form = {}
         transaction = {}
+        league = request.POST.get("league", "")
         if request.POST.get("transaction", "") == "sellall": # sellall needs to be handled separately 
             stock = Stock.objects.filter(ticket =  request.POST.get("ticket", ""))[0] # find stock in db
-            if Holding.objects.filter(owner = request.user, stock_id = stock).exists():
-                holding =  Holding.objects.filter(owner =  request.user, stock_id = stock)[0]
-                transaction['amount'] = holding.amount * stock.current_price
+            if league == "global":
+                if Holding.objects.filter(owner = request.user, stock_id = stock).exists():
+                    holding =  Holding.objects.filter(owner =  request.user, stock_id = stock)[0]
+                    transaction['amount'] = holding.amount * stock.current_price
 
-                order = user_sell_all(request.user, request.POST.get("ticket", ""))
+                    order = user_sell_all(request.user, request.POST.get("ticket", "")) # autos to global league
 
-                if order[0]:
-                    form['success'] = True
+                    if order[0]:
+                        form['success'] = True
+                    else:
+                        transaction['error'] = order[1] # Error msg to send back in HTML
+                        form['success'] = False
+                    transaction['is_buy'] = False
+                    transaction['stock_id'] = request.POST.get("ticket", "")
                 else:
-                    transaction['error'] = order[1] # Error msg to send back in HTML
+                    # Fail if user has no holding in stock
                     form['success'] = False
-                transaction['is_buy'] = False
-                transaction['stock_id'] = request.POST.get("ticket", "")
             else:
-                # Fail if user has no holding in stock
-                form['success'] = False
+                if LeagueHolding.objects.filter(owner = request.user, stock_id = stock).exists():
+                    holding =  LeagueHolding.objects.filter(owner =  request.user, stock_id = stock)[0]
+                    transaction['amount'] = holding.amount * stock.current_price
+
+                    order = user_sell_all(request.user, request.POST.get("ticket", ""), league)
+
+                    if order[0]:
+                        form['success'] = True
+                    else:
+                        transaction['error'] = order[1] # Error msg to send back in HTML
+                        form['success'] = False
+                    transaction['is_buy'] = False
+                    transaction['stock_id'] = request.POST.get("ticket", "")
+                else:
+                    # Fail if user has no holding in stock
+                    form['success'] = False
             
         else: # Must be either buy or sell
             transaction = {
@@ -42,7 +60,7 @@ def asset_page_form(request):
                 "stock_id": request.POST.get("ticket", ""), 
                 "amount": request.POST.get("amount", "")
             }
-            order = user_buy(request.user, transaction['is_buy'], transaction['stock_id'], float(transaction['amount']))
+            order = user_buy(request.user, transaction['is_buy'], transaction['stock_id'], float(transaction['amount']), league)
             if order[0]: # if order is success
                 form['success'] = True
             else:
@@ -53,12 +71,28 @@ def asset_page_form(request):
         stock.col1 = cols[0].split('(')[1][:-1]
         stock.col2 = cols[1].split('(')[1][:-1]
 
-        return render(request, 'trading/stock_listing_response.html', {"form": form, "transaction": transaction, "stock": stock})
+        return render(request, 'trading/stock_listing_response.html', {
+            "form": form,
+            "transaction": transaction,
+            "stock": stock,
+            'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}})
         
 # asset_page (view function)
 # Main page for a stock listing.
 # ticket = The stock you are requesting to see.
-def asset_page(request, ticket):
+def asset_page(request, ticket, league_name="global"):
+    if league_name != "global" and not request.user.is_authenticated:
+        return error_view(request, error="You need to be logged in to view your leagues.")
+
+    if league_name != "global":
+        if len(League.objects.filter(name=league_name)) == 0:
+            return error_view(request, error="This league doesn't exist.")
+        
+        leagueobj = League.objects.filter(name = league_name)[0]
+        if not (request.user in leagueobj.participants.all() or leagueobj.owner == request.user):
+                return error_view(request, error="You are not in this league.")
+
+
     query_matches = Stock.objects.filter(ticket=ticket)
     if len(query_matches) != 1:
         # TODO: Change to error page
@@ -123,13 +157,29 @@ def asset_page(request, ticket):
             "value_history": value_history,
             "dates": dates
         }),
+        'league': league_name,
+        'league_info': {'current_league': league_name, 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
     }
     )
 
 
 # asset_list_page (view func)
 # List of all stocks available & price information
-def asset_list_page(request):
+def asset_list_page(request, league_name="global"):
+    if league_name != "global" and not request.user.is_authenticated:
+        return error_view(request, error="You need to be logged in to view your leagues.")
+
+    if league_name != "global":
+        if len(League.objects.filter(name=league_name)) == 0:
+            return error_view(request, error="This league doesn't exist.")
+        
+        leagueobj = League.objects.filter(name = league_name)[0]
+        if not (request.user in leagueobj.participants.all() or leagueobj.owner == request.user):
+                return error_view(request, error="You are not in this league.")
+    
+    
+
+
     stocks = [stock for stock in Stock.objects.all()]
     positive = {}
     for stock in stocks:
@@ -144,7 +194,9 @@ def asset_list_page(request):
         stock.col2 = cols[1]
         #stock.background = choose_background(stock)
     return render(request, "trading/stock_list.html", {
-        'stocks': stocks
+        'stocks': stocks,
+        'league': league_name,
+        'league_info': {'current_league': league_name, 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
     })
 
 # portfolio_view (view func)
@@ -237,7 +289,8 @@ def portfolio_view(request):
                 "value_history": value_history,
                 "dates": dates
             }),
-        'assetData':str(asset_data)
+        'assetData':str(asset_data),
+        'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
     })
 
 # other_user_portfolio (view func)
@@ -292,7 +345,7 @@ def other_user_portfolio(request,name):
             ticket_list.append(item[0])
             data_list.append(item[1])
 
-        colour_list = circular_colour_list
+        colour_list = CIRCULAR_COLOUR_LIST
 
 
         asset_data = {'tickets': ticket_list ,'data' :data_list,'colours': colour_list }
@@ -315,5 +368,6 @@ def other_user_portfolio(request,name):
                 "value_history": value_history,
                 "dates": dates
             }),
-        'assetData':str(asset_data)
+        'assetData':str(asset_data),
+        'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
     })

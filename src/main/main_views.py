@@ -7,12 +7,12 @@ from django.contrib.auth.decorators import login_required
 from stock_updater import update_user_portfolio
 from .models import Stock,Profile,Portfolio,Holding,User, Transaction
 
-from .generic_functions import getPortfolioValue, percentage_change
-
+from .generic_functions import getPortfolioValue, percentage_change, get_user_leagues
+from .constants import *
 from .holdings import get_holdings, holdings_distribution, holdings_total
 import json
 import random
-from .constants import *
+
 
 # home_view (view func)
 # User homepage, not viewable if not logged in.
@@ -71,8 +71,9 @@ def home_view(request):
 
 	usertransactions = usertransactions[::-1][:6]
 	friendtransactions = usertransactions[::-1][:6]
-
 	errors = []
+
+
 	return render(request, 'accounts/home.html', {
 		'portfolio_value': request.user.portfolio_value,
 		'message': message,
@@ -80,6 +81,7 @@ def home_view(request):
 		'friend_transactions': friendtransactions,
 		'stocks': HotandCold,
 		'errors': errors,
+		'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
 		})
 
 # signup_view (view func)
@@ -100,7 +102,7 @@ def signup_view(request):
 			update_user_portfolio(user.portfolio)
 			return redirect('/portfolio')
 
-	return render(request, 'accounts/signup.html', {'errors': errors})
+	return render(request, 'accounts/signup.html', {'errors': errors, 'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}})
 
 # login_view (view func)
 def login_view(request):
@@ -119,7 +121,7 @@ def login_view(request):
 			user = form.get_user()
 			login(request, user)
 			return redirect('/home')
-	return render(request, "accounts/login.html", {'errors': errors})
+	return render(request, "accounts/login.html", {'errors': errors, 'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}})
 
 # logout_view: Not an actual page, just a redirect passthrough to log them out
 def logout_view(request):
@@ -130,7 +132,7 @@ def logout_view(request):
 def settings_view(request):
 	errors = []
 
-	return render(request, 'accounts/account_settings.html', {})
+	return render(request, 'accounts/account_settings.html', {'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}})
 
 def friends_search_form(request):
 	if request.method == "POST":
@@ -142,7 +144,7 @@ def friends_search_form(request):
 		else:
 			form['success'] = False
 			search_result_name = ""
-		return render(request, 'accounts/friends_response.html', {"form": form, "search_result_name":search_result_name})
+		return render(request, 'accounts/friends_response.html', {"form": form, "search_result_name":search_result_name, 'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}})
 
 def request_friend(request):
 	if request.method == "POST":
@@ -170,24 +172,12 @@ def request_friend(request):
 				request.user.profile.save()
 				newFriend.profile.save()
 				form['success'] = True
-			return render(request, 'accounts/friend_request_response.html', {"form": form, "friend_name":friend_name})			
+			return render(request, 'accounts/friend_request_response.html', {"form": form, "friend_name":friend_name, 'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}})			
 		else:
 			return(False,"This user does not exist")
 		# add user to friend names requested list
 
-# def add_friend(request,friend_name):
-# 	if User.objects.filter(username = friend_name).exists():
-# 		newFriend =  User.objects.filter(username = friend_name)[0]
-# 		if newFriend  in request.user.profile.requested_friends.all():
-# 			request.user.profile.friends.add(newFriend)
-# 			request.user.profile.save()
-# 			newFriend.profile.friends.add(request.user)
-# 			newFriend.profile.save()
-# 			return(True,"")
-# 		else:
-# 			return(False,f"You're already friends with {friend_name}")
-# 	else:
-# 		return(False,"This user does not exist")
+
 
 def remove_friend(request):
 	if request.method == "POST":
@@ -278,10 +268,10 @@ def friends_view(request):
 	return render(request, 'accounts/friends.html', {
 		'friends':friends,
 		'leagues':leagues,
-		'requests':requests,
-		'suggestions':suggested_users
+		'requests':requests, #change to requests once requests info is imported
+		'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
 		})
 	
 
-
-
+def error_view(request, error="Page doesn't exist"):
+	return render(request, 'base/error.html', {'error': error, 'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}})

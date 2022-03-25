@@ -2,6 +2,7 @@
 {% load static %}
  {% load humanize %} 
 {% block content %}
+
 <link rel="stylesheet" href="{% static 'css/chart_page.css' %}">
 
 <div class="form-response-container" id="responseModal"></div>
@@ -25,6 +26,7 @@
                             {% csrf_token %}
                             <input type="hidden" name="transaction" value="buy">
                             <input type="hidden" name="ticket" value="{{ stock.ticket }}">
+                            <input type="hidden" name="league" value="{{ league }}">
                             <div class="col-auto">
                                 <div class="row">
                                     <div class="col-2">
@@ -55,11 +57,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <form hx-post="/trading/transaction" hx-swap="afterend" class="row g-3">
+                        <form hx-post="/trading/transaction" hx-swap="afterend" class="col-8 row g-3">
                             {% csrf_token %}
+
                             <input type="hidden" name="transaction" value="sell">
                             <input type="hidden" name="ticket" value="{{ stock.ticket }}">
-
+                            <input type="hidden" name="league" value="{{ league }}">
 
                             <div class="col-auto">
                                 <div class="row">
@@ -78,11 +81,12 @@
                                 </button>
                             </div>
                         </form>
-                        <form hx-post="/trading/transaction" hx-swap="afterend" class="row g-3">
+                        <form hx-post="/trading/transaction" hx-swap="afterend" class="col-4 row g-3">
                             {% csrf_token %}
                             <div class="col-auto">
                                 <input type="hidden" name="transaction" value="sellall">
                                 <input type="hidden" name="ticket" value="{{ stock.ticket }}">
+                                <input type="hidden" name="league" value="{{ league }}">
 
                                 <button type="submit" class="trade-form-btn">
                                     <i class="fa-solid fa-circle-minus" style="margin-right: 5px;"></i>
@@ -125,10 +129,10 @@
                 <div class="row" style="margin-top: auto; margin-bottom: 10px;">
                     <div class="col-md-auto">
                         <h2 style="font-family:'Consolas'">{% if stock.pos %}<span style="color: var(--nephritis);"><i
-                                    style="margin-right:5px; position: relative; bottom:1px;"
-                                    class="fas fa-caret-up"></i>{% else %}<span style="color: var(--alizarin);"><i
-                                        style="color: var(--alizarin); margin-right:5px; position: relative; bottom:1px;"
-                                        class="fas fa-caret-down"></i>{% endif %}${{ stock.current_price|intcomma }}</span></h2>
+                                    style="font-size: 1.2rem; margin-right:5px; position: relative; bottom:1px;transform: rotate(-45deg)"
+                                    class="fas fa-rocket"></i>{% else %}<span style="color: var(--alizarin);"><i
+                                        style="font-size: 1.2rem; color: var(--alizarin); margin-right:5px; position: relative; bottom:5px;transform: rotate(135deg)"
+                                        class="fas fa-rocket"></i>{% endif %}${{ stock.current_price|intcomma }}</span></h2>
                     </div>
                     <div class="col-md-auto" style="padding: 5px;">
                         {% if user.is_authenticated %}

@@ -1,0 +1,64 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/login_page.css' %}">  
+
+
+<body>
+    <!--Title of Page-->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="container" style="margin-top: 20px;">
+                    <div class="row" style="border-bottom:1px solid #95a5a6">
+                        <h2 style="text-align: left;">New League</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" style="margin-bottom: 40px;max-width: 575px; padding: 20px;">
+        <div class="row">
+            <form method="POST" action="/leagues/create" class="col-12">
+                {% csrf_token %}
+                <div class="account-input d-flex justify-content-center">
+                    <h5 class="account-input-text col-12 col-sm-6">League Name</h5>
+                    <input class="account-input-box col-12 col-sm-6" type="text" name="league_name">
+                </div>
+                <div class="account-input d-flex justify-content-center" style="margin-top: 15px;">
+                    <h5 class="account-input-text col-12 col-sm-6">Starting Balance ($)</h5>
+                    <input class="account-input-box col-12 col-sm-6" type="number" min="0.00" step=".01" value="0.00" name="league_start_bal">
+                </div>
+
+                <span style="color:var(--alizarin);">
+                    {% if errors|length > 0 %}
+                        {% for error in errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                </span>
+
+                <div class="account-input">
+                    <button class="submit-button" style="align-self: center;" type="submit">
+                        <i class="fas fa-plus" style="margin-right: 5px;"></i>
+                        Create league
+                    </button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+
+
+
+
+</body>
+
+{% endblock %}

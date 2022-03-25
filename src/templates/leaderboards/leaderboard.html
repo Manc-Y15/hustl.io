@@ -14,7 +14,9 @@
             <div class="col-12 text-center">
                 <div class="container" style="margin-top: 20px;">
                     <div class="row" style="border-bottom:1px solid #95a5a6">
-                        <h2 style="text-align: left;">Global Leaderboard</h2>
+                        <h2 style="text-align: left;">
+                            <i class="fas fa-globe"></i>
+                            Global Leaderboard</h2>
                     </div>
                 </div>
             </div>
@@ -125,7 +127,7 @@
 
                     <h5 class="activity-item-text">
                         {{ forloop.counter|add:3 }}.
-                        <span style="color: var(--orange);">{{ player.username }}</span> valued at 
+                        <span style="color: {% if player.username == user.username %}var(--wisteria);font-weight:900;{% elif player.is_friend %}var(--belize-hole);font-weight:900;{% else %}var(--orange);{% endif %}">{{ player.username }}</span> valued at 
                         <span style="color: var(--emerald);">${{ player.portfolio_value|intcomma }}</span>
                     </h5>
 
