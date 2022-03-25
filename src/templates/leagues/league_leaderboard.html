@@ -14,17 +14,17 @@
             <div class="col-12 text-center">
                 <div class="container" style="margin-top: 20px;padding:15px">
                     <div class="row" style="border-bottom:1px solid #95a5a6">
-                        <div class="col-10">
+                        <div class="col-12 col-md-10">
                             <h2 style="text-align: left;"><span style="color: var(--orange);">{{ league.name }}</span> Leaderboard</h2>
                         </div>
-                        <div class="col-2">
+                        <div class="col-12 col-md-2">
                             {% if user == league.owner %}
-                            <button class="angry-btn" style="float: right" onClick="window.location = '/leagues/{{ league.name }}/delete';">
+                            <button class="angry-btn" style="margin-bottom: 5px;" onClick="window.location = '/leagues/{{ league.name }}/delete';">
                                 <i class="fas fa-trash-can" style="margin-right: 5px;"></i>
                                 Delete League
                             </button>
                             {% else %}
-                            <button class="angry-btn" style="float: right" onClick="window.location = '/leagues/{{ league.name }}/leave';">
+                            <button class="angry-btn" style="margin-bottom: 5px;" onClick="window.location = '/leagues/{{ league.name }}/leave';">
                                 <i class="fas fa-arrow-right-from-bracket" style="margin-right: 5px;"></i>
                                 Leave League
                             </button>
