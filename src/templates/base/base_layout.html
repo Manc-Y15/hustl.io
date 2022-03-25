@@ -33,7 +33,11 @@
                             aria-controls="navbarCollapseToggle" aria-expanded="false" aria-label="Toggle Navigation">
                             <span class="navbar-toggler-icon" style="color: white"></span>
                         </button>
-                        <a class="navbar-brand brand-logo" href="#">hustl.io</a>
+                        <a class="navbar-brand brand-logo" style="margin-right: 0 !important;" href="#">
+                            hustl.io
+                            <h5 style="text-align:center;margin-top:-5px; margin-bottom:0 !important;"><span style="background: linear-gradient(90deg, var(--amethyst) 23%, var(--wisteria) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{{ league_info.current_league }}</span></h5>
+
+                        </a>
                     </div>
                     <div class="col-12 collapse navbar-collapse justify-content-center" id="navbarCollapseToggle">
                         <ul class="nav nav-elems justify-content-center">
@@ -113,6 +117,7 @@
         </div>
     </div>
 
+    {% if user.is_authenticated %}
     <!-- League Navigation Menu & Floating Button -->
     <button class="fixed-league-btn shadow-none" type="button" data-bs-toggle="offcanvas"
         data-bs-target="#leagueCanvas" aria-controls="offcanvasLeft">
@@ -122,54 +127,30 @@
     <div class="offcanvas offcanvas-start account-menu" style="transition: transform .2s ease-in-out;" tabindex="-1"
         id="leagueCanvas" aria-labelledby="offcanvasLeft">
         <div class="offcanvas-header" style="padding:30px">
-            {% if user.is_authenticated %}
             <h2 id="offcanvasRightLabel" style="margin-top:5px;">Competing in <span style="color: var(--orange);">
-                    Hustlers
+                    {{ league_info.current_league }}
                 </span> league</h2>
-            {% else %}
-            <h2 id="offcanvasRightLabel" style="margin-top:5px;">Home</h2>
-            {% endif %}
             <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <ul class="nav flex-column">
-                {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link nav-account-link hover-underline" href="/portfolio">
-                        <i class="fas fa-chart-bar nav-account-icon"></i> Your Portfolio
+                    <a class="nav-link nav-account-link hover-underline" href="/">
+                        <i class="fas fa-globe nav-account-icon"></i> global
                     </a>
                 </li>
+                {% for league in league_info.all_leagues %}
                 <li class="nav-item">
-                    <a class="nav-link nav-account-link hover-underline" href="/friends">
-                        <i class="fas fa-user-friends nav-account-icon"></i> Friends
+                    <a class="nav-link nav-account-link hover-underline" href="/leagues/{{ league.name }}">
+                        <i class="fas {{ league.league_icon }} nav-account-icon"></i> {{ league.name }}
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-account-link hover-underline" href="/settings">
-                        <i class="fas fa-cogs nav-account-icon"></i> Account Settings
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-account-link hover-underline" href="/logout">
-                        <i class="fas fa-sign-out nav-account-icon"></i> Log out
-                    </a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link nav-account-link hover-underline" href="/login">
-                        <i class="fas fa-sign-in-alt nav-account-icon"></i> Log in
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-account-link hover-underline" href="/signup">
-                        <i class="fas fa-user-plus nav-account-icon"></i> Sign up
-                    </a>
-                </li>
-                {% endif %}
+                {% endfor %}
             </ul>
         </div>
     </div>
+    {% endif %}
 
 
     {% block content %}

@@ -12,16 +12,16 @@
         <div class="row">
             <div class="col" style="margin-bottom: 15px; padding: 0 !important;">
                 <div class="display-1 section-heading ">
-                    <h1>Your Portfolio</h1>
+                    <h1><span style="color: var(--orange); ">{{ playerName }}'s</span> Portfolio</h1>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col portfolio-summary d-flex justify-content-center ">
                 <h1 class="activity-item-text ">
-                    You've made <span style="color: var(--carrot); ">{{ numOfTrades }}</span> trades, ranking
-                    <span style="color: var(--amethyst); ">{{ rankRegional }}</span> in your regional league and
-                    <span style="color: var(--river); ">{{ rankOverall }}</span> overall, nice work!
+                    They've made <span style="color: var(--carrot); ">{{ numOfTrades }}</span> trades, ranking
+                    <span style="color: var(--amethyst); ">{{ rankRegional }}</span> in their regional league and
+                    <span style="color: var(--river); ">{{ rankOverall }}</span> overall.
                 </h1>
             </div>
         </div>
@@ -45,7 +45,7 @@
             {% else %}
             <div class="col portfolio-info-box ">
                 <h3>Last Traded</h3>
-                <h4>You haven't traded yet.
+                <h4>They haven't traded yet.
                 </h4>
             </div>{% endif %}
         </div>
@@ -54,36 +54,12 @@
                 <h3>Asset Distribution</h3>
                 <canvas id="assets_chart"></canvas>
             </div>
+
             <div class="col col-md portfolio-chart-box ">
                 <h3>Portfolio Value History</h3>
                 <canvas id="valuation_chart"></canvas>
             </div>
 
-        </div>
-        <div class="row">
-            <div class="col" style="margin: 25px auto; padding: 0 !important;">
-                <div class="display-1 section-heading ">
-                    <h1>Your Assets</h1>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin-top: 15px; gap: 15px; ">
-            <div class="col portfolio-info-box ">
-                <h3><span style="width: fit-content;font-weight: 900; font-size: 1.6rem;">Cash</span></h3>
-                <h1 class="showcase-number "><span style="color: var(--concrete); ">${{ portfolio.balance|intcomma }}</span>
-                </h1>
-            </div>
-            {% for userstock in userstocks %}
-            {% if userstock.stock_id.balance > 0 %}
-            <div class="col portfolio-info-box ">
-                <h3><span style="width: fit-content;font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, var({{ userstock.stock_id.col1 }}) 23%, var({{ userstock.stock_id.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ userstock.stock_id.ticket }}</span></h3>
-                <h1 class="showcase-number "><span style="color: var(--concrete); ">${{ userstock.stock_id.balance|intcomma }}</span>
-                </h1>
-                <a href="/leagues/{{ league.name }}/trading/{{ userstock.stock_id.ticket }}"><button  class="regular-btn" style="float:right;"><i class="fa fa-cogs" aria-hidden="true"></i>
-                    Manage</button></a>
-            </div>
-            {% endif %}
-            {% endfor %}
         </div>
     </div>
 

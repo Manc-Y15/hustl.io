@@ -3,11 +3,10 @@ from .models import Stock, Holding, Portfolio, Transaction,User, League, LeagueH
 from django.contrib.auth.decorators import login_required
 from .transactions import user_buy, user_sell_all
 from random import randint, choice
-from .generic_functions import getPortfolioValue
-from .leagues import add_user
 import json
 from datetime import datetime
 import calendar
+from .generic_functions import getPortfolioValue, percentage_change, get_user_leagues
 from .constants import *
 from .main_views import error_view
 
@@ -72,7 +71,11 @@ def asset_page_form(request):
         stock.col1 = cols[0].split('(')[1][:-1]
         stock.col2 = cols[1].split('(')[1][:-1]
 
-        return render(request, 'trading/stock_listing_response.html', {"form": form, "transaction": transaction, "stock": stock})
+        return render(request, 'trading/stock_listing_response.html', {
+            "form": form,
+            "transaction": transaction,
+            "stock": stock,
+            'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}})
         
 # asset_page (view function)
 # Main page for a stock listing.
@@ -154,7 +157,8 @@ def asset_page(request, ticket, league_name="global"):
             "value_history": value_history,
             "dates": dates
         }),
-        'league': league_name
+        'league': league_name,
+        'league_info': {'current_league': league_name, 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
     }
     )
 
@@ -191,7 +195,8 @@ def asset_list_page(request, league_name="global"):
         #stock.background = choose_background(stock)
     return render(request, "trading/stock_list.html", {
         'stocks': stocks,
-        'league': league_name
+        'league': league_name,
+        'league_info': {'current_league': league_name, 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
     })
 
 # portfolio_view (view func)
@@ -284,7 +289,8 @@ def portfolio_view(request):
                 "value_history": value_history,
                 "dates": dates
             }),
-        'assetData':str(asset_data)
+        'assetData':str(asset_data),
+        'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
     })
 
 # other_user_portfolio (view func)
@@ -362,5 +368,6 @@ def other_user_portfolio(request,name):
                 "value_history": value_history,
                 "dates": dates
             }),
-        'assetData':str(asset_data)
+        'assetData':str(asset_data),
+        'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
     })

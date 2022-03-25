@@ -69,6 +69,24 @@
     transition: 0.1s ease-in;
 }
 
+.angry-btn {
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: var(--alizarin);
+    border: 1px solid transparent;
+    color: var(--midnight-blue);
+    font-family: 'Comfortaa';
+    font-weight: 700;
+    transition: 0.1s ease-in;
+}
+
+.angry-btn:hover {
+    background: transparent;
+    border: 1px solid var(--alizarin);
+    color: var(--alizarin);
+    transition: 0.1s ease-in;
+}
+
 
 /* Activity Items */
 

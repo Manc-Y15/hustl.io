@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from .models import Stock,Profile,Portfolio,Holding,User
-    
+from .models import Stock,Profile,Portfolio,Holding,User,League
+from .constants import *
     
 def getPortfolioValue(player):   
     userHoldings = [holding for holding in Holding.objects.filter(owner = player)]
@@ -30,4 +30,20 @@ def high_and_low(price_list):
     highest_price = max(price_list)
     lowest_price = min(price_list)
     #print("Lowest price is: " + str(lowest_price) + "\nHighest price is: " + str(highest_price))
+
+def get_user_leagues(user):
+    if not user.is_authenticated: return []
+    to_return = []
+    for league in League.objects.filter(owner=user):
+        league.league_icon = ICON_LIST[league.icon]
+        to_return.append(league)
+    for league in League.objects.all():
+        if user in league.participants.all(): 
+            league.league_icon = ICON_LIST[league.icon]
+            to_return.append(league)
+    return to_return
+    
+    
+
+
    

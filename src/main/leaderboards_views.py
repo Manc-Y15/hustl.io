@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Stock,Profile,Portfolio,Holding,User
+from .generic_functions import get_user_leagues
+from .constants import *
 
 def leaderboard_view(request):
     userlist = []
@@ -23,4 +25,9 @@ def leaderboard_view(request):
     del userlist[0]
     bronze = userlist[0]
     del userlist[0]
-    return render(request, "leaderboards/leaderboard.html", {"users": userlist[:37], "gold": winner,"silver": silver,"bronze": bronze})
+    return render(request, "leaderboards/leaderboard.html", {
+        "users": userlist[:37],
+        "gold": winner,"silver": silver,
+        "bronze": bronze,
+        'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
+        })
