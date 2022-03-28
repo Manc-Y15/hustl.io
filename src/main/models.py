@@ -7,7 +7,7 @@ from django.dispatch import receiver
 class Stock(models.Model):
     ticket = models.CharField(max_length=5)
     name = models.CharField(max_length=100)
-    desc = models.CharField(max_length=1000)
+    description = models.CharField(max_length=1000)
     current_price = models.DecimalField(max_digits=10, decimal_places=2)
     current_datetime = models.DateTimeField()
     historical = models.TextField() # Stored as JSON, needs to be large text file
@@ -29,7 +29,7 @@ class Portfolio(models.Model):
     # This relationship is the primary key
     balance = models.DecimalField(max_digits=10, decimal_places=2)
     bal_hist = models.TextField() # JSON
-    rank = models.IntegerField(blank = False,default = 999)
+    leaderboard_ranking = models.IntegerField(blank = False,default = 999)
 
 class League(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="league_owner")
