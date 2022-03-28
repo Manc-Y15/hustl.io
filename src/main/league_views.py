@@ -53,7 +53,7 @@ def create_league_view(request):
         icon = random.randint(0,20)
         created = create_league(request.user, newleagueName, startBal, icon)
         
-        if created:
+        if created[0]:
             return redirect(f'/leagues/{newleagueName}')
         else:
             errors.append(created[1])
