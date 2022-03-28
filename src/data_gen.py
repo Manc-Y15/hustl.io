@@ -3,6 +3,7 @@ from main.transactions import user_buy, user_sell_all
 from stock_updater import update_user_portfolio
 import random
 
+
 f = open("names.txt", "r")
 names = f.read().split('\n')
 
@@ -45,3 +46,19 @@ def create_username():
     if random.randint(0, 10) >= 6:
         name += str(random.randint(0, 9999))
     return name
+
+
+def get_stocks():
+    stocks = []
+
+    for db_stock in Stock.objects.all():
+        stock = {}
+        stock['ticket'] = db_stock.ticket
+        stock['name'] = db_stock.name
+        stock['description'] = db_stock.desc
+        stock['current_price'] = db_stock.current_price
+        stock['historical'] = db_stock.historical
+        stock['display_colour'] = db_stock.display_colour
+        stocks.append(stock)
+    return stocks
+    
