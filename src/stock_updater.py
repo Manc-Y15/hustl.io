@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.utils import timezone
-from main.models import Stock, Portfolio, Holding
+from main.models import Stock, Portfolio, Holding,User,League,LeagueHolding,LeaguePortfolio
 from main.generic_functions import getPortfolioValue, percentage_change
 
 
@@ -99,7 +99,45 @@ def update_portfolios():
     print(f"[LOG] Successfully updated portfolios for: {success_output}")
     if len(Portfolio.objects.all())-len(successful) > 0:
         print(f"[LOG] Failed to update portfolios for: {failed_output}")
-
+    userlist = []
+    # update global rankings
+    for player in User.objects.all():
+        userHoldings = [holding for holding in Holding.objects.filter(owner = player)]
+        totalPortValue = 0
+        for holding in userHoldings:
+            totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
+        totalPortValue +=  player.portfolio.balance
+        player.portfolio_value = totalPortValue
+        userlist.append(player)
+    userlist.sort(key = lambda x: x.portfolio_value)
+    userlist = userlist[::-1]
+    for i in range(0,len(userlist)):
+        userlist[i].portfolio.leaderboard_ranking = i+1
+    # update league rankings
+    for league in League.objects.all():
+        leaguememberlist = []
+        owner = league.owner
+        userHoldings = [holding for holding in LeagueHolding.objects.filter(owner = owner, league = league)]
+        totalPortValue = 0
+        for holding in userHoldings:
+            totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
+        portfolio = LeaguePortfolio.objects.filter(owner = owner, league = league)[0]
+        totalPortValue +=  portfolio.balance
+        owner.portfolio_value = totalPortValue 
+        leaguememberlist.append(owner)
+        for player in league.participants.all():
+            userHoldings = [holding for holding in LeagueHolding.objects.filter(owner = player, league = league)]
+            totalPortValue = 0
+            for holding in userHoldings:
+                totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
+            portfolio = LeaguePortfolio.objects.filter(owner = player, league = league)[0]
+            totalPortValue +=  portfolio.balance
+            leaguememberlist.append(player)
+        leaguememberlist.sort(key = lambda x: x.portfolio_value)
+        leaguememberlist = leaguememberlist[::-1]
+        for i in range(0,len(leaguememberlist)):
+            portfolio = LeaguePortfolio.objects.filter(owner = leaguememberlist[i], league = league)[0]
+            portfolio.rank = i+1
 def update_db():
     update_stocks()
     update_portfolios()
