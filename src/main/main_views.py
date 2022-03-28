@@ -46,7 +46,9 @@ def home_view(request):
 	for transac in Transaction.objects.exclude(portfolio_id = request.user.portfolio):
 		if transac.portfolio_id.owner in request.user.profile.friends.all():
 			allTransactions.append(transac)
-	
+	transac_count = 0
+	for transac in Transaction.objects.all():
+		transac_count +=1
 	for transac in allTransactions:
 		if transac.portfolio_id.owner == request.user:
 			usertransactions.append([])
@@ -77,6 +79,7 @@ def home_view(request):
 	return render(request, 'accounts/home.html', {
 		'portfolio_value': request.user.portfolio_value,
 		'message': message,
+		'TradeNum': transac_count,
 		'user_transactions': usertransactions,
 		'friend_transactions': friendtransactions,
 		'stocks': HotandCold,

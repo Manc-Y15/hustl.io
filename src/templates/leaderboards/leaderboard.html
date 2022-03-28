@@ -127,7 +127,11 @@
 
                     <h5 class="activity-item-text">
                         {{ forloop.counter|add:3 }}.
-                        <span style="color: {% if player.username == user.username %}var(--wisteria);font-weight:900;{% elif player.is_friend %}var(--belize-hole);font-weight:900;{% else %}var(--orange);{% endif %}">{{ player.username }}</span> valued at 
+                        {% if user.is_authenticated %}
+                            <span style="color: {% if player.username == user.username %}var(--wisteria);font-weight:900;{% elif player.is_friend %}var(--belize-hole);font-weight:900;{% else %}var(--orange);{% endif %}">{{ player.username }}</span> valued at
+                        {% else %}
+                            <span style="color: var(--orange);">{{ player.username }}</span> valued at 
+                        {% endif %}
                         <span style="color: var(--emerald);">${{ player.portfolio_value|intcomma }}</span>
                     </h5>
 

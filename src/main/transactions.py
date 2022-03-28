@@ -39,12 +39,13 @@ def user_sell_all(user,stock_id, league="global"):
         and LeagueHolding.objects.filter(owner = user, stock_id = stock)[0].amount > 0 ):
             leagueobj = League.objects.filter(name = league)[0]
             holding =  LeagueHolding.objects.filter(owner = user, stock_id = stock, league=leagueobj)[0]
-            user.portfolio.balance += holding.amount * stock.current_price
+            portfolio = LeaguePortfolio.objects.filter(league=leagueobj)[0]
+            portfolio.balance += holding.amount * stock.current_price
             amount_sold = holding.amount * stock.current_price
             tempAmount =  holding.amount
             holding.amount = 0.0
             holding.save()            
-            user.portfolio.save()
+            portfolio.save()
             return(True, f"Successfully sold ${amount_sold}")
         else:
             return(False,"You don't own any of this stock")

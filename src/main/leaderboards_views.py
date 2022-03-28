@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from .models import Stock,Profile,Portfolio,Holding,User
 from .generic_functions import get_user_leagues
 from .constants import *
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def leaderboard_view(request):
     userlist = []
     for player in User.objects.all():

@@ -10,7 +10,9 @@ import calendar
 from .generic_functions import get_user_leagues
 from .constants import *
 from .main_views import error_view
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def delete_league(request, league_name):
     if not League.objects.filter(owner = request.user, name=league_name).exists():
         return error_view(request, error="You do not own this league.")
@@ -20,7 +22,8 @@ def delete_league(request, league_name):
     league.delete()
 
     return redirect('/leagues')
-    
+
+@login_required
 def leave_league(request, league_name):
     if not League.objects.filter(name=league_name).exists():
         return error_view(request, error="This league doesn't exist")
@@ -34,6 +37,7 @@ def leave_league(request, league_name):
 
     return redirect('/leagues')
 
+@login_required
 def view_leagues(request):
     allLeagues = list(League.objects.filter(owner = request.user))
     for league in League.objects.exclude(owner = request.user):
@@ -44,7 +48,7 @@ def view_leagues(request):
         'userLeagues': allLeagues,
     })
         
-
+@login_required
 def create_league_view(request):
     errors = []
     if request.method == "POST":
@@ -63,6 +67,7 @@ def create_league_view(request):
         'errors': errors,
     })
 
+@login_required
 def add_member(request,league_name):
     errors = []
     if request.method == "POST":
@@ -81,7 +86,7 @@ def add_member(request,league_name):
         "league_name": league_name,
     })    
 
-
+@login_required
 def league_leaderboard(request,league_name):#
     if not League.objects.filter(name = league_name).exists():
         return error_view(request, error="This league does not exist.")
@@ -133,9 +138,11 @@ def league_leaderboard(request,league_name):#
         "bronze": bronze,
         })
 
+@login_required
 def league_asset_listing_page(request, league_name, ticket):
     return trading_views.asset_page(request, ticket, league_name)
 
+@login_required
 def league_portfolio(request,league_name):
     if not League.objects.filter(name = league_name).exists():
         return error_view(request, error="This league does not exist.")
@@ -220,6 +227,8 @@ def league_portfolio(request,league_name):
             }),
         'assetData':str(asset_data)
     })
+
+@login_required
 def league_other_portfolio(request,league_name,name):
     if not League.objects.filter(name = league_name).exists():
         return error_view(request, error="This league does not exist.")
