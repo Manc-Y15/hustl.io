@@ -7,5 +7,5 @@ Y15 Group Project for 10120
 # Trading is done :)
 
 ## Remaining:
-- [ ] Migrate to live build
-- [ ] Fix issues
+- [x] Migrate to live build
+- [x] Fix issues
