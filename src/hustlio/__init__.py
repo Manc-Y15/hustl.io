@@ -5,14 +5,14 @@ django.setup()
 from stock_updater import update_db
 from scheduler import run_continuously
 import schedule
-from data_gen import gen_data
+from data_gen import get_stocks, replenish_stocks
 
 # Generate randomised users
 #gen_data(50)
-
+replenish_stocks()
 
 # Every 12 hours starting from the time the script is executed.
-schedule.every(5).minutes.do(update_db)
+#schedule.every(5).minutes.do(update_db)
 
 # Run this to force update:
 #update_db()

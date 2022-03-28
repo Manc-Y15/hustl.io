@@ -7,16 +7,6 @@
 </head>
 <body>
     <h1 class="">Hello</h1>
-    {% if user.is_authenticated %}
-        You are logged in as: {{ user.username }}
-    {% else %}
-        Not logged in.
-    {% endif %}
-
-    {% for holding in holdings %}
-        <p>{{ holding.stock_id.ticket }}</p>
-        <p>{{ holding.amount }}</p>
-        <p>{{ holding.stock_id.current_price }}</p>
-    {% endfor %}
+    {{ data }}
 </body>
 </html>

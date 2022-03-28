@@ -1,9 +1,13 @@
 from main.models import Stock, Holding, Portfolio, Transaction, User
 from main.transactions import user_buy, user_sell_all
+from django.utils import timezone
 from stock_updater import update_user_portfolio
+import json
+from decimal import Decimal
+
 import random
 
-
+'''
 f = open("names.txt", "r")
 names = f.read().split('\n')
 
@@ -46,7 +50,7 @@ def create_username():
     if random.randint(0, 10) >= 6:
         name += str(random.randint(0, 9999))
     return name
-
+'''
 
 def get_stocks():
     stocks = []
@@ -56,9 +60,25 @@ def get_stocks():
         stock['ticket'] = db_stock.ticket
         stock['name'] = db_stock.name
         stock['description'] = db_stock.desc
-        stock['current_price'] = db_stock.current_price
+        stock['current_price'] = float(db_stock.current_price)
         stock['historical'] = db_stock.historical
         stock['display_colour'] = db_stock.display_colour
         stocks.append(stock)
-    return stocks
-    
+    return json.dumps({'data': stocks})
+
+
+def replenish_stocks():
+    f = open("data.json", "r")
+    stocks = json.loads(f.read())['data']
+
+    for stock in stocks:
+        db_stock = Stock()
+        db_stock.ticket = stock['ticket']
+        db_stock.name = stock['name']
+        db_stock.desc = stock['description'] # CHANGE
+        db_stock.current_price = Decimal.from_float(stock['current_price'])
+        db_stock.historical = stock['historical']
+        db_stock.display_colour = stock['display_colour']
+        db_stock.current_datetime = timezone.now()
+        db_stock.save()
+        print("UPDATED: " + stock['ticket'])

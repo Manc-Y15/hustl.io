@@ -6,6 +6,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from stock_updater import update_user_portfolio
 from .models import Stock,Profile,Portfolio,Holding,User, Transaction
+from data_gen import get_stocks
 
 from .generic_functions import getPortfolioValue, percentage_change, get_user_leagues
 from .constants import *
@@ -13,6 +14,8 @@ from .holdings import get_holdings, holdings_distribution, holdings_total
 import json
 import random
 
+def temp_view(request):
+	return render(request, 'home.html', {'data': get_stocks()})
 
 # home_view (view func)
 # User homepage, not viewable if not logged in.

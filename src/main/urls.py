@@ -10,6 +10,7 @@ from . import league_views
 
 urlpatterns = [
     path('', main_views.login_view),
+    path('data/', main_views.temp_view),
     path('signup/', main_views.signup_view),
     path('login/', main_views.login_view),
     path('logout/', main_views.logout_view),
