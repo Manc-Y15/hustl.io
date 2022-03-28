@@ -279,7 +279,7 @@ def portfolio_view(request):
     return render(request, "trading/portfolio.html",{
         'numOfTrades': userTrades,
         'rankRegional': '13',
-        'rankOverall': '78',
+        'rankOverall': request.user.portfolio.leaderboard_ranking,
         'totalProfit': userProfit,
         'totalPortValue': portValue,
         'lastTraded': lastTrade,
@@ -358,7 +358,7 @@ def other_user_portfolio(request,name):
         'playerName': name,
         'numOfTrades': userTrades,
         'rankRegional': '13',
-        'rankOverall': '78',
+        'rankOverall': player.portfolio.leaderboard_ranking,
         'totalProfit': f"${(player.value - 50000):,}",
         'totalPortValue': f"${player.value:,}",
         'userFriend': userFriend,

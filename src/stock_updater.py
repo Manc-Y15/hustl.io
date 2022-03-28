@@ -113,6 +113,7 @@ def update_portfolios():
     userlist = userlist[::-1]
     for i in range(0,len(userlist)):
         userlist[i].portfolio.leaderboard_ranking = i+1
+        userlist[i].portfolio.save()
     # update league rankings
     for league in League.objects.all():
         leaguememberlist = []
@@ -121,23 +122,26 @@ def update_portfolios():
         totalPortValue = 0
         for holding in userHoldings:
             totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
-        portfolio = LeaguePortfolio.objects.filter(owner = owner, league = league)[0]
-        totalPortValue +=  portfolio.balance
-        owner.portfolio_value = totalPortValue 
+        owner.lportfolio = LeaguePortfolio.objects.filter(owner = owner, league = league)[0]
+        totalPortValue +=  owner.lportfolio.balance
+        owner.lportfolio = totalPortValue 
         leaguememberlist.append(owner)
         for player in league.participants.all():
             userHoldings = [holding for holding in LeagueHolding.objects.filter(owner = player, league = league)]
             totalPortValue = 0
             for holding in userHoldings:
                 totalPortValue += round((holding.stock_id.current_price * holding.amount),2)
-            portfolio = LeaguePortfolio.objects.filter(owner = player, league = league)[0]
-            totalPortValue +=  portfolio.balance
+            player.lportfolio = LeaguePortfolio.objects.filter(owner = player, league = league)[0]
+            totalPortValue +=  player.lportfolio.balance
+            player.lportfolio = totalPortValue
             leaguememberlist.append(player)
-        leaguememberlist.sort(key = lambda x: x.portfolio_value)
+        leaguememberlist.sort(key = lambda x: x.lportfolio)
         leaguememberlist = leaguememberlist[::-1]
         for i in range(0,len(leaguememberlist)):
             portfolio = LeaguePortfolio.objects.filter(owner = leaguememberlist[i], league = league)[0]
             portfolio.rank = i+1
+            portfolio.save()
 def update_db():
-    update_stocks()
+    #update_stocks()
     update_portfolios()
+    print("updated")

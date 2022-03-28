@@ -12,7 +12,7 @@ from data_gen import gen_data
 
 
 # Every 12 hours starting from the time the script is executed.
-schedule.every(5).minutes.do(update_db)
+schedule.every(30).seconds.do(update_db)
 
 # Run this to force update:
 #update_db()

@@ -81,7 +81,8 @@ def home_view(request):
 		'friend_transactions': friendtransactions,
 		'stocks': HotandCold,
 		'errors': errors,
-		'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
+		'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST},
+		'global_ranking': request.user.portfolio.leaderboard_ranking
 		})
 
 # signup_view (view func)
