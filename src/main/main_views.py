@@ -268,7 +268,8 @@ def friends_view(request):
 	return render(request, 'accounts/friends.html', {
 		'friends':friends,
 		'leagues':leagues,
-		'requests':requests, #change to requests once requests info is imported
+		'requests':requests,
+		'suggestions':suggested_users,
 		'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}
 		})
 	
