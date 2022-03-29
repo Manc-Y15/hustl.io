@@ -10,11 +10,18 @@ import finnhub
 import json
 
 
-def get_total_value(user_portfolio):
-    userHoldings = [holding for holding in Holding.objects.filter(owner = user_portfolio.owner)]
-    portfolio_value = user_portfolio.owner.portfolio.balance
-    for holding in userHoldings:
-        portfolio_value += round((holding.stock_id.current_price * holding.amount),2)
+def get_total_value(user_portfolio, league="global"):
+    if league == "global":
+        userHoldings = [holding for holding in Holding.objects.filter(owner = user_portfolio.owner)]
+        portfolio_value = user_portfolio.owner.portfolio.balance
+        for holding in userHoldings:
+            portfolio_value += round((holding.stock_id.current_price * holding.amount),2)
+    else:
+        leagueobj = League.objects.filter(name=league)[0]
+        userHoldings = [holding for holding in LeagueHolding.objects.filter(owner = user_portfolio.owner, league=leagueobj)]
+        portfolio_value = user_portfolio.owner.portfolio.balance
+        for holding in userHoldings:
+            portfolio_value += round((holding.stock_id.current_price * holding.amount),2)
     return portfolio_value
 
 def update_stocks():
@@ -41,8 +48,10 @@ def update_stocks():
         history = json.loads(stock.historical)
         if history.get('history'):
             if len(history['history']) >= 14: # Roll over oldest historical value after 14 days.
-                del history['history'][0]
-            history['history'].append({"oldTime": str(stock.current_datetime), "oldData": float(stock.current_price)})
+                day_date = int(history['history'][13]['oldTime'].split('-')[2].split(' ')[0])
+                if int(newDateTime.today().strftime('%d')) != day_date:         
+                    del history['history'][0]
+                    history['history'].append({"oldTime": str(stock.current_datetime), "oldData": float(stock.current_price)})
         else:
             history['history'] = [{"oldTime": str(stock.current_datetime), "oldData": float(stock.current_price)}] # If history doesn't exist for some reason
         stock.historical = json.dumps(history) # Saved as text due to SQLite not supporting JSONField
@@ -62,7 +71,7 @@ def update_stocks():
     print(f"[LOG] {len(successfully_updated)} stocks were updated: {success_output}")
     print(f"[LOG] {len(failed)} stocks failed to update: {failed_output}")
 
-def update_user_portfolio(user_portfolio):
+def update_user_portfolio(user_portfolio, league="global"):
     try:
         history = json.loads(user_portfolio.bal_hist)['history']
     except:
@@ -73,11 +82,11 @@ def update_user_portfolio(user_portfolio):
         del history[0]
         day_date = int(history[5]['oldTime'].split('-')[2].split(' ')[0]) # Split off day number from date
         if int(timezone.now().strftime('%d')) != day_date:
-            history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
-    elif len(history) == 0:
+            history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio, league))})
+    else:
         # fill blanks
-        for i in range(0, 7):
-            history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio))})
+        for i in range(7-len(history)):
+            history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio, league))})
     user_portfolio.bal_hist = json.dumps({"history": history})
     user_portfolio.save()
 
@@ -91,8 +100,15 @@ def update_portfolios():
     successful = []
     failed = []
     for user_portfolio in Portfolio.objects.all():
+        print("Updating Port: " + user_portfolio.owner.username)
         if update_user_portfolio(user_portfolio): successful.append(user_portfolio.owner.username)
-        else: failed.append(user_portfolio.owner.username)
+        else: 
+            failed.append(user_portfolio.owner.username)
+            print("FAILED.")
+
+    for league_portfolio in LeaguePortfolio.objects.all():
+        if update_user_portfolio(league_portfolio, league=league_portfolio.league.name): successful.append(league_portfolio.owner.username)
+        else: failed.append(league_portfolio.owner.username)
 
     success_output = ','.join(successful)
     failed_output = ','.join(failed)
@@ -142,6 +158,6 @@ def update_portfolios():
             portfolio.rank = i+1
             portfolio.save()
 def update_db():
-    #update_stocks()
+    print("UPDATING DATABASE...")
+    update_stocks()
     update_portfolios()
-    print("updated")

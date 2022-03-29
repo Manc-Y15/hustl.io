@@ -9,13 +9,6 @@ def run_continuously(interval=1):
     # Allows us to run a scheduled task in the background of the server via threading
     """Continuously run, while executing pending jobs at each
     elapsed time interval.
-    @return cease_continuous_run: threading. Event which can
-    be set to cease continuous run. Please note that it is
-    *intended behavior that run_continuously() does not run
-    missed jobs*. For example, if you've registered a job that
-    should run every minute and you set a continuous run
-    interval of one hour then your job won't be run 60 times
-    at each interval but only once.
     """
     cease_continuous_run = threading.Event()
 

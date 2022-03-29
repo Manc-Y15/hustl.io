@@ -39,12 +39,11 @@ def user_sell_all(user,stock_id, league="global"):
         and LeagueHolding.objects.filter(owner = user, stock_id = stock)[0].amount > 0 ):
             leagueobj = League.objects.filter(name = league)[0]
             holding =  LeagueHolding.objects.filter(owner = user, stock_id = stock, league=leagueobj)[0]
-            portfolio = LeaguePortfolio.objects.filter(league=leagueobj)[0]
+            portfolio = LeaguePortfolio.objects.filter(league=leagueobj, owner=user)[0]
             portfolio.balance += holding.amount * stock.current_price
             amount_sold = holding.amount * stock.current_price
-            tempAmount =  holding.amount
             holding.amount = 0.0
-            holding.save()            
+            holding.save()      
             portfolio.save()
             return(True, f"Successfully sold ${amount_sold}")
         else:
@@ -105,12 +104,14 @@ def user_buy(user, is_buy, stock_id, amount, league="global"):
         else:
             return (False, "No amount specified.")
     else:
-        if LeagueHolding.objects.filter(owner = user, stock_id = stock).exists():
+
+        leagueobj = League.objects.filter(name = league)[0]
+        if LeagueHolding.objects.filter(owner = user, stock_id = stock, league = leagueobj).exists():
             firstBuy = False
         else:
             firstBuy = True
+            
         if amount != 0:
-            leagueobj = League.objects.filter(name = league)[0]
             league_portfolio = LeaguePortfolio.objects.filter(owner = user, league = leagueobj)[0]
             if amount > (stock.current_price/100):
                 volume = amount / float(stock.current_price)
@@ -119,14 +120,14 @@ def user_buy(user, is_buy, stock_id, amount, league="global"):
                     if amount > league_portfolio.balance:
                         return (False, "You don't have enough money to buy this amount.")
                 else:
-                    if volume > LeagueHolding.objects.filter(owner = user, stock_id = stock)[0].amount:
+                    if volume > LeagueHolding.objects.filter(owner = user, stock_id = stock, league = leagueobj)[0].amount:
                         return (False, "You don't own enough of this asset to sell this amount.")
                     purchase = 'SELL'
                     amount = amount * -1 # makes the amount negative. The amount is subtracted from the balance.
                     volumeSell = volume * -1
                 league_portfolio.balance -= Decimal.from_float(float(amount))
                 if firstBuy == False:
-                    thisHolding = LeagueHolding.objects.filter(owner = user, stock_id = stock)[0]
+                    thisHolding = LeagueHolding.objects.filter(owner = user, stock_id = stock, league = leagueobj)[0]
                     if is_buy:
                         x = float(thisHolding.amount) + volume
                         thisHolding.amount = Decimal.from_float(x)

@@ -37,8 +37,9 @@ def asset_page_form(request):
                     # Fail if user has no holding in stock
                     form['success'] = False
             else:
-                if LeagueHolding.objects.filter(owner = request.user, stock_id = stock).exists():
-                    holding =  LeagueHolding.objects.filter(owner =  request.user, stock_id = stock)[0]
+                leagueobj = League.objects.filter(name = league)[0]
+                if LeagueHolding.objects.filter(owner = request.user, stock_id = stock, league = leagueobj).exists():
+                    holding =  LeagueHolding.objects.filter(owner =  request.user, stock_id = stock, league = leagueobj)[0]
                     transaction['amount'] = holding.amount * stock.current_price
 
                     order = user_sell_all(request.user, request.POST.get("ticket", ""), league)
