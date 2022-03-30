@@ -77,15 +77,16 @@ def update_user_portfolio(user_portfolio, league="global"):
     except:
         failed.append(user_portfolio.owner.username)
         return False
-    if len(history) >= 7:
+    if len(history) == 7:
         # Cycle next
-        del history[0]
-        day_date = int(history[5]['oldTime'].split('-')[2].split(' ')[0]) # Split off day number from date
-        if int(timezone.now().strftime('%d')) != day_date:
+        day_date = int(history[-1]['oldTime'].split('-')[2].split(' ')[0]) # Split off day number from date
+        if int(timezone.now().today().strftime('%d')) != day_date:
+            del history[0]
             history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio, league))})
     else:
-        # fill blanks
-        for i in range(7-len(history)):
+        # reset
+        history = []
+        for i in range(7):
             history.append({"oldTime": str(timezone.now()), "oldData": float(get_total_value(user_portfolio, league))})
     user_portfolio.bal_hist = json.dumps({"history": history})
     user_portfolio.save()
@@ -100,11 +101,9 @@ def update_portfolios():
     successful = []
     failed = []
     for user_portfolio in Portfolio.objects.all():
-        print("Updating Port: " + user_portfolio.owner.username)
         if update_user_portfolio(user_portfolio): successful.append(user_portfolio.owner.username)
         else: 
             failed.append(user_portfolio.owner.username)
-            print("FAILED.")
 
     for league_portfolio in LeaguePortfolio.objects.all():
         if update_user_portfolio(league_portfolio, league=league_portfolio.league.name): successful.append(league_portfolio.owner.username)
@@ -159,5 +158,5 @@ def update_portfolios():
             portfolio.save()
 def update_db():
     print("UPDATING DATABASE...")
-    update_stocks()
+    #update_stocks()
     update_portfolios()
