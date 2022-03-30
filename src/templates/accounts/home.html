@@ -71,7 +71,7 @@
         </div>
         <div class="col portfolio-info-box">
             <h3>Weekly Market Direction</h3>
-            <h1 class="showcase-number ">{% if stock.pos %}<span style="color: var(--nephritis);"><i
+            <h1 class="showcase-number ">{% if market_direction >= 0 %}<span style="color: var(--nephritis);"><i
                 style="margin-right:5px; position: relative; bottom:8px;font-size: 2.5rem; transform: rotate(-45deg);"
                 class="fas fa-rocket"></i>{% else %}<span style="color: var(--alizarin);"><i
                     style="color: var(--alizarin); margin-right:5px; position: relative; bottom:18px;font-size: 2.5rem; transform: rotate(135deg);"

@@ -325,6 +325,7 @@ def league_other_portfolio(request,league_name,name):
     return render(request, "leagues/league_other_portfolio.html",{
         'league_info': {'current_league': league_name, 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST},
         'playerName': user.username,
+        'league': league,
         'numOfTrades': userTrades,
         'rankRegional': '13',
         'rankOverall': portfolio.rank,
