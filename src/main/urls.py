@@ -31,6 +31,7 @@ urlpatterns = [
     path('leagues/<str:league_name>/add_member', league_views.add_member),
     path('leagues/<str:league_name>/delete', league_views.delete_league),
     path('leagues/<str:league_name>/leave', league_views.leave_league),
+    path('leagues/<str:league_name>/remove_user/<str:username>', league_views.remove_league_user),
     # Asset list page can be rerouted to global one as it's non-specific to leagues
     path('leagues/<str:league_name>/trading', trading_views.asset_list_page),
     # Asset listing page needs a separate variable but still routes to same page

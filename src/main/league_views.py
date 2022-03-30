@@ -23,6 +23,23 @@ def delete_league(request, league_name):
 
     return redirect('/leagues')
 
+
+@login_required
+def remove_league_user(request, league_name, username):
+    if not League.objects.filter(name=league_name).exists():
+        return error_view(request, error="This league doesn't exist")
+    league = League.objects.filter(name=league_name)[0]
+
+    if request.user != league.owner:
+        return error_view(request, error="You are not the owner of this league.")
+
+    user = User.objects.filter(username=username)[0]
+
+    result = remove_member_backend(league, user)
+    print(result)
+    if result: return redirect(f'/leagues/{league_name}')
+    else: return error_view(request, error=result[1])
+
 @login_required
 def leave_league(request, league_name):
     if not League.objects.filter(name=league_name).exists():
@@ -33,9 +50,10 @@ def leave_league(request, league_name):
     if not request.user in league.participants.all():
         return error_view(request, error="You are not in this league.")
 
-    remove_member_backend(league, request.user)
+    result = remove_member_backend(league, request.user)
+    if result: return redirect('/leagues')
+    else: return error_view(request, error=result[1])
 
-    return redirect('/leagues')
 
 @login_required
 def view_leagues(request):

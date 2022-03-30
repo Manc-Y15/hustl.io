@@ -5,6 +5,8 @@ from .constants import *
 def create_league(owner, name, starting_balance, icon):
     if name in [league.name for league in League.objects.all()]:
         return (False, "Name already in use")
+    if float(starting_balance) <= 1000 :
+        return (False, "Starting balance must be greater than $1000")
     new_league = League()
     new_league.owner = owner
     new_league.name = name

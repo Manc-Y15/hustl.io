@@ -69,7 +69,7 @@
 
         a {
             text-decoration: none !important;
-            
+            color:inherit;
         }
     </style>
     <div class="container" style="margin-bottom: 40px;">
@@ -88,8 +88,11 @@
                         <span style="font-size: 1.8rem; width: fit-content;background: linear-gradient(90deg, var(--sun-flower) 23%, var(--carrot) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                             <i class="fas fa-medal"></i>
                         </span>
-                        <br>{{ gold.username }}<br>
+                        <br><span style="{% if gold == user %}color: var(--wisteria);{% else %} color: white; {% endif %}">{{ gold.username }}</span><br>
                         <span style="color: var(--emerald);">${{ gold.league_portfolio_value|intcomma }}</span>
+                        {% if gold != league.owner %}
+                        <a href="/leagues/{{ league.name }}/remove_user/{{ gold.username }}" style="float: right; position: absolute; right: 15px; text-decoration: none !important;"><i class="fas fa-trash-can"></i></a>
+                        {% endif %}
                     </h3>
                 </a>
 
@@ -107,9 +110,11 @@
                         <span style="font-size: 1.8rem; width: fit-content;background: linear-gradient(90deg, var(--concrete) 23%, var(--clouds) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                             <i class="fas fa-medal"></i>
                         </span>
-                        <br>{{ silver.username }}<br>
+                        <br><span style="{% if silver == user %}color: var(--wisteria);{% else %} color: white; {% endif %}">{{ silver.username }}</span><br>
                         <span style="color: var(--emerald);">${{ silver.league_portfolio_value|intcomma }}</span>                        
-
+                        {% if silver != league.owner %}
+                        <a href="/leagues/{{ league.name }}/remove_user/{{ silver.username }}" style="float: right; position: absolute; right: 15px; text-decoration: none !important;"><i class="fas fa-trash-can" ></i></a>
+                        {% endif %}
                     </h3>
                 </a>
 
@@ -128,8 +133,11 @@
                         <span style="font-size: 1.8rem; width: fit-content;background: linear-gradient(90deg, var(--carrot) 23%, var(--pumpkin) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                             <i class="fas fa-medal"></i>
                         </span>
-                        <br>{{ bronze.username }}<br>
+                        <br><span style="{% if bronze == user %}color: var(--wisteria);{% else %} color: white; {% endif %}">{{ bronze.username }}</span><br>
                         <span style="color: var(--emerald);">${{ bronze.league_portfolio_value|intcomma }}</span>
+                        {% if bronze != league.owner %}
+                        <a href="/leagues/{{ league.name }}/remove_user/{{ bronze.username }}" style="float: right; position: absolute; right: 15px; text-decoration: none !important;"><i class="fas fa-trash-can" ></i></a>
+                        {% endif %}
                     </h3>
                 </a>
 
@@ -150,6 +158,9 @@
                         {% endif %}
                         <span style="color: {% if player.username == user.username %}var(--wisteria);font-weight:900;{% else %}var(--orange);{% endif %}">{{ member.username }}</span> valued at 
                         <span style="color: var(--emerald);">${{ member.league_portfolio_value|intcomma }}</span>
+                        {% if member != league.owner %}
+                        <a href="/leagues/{{ league.name }}/remove_user/{{ member.username }}" style="float: right; position: absolute; right: 15px; text-decoration: none !important;"><i class="fas fa-trash-can" ></i></a>
+                        {% endif %}
                     </h5>
 
                     </a>
@@ -157,12 +168,14 @@
                 </li>
             </div>
             {% endfor %}
-            <div class="col-12">
-                <button class="action-btn" style="float: left; margin-top: 15px; min-width: -webkit-fill-available" onClick="window.location = '/leagues/{{ league.name }}/add_member';">
-                    <i class="fas fa-plus" style="margin-right: 5px;"></i>
-                    Add Player
-                </button>
-            </div>
+            {% if user == league.owner %}
+                <div class="col-12">
+                    <button class="action-btn" style="float: left; margin-top: 15px; min-width: -webkit-fill-available" onClick="window.location = '/leagues/{{ league.name }}/add_member';">
+                        <i class="fas fa-plus" style="margin-right: 5px;"></i>
+                        Add Player
+                    </button>
+                </div>
+            {% endif %}
         </div>
     </div>
 </body>

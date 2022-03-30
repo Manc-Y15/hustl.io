@@ -42,6 +42,7 @@
     left: 0;
     right: 0;
     text-align: center;
+    pointer-events: none !important;
 }
 
 .icon-box > .secondary-icon {

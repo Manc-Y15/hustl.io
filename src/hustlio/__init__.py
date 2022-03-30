@@ -15,7 +15,7 @@ from data_gen import gen_data
 schedule.every(5).minutes.do(update_db)
 
 # Run this to force update:
-update_db()
+#update_db()
 
 # Start the background thread
 stop_run_continuously = run_continuously()

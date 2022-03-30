@@ -36,8 +36,12 @@ def home_view(request):
 		cols = stock.display_colour.split(' ')
 		stock.col1 = cols[0]
 		stock.col2 = cols[1]
-
-	
+	marketDirection = 0
+	for i in range(0,len(stocks)):
+		marketDirection += stocks[i].week_change
+	marketDirection = round(marketDirection / len(stocks),2)
+	TopTrader = None # default
+	TopTrader = Portfolio.objects.filter(leaderboard_ranking=1)[0].owner
 	# get activity feeds for user
 	usertransactions= []
 	friendtransactions = []
@@ -60,7 +64,7 @@ def home_view(request):
 				transac.stock_id.current_price,
 				transac.time
 			]		
-		elif transac.portfolio_id.owner in request.user.profile.friends.all():
+		elif transac.portfolio_id.owner in request.user.profile.friends.all() and transac.portfolio_id.owner != request.user:
 			friendtransactions.append([])
 			friendtransactions[-1] += [
 				transac.portfolio_id.owner.username,
@@ -72,7 +76,7 @@ def home_view(request):
 			]
 
 	usertransactions = usertransactions[::-1][:6]
-	friendtransactions = usertransactions[::-1][:6]
+	friendtransactions = friendtransactions[::-1][:6]
 	errors = []
 
 
@@ -81,7 +85,9 @@ def home_view(request):
 		'message': message,
 		'TradeNum': transac_count,
 		'user_transactions': usertransactions,
+		'toptrader': TopTrader,
 		'friend_transactions': friendtransactions,
+		'market_direction': marketDirection,
 		'stocks': HotandCold,
 		'errors': errors,
 		'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST},

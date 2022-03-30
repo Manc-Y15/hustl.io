@@ -74,8 +74,11 @@
         <div class="row">
             <div class="col-12">
                 <li class="list-group-item activity-item">
-                    <a href="/portfolio/{{ gold.username }}">
-
+                    {% if gold == user %}
+                        <a href="/portfolio/">
+                    {% else %}
+                        <a href="/portfolio/{{ gold.username }}">
+                    {% endif %}
                     <h3 class="activity-item-text text-center">
 
                         <span style="font-size: 1.8rem; width: fit-content;background: linear-gradient(90deg, var(--sun-flower) 23%, var(--carrot) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
@@ -90,8 +93,11 @@
             </div>
             <div class="col-12 col-sm-6">
                 <li class="list-group-item activity-item">
-                    <a href="/portfolio/{{ silver.username }}">
-
+                    {% if silver == user %}
+                        <a href="/portfolio/">
+                    {% else %}
+                        <a href="/portfolio/{{ silver.username }}">
+                    {% endif %}
                     <h3 class="activity-item-text text-center">
                         <span style="font-size: 1.8rem; width: fit-content;background: linear-gradient(90deg, var(--concrete) 23%, var(--clouds) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                             <i class="fas fa-medal"></i>
@@ -106,8 +112,11 @@
             </div>
             <div class="col-12 col-sm-6">
                 <li class="list-group-item activity-item">
-                    <a href="/portfolio/{{ bronze.username }}">
-
+                    {% if bronze == user %}
+                        <a href="/portfolio/">
+                    {% else %}
+                        <a href="/portfolio/{{ bronze.username }}">
+                    {% endif %}
                     <h3 class="activity-item-text text-center">
 
                         <span style="font-size: 1.8rem; width: fit-content;background: linear-gradient(90deg, var(--carrot) 23%, var(--pumpkin) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
@@ -123,7 +132,11 @@
             {% for player in users %}
             <div class="col-12 col-sm-6">
                 <li class="list-group-item activity-item">
-                    <a href="/portfolio/{{ player.username }}">
+                    {% if player == user %}
+                        <a href="/portfolio/">
+                    {% else %}
+                        <a href="/portfolio/{{ player.username }}">
+                    {% endif %}
 
                     <h5 class="activity-item-text">
                         {{ forloop.counter|add:3 }}.
