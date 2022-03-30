@@ -35,18 +35,11 @@
                 <h1 class="showcase-number "><span style="color: var(--emerald); ">{{ totalPortValue|intcomma }}</span>
                 </h1>
             </div>
-            {% if lastTraded %}
             <div class="col portfolio-info-box ">
-                <h3>Last Traded</h3>
-                <h1 class="showcase-number "><span style="width: fit-content;font-weight: 900; background: linear-gradient(90deg, var({{ lastTraded.col1 }}) 23%, var({{ lastTraded.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ lastTraded.ticket }}</span>
+                <h3>League Rank</h3>
+                <h1 class="showcase-number "><span style="width: fit-content;font-weight: 900;color: var(--river);">{{ rankOverall|ordinal }}</span>
                 </h1>
             </div>
-            {% else %}
-            <div class="col portfolio-info-box ">
-                <h3>Last Traded</h3>
-                <h4>You haven't traded yet.
-                </h4>
-            </div>{% endif %}
         </div>
         <div class="row " style="margin-top: 15px; gap: 15px; ">
             <div class="col col-md-4 portfolio-chart-box ">
