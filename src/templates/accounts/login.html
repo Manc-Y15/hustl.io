@@ -9,7 +9,7 @@
             <div class="col-12 text-center">
                 <div class="container" style="margin-top: 20px;">
                     <div class="row" style="border-bottom:1px solid #95a5a6">
-                        <h2 style="text-align: left;">Log in</h2>
+                        <h2 style="text-align: center;">Log in</h2>
                     </div>
                     <div class="container" style="padding-top: 20px;">
                         <form action="/login/" method="POST">
@@ -24,19 +24,9 @@
                                     <h4 class="account-input-text col-12 col-sm-6">Password</h4>
                                     <input class="account-input-box col-12 col-sm-6" type="password" name="password" id="inputPassword">
                                 </div>
-                                <div class="row justify-content-center">
-                                    <div class="col-12 col-sm-4">
-                                        <h6 class="remember-me-text" style="margin-top: 0.2em;">Remember me</h6>
-                                    </div>
-
-                                    <div class="form-check form-switch col-4 col-sm-2 justify-content-center">
-                                        <!-- Override margin-left & float values to center -->
-                                        <input class="form-check-input" type="checkbox" id="inputRemember" style="margin-left: -1.5em !important; float: none !important;">
-                                    </div>
-                                </div>
                                 <div class="account-input" style="text-align: center;">
                                     <button class="submit-button" name="Login" type="submit">Login</button>
-                                    <a href="/signup" class="submit-button" style="padding-top: 0.488em;padding-bottom: 0.488em;">Sign Up</a>
+                                    <button class="submit-button" onclick="window.location.href='/signup'" name="Signup" type="button">Sign Up</a>
                                 </div>
                             </div>
                             <span style="color:var(--alizarin);">
@@ -47,9 +37,6 @@
                                 {% endif %}
                             </span>
                         </form>
-                        <div class="account-admin">
-                            <a href="recover_account.html" class="account-admin-text">Forgot password?</a>
-                        </div>
                     </div>
                 </div>
 

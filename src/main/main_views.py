@@ -56,23 +56,33 @@ def home_view(request):
 	for transac in allTransactions:
 		if transac.portfolio_id.owner == request.user:
 			usertransactions.append([])
+			cols = transac.stock_id.display_colour.split(' ')
+			transac.stock_id.col1 = cols[0]
+			transac.stock_id.col2 = cols[1]
 			usertransactions[-1] += [
 				transac.portfolio_id.owner.username,
 				'bought' if transac.buy else 'sold',
 				round(transac.buy_price * transac.volume,2),
 				transac.stock_id.ticket,
 				transac.stock_id.current_price,
-				transac.time
+				transac.time,
+				transac.stock_id.col1,
+				transac.stock_id.col2,
 			]		
 		elif transac.portfolio_id.owner in request.user.profile.friends.all() and transac.portfolio_id.owner != request.user:
 			friendtransactions.append([])
+			cols = transac.stock_id.display_colour.split(' ')
+			transac.stock_id.col1 = cols[0]
+			transac.stock_id.col2 = cols[1]		
 			friendtransactions[-1] += [
 				transac.portfolio_id.owner.username,
 				'bought' if transac.buy else 'sold',
 				round(transac.buy_price * transac.volume,2),
 				transac.stock_id.ticket,
 				transac.stock_id.current_price,
-				transac.time
+				transac.time,
+				transac.stock_id.col1,
+				transac.stock_id.col2,
 			]
 
 	usertransactions = usertransactions[::-1][:6]
