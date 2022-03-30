@@ -44,11 +44,9 @@ def remove_member_backend(league, user):
     
     for holding in holdings:
         holding.delete()
-        holding.save()
     league.participants.remove(user)
     league.save()
     user_port = LeaguePortfolio.objects.filter(league=league, owner = user)[0]
     user_port.delete()
-    user_port.save()
 
     return (True, f"Successfully removed {user.username}")

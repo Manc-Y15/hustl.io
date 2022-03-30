@@ -67,7 +67,7 @@
 
         }
 
-        a {
+        a, a:hover {
             text-decoration: none !important;
             color:inherit;
         }
@@ -78,9 +78,9 @@
             <div class="col-12">
                 <li class="list-group-item activity-item">
                     {% if gold == user %}
-                        <a href="/leagues/{{ league.name }}/portfolio">
+                        <a style="text-decoration: none;" href="/leagues/{{ league.name }}/portfolio">
                     {% else %}
-                        <a href="/leagues/{{ league.name }}/portfolio/{{ gold.username }}">
+                        <a style="text-decoration: none;" href="/leagues/{{ league.name }}/portfolio/{{ gold.username }}">
                     {% endif %}
 
                     <h3 class="activity-item-text text-center">
@@ -90,7 +90,7 @@
                         </span>
                         <br><span style="{% if gold == user %}color: var(--wisteria);{% else %} color: white; {% endif %}">{{ gold.username }}</span><br>
                         <span style="color: var(--emerald);">${{ gold.league_portfolio_value|intcomma }}</span>
-                        {% if gold != league.owner %}
+                        {% if user == league.owner and gold != league.owner %}
                         <a href="/leagues/{{ league.name }}/remove_user/{{ gold.username }}" style="float: right; position: absolute; right: 15px; text-decoration: none !important;"><i class="fas fa-trash-can"></i></a>
                         {% endif %}
                     </h3>
@@ -101,9 +101,9 @@
             <div class="col-12 col-sm-6">
                 <li class="list-group-item activity-item">
                     {% if silver == user %}
-                        <a href="/leagues/{{ league.name }}/portfolio">
+                        <a style="text-decoration: none;" href="/leagues/{{ league.name }}/portfolio">
                     {% else %}
-                        <a href="/leagues/{{ league.name }}/portfolio/{{ silver.username }}">
+                        <a style="text-decoration: none;" href="/leagues/{{ league.name }}/portfolio/{{ silver.username }}">
                     {% endif %}
 
                     <h3 class="activity-item-text text-center">
@@ -112,7 +112,7 @@
                         </span>
                         <br><span style="{% if silver == user %}color: var(--wisteria);{% else %} color: white; {% endif %}">{{ silver.username }}</span><br>
                         <span style="color: var(--emerald);">${{ silver.league_portfolio_value|intcomma }}</span>                        
-                        {% if silver != league.owner %}
+                        {% if user == league.owner and silver != league.owner %}
                         <a href="/leagues/{{ league.name }}/remove_user/{{ silver.username }}" style="float: right; position: absolute; right: 15px; text-decoration: none !important;"><i class="fas fa-trash-can" ></i></a>
                         {% endif %}
                     </h3>
@@ -123,9 +123,9 @@
             <div class="col-12 col-sm-6">
                 <li class="list-group-item activity-item">
                     {% if bronze == user %}
-                        <a href="/leagues/{{ league.name }}/portfolio">
+                        <a style="text-decoration: none;" href ="/leagues/{{ league.name }}/portfolio">
                     {% else %}
-                        <a href="/leagues/{{ league.name }}/portfolio/{{ bronze.username }}">
+                        <a style="text-decoration: none;" href="/leagues/{{ league.name }}/portfolio/{{ bronze.username }}">
                     {% endif %}
 
                     <h3 class="activity-item-text text-center">
@@ -135,7 +135,7 @@
                         </span>
                         <br><span style="{% if bronze == user %}color: var(--wisteria);{% else %} color: white; {% endif %}">{{ bronze.username }}</span><br>
                         <span style="color: var(--emerald);">${{ bronze.league_portfolio_value|intcomma }}</span>
-                        {% if bronze != league.owner %}
+                        {% if user == league.owner and bronze != league.owner %}
                         <a href="/leagues/{{ league.name }}/remove_user/{{ bronze.username }}" style="float: right; position: absolute; right: 15px; text-decoration: none !important;"><i class="fas fa-trash-can" ></i></a>
                         {% endif %}
                     </h3>
@@ -148,9 +148,9 @@
             <div class="col-12 col-sm-6">
                 <li class="list-group-item activity-item">
                     {% if member == user %}
-                        <a href="/leagues/{{ league.name }}/portfolio">
+                        <a style="text-decoration: none;" href="/leagues/{{ league.name }}/portfolio">
                     {% else %}
-                        <a href="/leagues/{{ league.name }}/portfolio/{{ member.username }}">
+                        <a style="text-decoration: none;" href="/leagues/{{ league.name }}/portfolio/{{ member.username }}">
                     {% endif %}
                     <h5 class="activity-item-text">
                         {% if league_size == True %}
@@ -158,7 +158,7 @@
                         {% endif %}
                         <span style="color: {% if player.username == user.username %}var(--wisteria);font-weight:900;{% else %}var(--orange);{% endif %}">{{ member.username }}</span> valued at 
                         <span style="color: var(--emerald);">${{ member.league_portfolio_value|intcomma }}</span>
-                        {% if member != league.owner %}
+                        {% if user == league.owner and member != league.owner %}
                         <a href="/leagues/{{ league.name }}/remove_user/{{ member.username }}" style="float: right; position: absolute; right: 15px; text-decoration: none !important;"><i class="fas fa-trash-can" ></i></a>
                         {% endif %}
                     </h5>
