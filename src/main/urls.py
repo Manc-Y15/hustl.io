@@ -4,12 +4,15 @@ from . import main_views
 from . import trading_views
 from . import leaderboards_views
 from . import league_views
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 
 # This page maps URLs to view-response functions.
 # URLs can have variables in them (e.g. "<str:name>"), these are passed into the funcs.
 
 urlpatterns = [
     path('', main_views.login_view),
+    path('favicon.png', RedirectView.as_view(url=staticfiles_storage.url('img/favicon2.png'))),
     path('signup/', main_views.signup_view),
     path('login/', main_views.login_view),
     path('logout/', main_views.logout_view),
