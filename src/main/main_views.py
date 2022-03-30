@@ -36,10 +36,6 @@ def home_view(request):
 		cols = stock.display_colour.split(' ')
 		stock.col1 = cols[0]
 		stock.col2 = cols[1]
-	HotandCold[0].tagline = "Best 24hr"
-	HotandCold[1].tagline = "Worst 24hr"
-	HotandCold[2].tagline = "Best 7d"
-	HotandCold[3].tagline = "Worst 7d"
 	marketDirection = 0
 	for i in range(0,len(stocks)):
 		marketDirection += stocks[i].week_change
@@ -105,7 +101,7 @@ def home_view(request):
 		'stocks': HotandCold,
 		'errors': errors,
 		'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST},
-		'global_ranking': request.user.portfolio.leaderboard_ranking
+		'global_ranking': request.user.portfolio.leaderboard_ranking, 
 		})
 
 # signup_view (view func)
