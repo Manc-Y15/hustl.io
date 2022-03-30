@@ -57,7 +57,7 @@ def update_stocks():
         stock.historical = json.dumps(history) # Saved as text due to SQLite not supporting JSONField
 
         historical_prices = json.loads(stock.historical)['history']
-        lastWeekPrice = float(historical_prices[len(historical_prices)-4]['oldData'])
+        lastWeekPrice = float(historical_prices[len(historical_prices)-8]['oldData'])
         yesterdayPrice =  float(historical_prices[len(historical_prices)-2]['oldData'])
         todayPrice =  float(stock.current_price)
         stock.day_change = percentage_change(yesterdayPrice,todayPrice)
