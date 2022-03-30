@@ -10,7 +10,7 @@
 .stock-button {
     border-radius: 5px;
     background: linear-gradient(90deg, rgba(26,188,156,1) 23%, rgba(46,204,113,1) 100%);
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0);
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
@@ -22,7 +22,7 @@
 }
 
 .stock-button:hover {
-    background: transparent;
+    background: rgba(255, 255, 255, 0);
     border: 1px solid #2ecc71;
     color: #2ecc71;
     transition: 0.2s ease-in;
@@ -30,7 +30,7 @@
 
 .activity-item {
     background: #34495e;
-    border: 1px solid transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0) !important;
     border-radius: 5px !important;
     margin-top: 15px;
     box-shadow:

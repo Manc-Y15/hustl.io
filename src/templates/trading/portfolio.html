@@ -38,7 +38,7 @@
             {% if lastTraded %}
             <div class="col portfolio-info-box ">
                 <h3>Last Traded</h3>
-                <h1 class="showcase-number "><span style="width: fit-content;font-weight: 900; background: linear-gradient(90deg, var({{ lastTraded.col1 }}) 23%, var({{ lastTraded.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ lastTraded.ticket }}</span>
+                <h1 class="showcase-number "><span style="width: fit-content;font-weight: 900; background: linear-gradient(90deg, var({{ lastTraded.col1 }}) 23%, var({{ lastTraded.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: rgba(255, 255, 255, 0);">${{ lastTraded.ticket }}</span>
                 </h1>
             </div>
             {% else %}
@@ -75,7 +75,7 @@
             {% for userstock in userstocks %}
             {% if userstock.stock_id.balance > 0 %}
             <div class="col portfolio-info-box ">
-                <h3><span style="width: fit-content;font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, var({{ userstock.stock_id.col1 }}) 23%, var({{ userstock.stock_id.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ userstock.stock_id.ticket }}</span></h3>
+                <h3><span style="width: fit-content;font-weight: 900; font-size: 1.6rem; background: linear-gradient(90deg, var({{ userstock.stock_id.col1 }}) 23%, var({{ userstock.stock_id.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: rgba(255, 255, 255, 0);">${{ userstock.stock_id.ticket }}</span></h3>
                 <h1 class="showcase-number "><span style="color: var(--concrete); ">${{ userstock.stock_id.balance|intcomma }}</span>
                 </h1>
                 <a href="/trading/{{ userstock.stock_id.ticket }}"><button  class="regular-btn" style="float:right;"><i class="fa fa-cogs" aria-hidden="true"></i>

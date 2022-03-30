@@ -6,13 +6,13 @@
 
 .nav-elems .nav-item.show .nav-link, .nav-elems .nav-link.active {
   border-radius:0px;
-  border-color:transparent;
-  background-color:transparent;
+  border-color:rgba(255, 255, 255, 0);
+  background-color:rgba(255, 255, 255, 0);
   color:#ecf0f1;
 }
 
 .nav-elems .nav-link, .nav-item .nav-link {
-  background-color:transparent;
+  background-color:rgba(255, 255, 255, 0);
   border-radius:0px;
   font-weight:500;
   color:#ecf0f1;
@@ -28,7 +28,7 @@
   border:none;
   background: linear-gradient(90deg, var(--turquoise) 0%, var(--emerald) 100%); 
   -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0);
   transition:0.5s;
 }
 

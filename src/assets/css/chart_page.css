@@ -15,13 +15,13 @@ body {
 .stock-ticker-heading {
     background: linear-gradient(90deg, rgba(26, 188, 156, 1) 23%, rgba(46, 204, 113, 1) 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
 }
 
 .stock-button {
     border-radius: 5px;
     background: linear-gradient(90deg, rgba(26, 188, 156, 1) 23%, rgba(46, 204, 113, 1) 100%);
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0);
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
@@ -34,7 +34,7 @@ body {
 
 
 .stock-button:hover {
-    background: transparent;
+    background: rgba(255, 255, 255, 0);
     border: 1px solid #2ecc71;
     color: #2ecc71;
     transition: 0.2s ease-in;
@@ -48,7 +48,7 @@ body {
 
 .activity-item {
     background: #34495e;
-    border: 1px solid transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0) !important;
     border-radius: 5px !important;
     margin-top: 15px;
     box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
@@ -102,7 +102,7 @@ body {
 
 .trade-form-btn {
     border-radius: 5px;
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0);
     margin: 1px;
     padding: 5px;
     padding-left: 10px;
@@ -118,7 +118,7 @@ body {
 }
 
 .trade-form-btn:hover {
-    background: transparent !important;
+    background: rgba(255, 255, 255, 0) !important;
     transition: 0.2s ease-in;
     border: 1px solid var(--river);
     color: var(--river);

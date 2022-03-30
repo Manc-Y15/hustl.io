@@ -2,7 +2,7 @@
 <div class="form-response-container" hx-swap-oob="innerHTML:#responseModal">
     <div class="toast form-response-toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
         <h1 class="form-response-h1">Successfully {% if transaction.is_buy %}bought{% else %}sold{% endif %} ${{ transaction.amount }} of
-            <span style="font-weight: 900; width: fit-content;background: linear-gradient(90deg, var({{ stock.col1 }}) 23%, var({{ stock.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <span style="font-weight: 900; width: fit-content;background: linear-gradient(90deg, var({{ stock.col1 }}) 23%, var({{ stock.col2 }}) 100%); -webkit-background-clip: text; -webkit-text-fill-color: rgba(255, 255, 255, 0);">
                 ${{ stock.ticket }}
             </span>
         </h1>
