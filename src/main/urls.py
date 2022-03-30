@@ -20,7 +20,7 @@ urlpatterns = [
     path('trading/', trading_views.asset_list_page),
     path('portfolio/', trading_views.portfolio_view),
     path('portfolio/<str:name>', trading_views.other_user_portfolio),
-    path('settings/', main_views.settings_view),
+    path('account_info/', main_views.info_view),
     path('friends/', main_views.friends_view),
     path('friends/search', main_views.friends_search_form),
     path('friends/request', main_views.request_friend),

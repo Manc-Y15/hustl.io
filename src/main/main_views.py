@@ -149,10 +149,15 @@ def logout_view(request):
 	return redirect('/')
 
 
-def settings_view(request):
+def info_view(request):
 	errors = []
 
-	return render(request, 'accounts/account_settings.html', {'league_info': {'current_league': "global", 'all_leagues': get_user_leagues(request.user), 'icon_list': ICON_LIST}})
+	return render(request, 'accounts/account_info.html', {
+		'league_info': {
+			'current_league': "global", 
+			'all_leagues': get_user_leagues(request.user), 
+			'icon_list': ICON_LIST}
+		})
 
 def friends_search_form(request):
 	if request.method == "POST":

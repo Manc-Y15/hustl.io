@@ -124,31 +124,24 @@ def asset_page(request, ticket, league_name="global"):
     if request.user.is_authenticated:
         # Get transactions for activity feed
         transactions = []
-        thisStock = Stock.objects.filter(ticket=ticket)[0]
-        allTransactions = Transaction.objects.filter(stock_id = thisStock)
-        activityFeed = []
-        transactions = []
-        for transac in allTransactions:
-            if transac.portfolio_id.owner == request.user or transac.portfolio_id.owner in request.user.profile.friends.all():
-                activityFeed.append(transac)
+        for transac in Transaction.objects.all():
+            if transac.stock_id == stock:
+                transactions.append([])
+                cols = transac.stock_id.display_colour.split(' ')
+                transac.stock_id.col11 = cols[0]
+                transac.stock_id.col12 = cols[1]
+                transactions[-1] += [
+                    transac.portfolio_id.owner.username,
+                    'bought' if transac.buy else 'sold',
+                    round(transac.buy_price * transac.volume,2),
+                    transac.stock_id.ticket,
+                    transac.stock_id.current_price,
+                    transac.time,
+                    transac.stock_id.col11,
+                    transac.stock_id.col12,
+                ]
+        transactions = transactions[::-1][:6]
 
-        for transac in activityFeed:
-            new_transacaction = []
-            if transac.portfolio_id.owner.username == request.user.username:
-                new_transacaction.append("You")
-            else:
-                new_transacaction.append(transac.portfolio_id.owner.username)
-
-            new_transacaction.append('bought' if transac.buy else 'sold')
-            new_transacaction.append(round(transac.buy_price * transac.volume,2))
-            new_transacaction.append(transac.stock_id.ticket)
-            new_transacaction.append(transac.buy_price)
-            new_transacaction.append(transac.time)
-            transactions.append(new_transacaction)
-        transactions.reverse()
-        transactions = transactions[:6]
-    else:
-        transactions = []
 
     
     return render(request, 'trading/stock_listing.html', {

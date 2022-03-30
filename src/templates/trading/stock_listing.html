@@ -165,18 +165,18 @@
         {% if user.is_authenticated %}
 
         <div class="row" style="margin-bottom: 20px">
-            <div class="list-group list-group-flush"></div>
-            {% for transac in transactions %}
-                <li class="list-group-item activity-item">
-                    <h5 class="activity-item-text">
-                        <font style="color: var(--orange)">{{ transac.0 }}</font> {{ transac.1 }}
-                        <font style="color: var(--emerald)">${{ transac.2 }}</font> of
-                        <font style="color: var(--river)">{{ transac.3 }}</font> at
-                        <font style="color: var(--river)">${{ transac.4 }}</font>
-                        <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
-                    </h5>
-                </li>
-            {% endfor %}
+            <div class="list-group list-group-flush">
+                {% for transac in transactions %}
+                    <li class="list-group-item activity-item" style="box-shadow: 5px 5px 20px;">
+                        <h5 class="activity-item-text">
+                            <a style="text-decoration: none;" href="/portfolio/{{ transac.0 }}"><font style="color: #f39c12">{{ transac.0 }}</font></a> {{ transac.1 }}
+                            <font style="color: #2ecc71">${{ transac.2 }}</font> of
+                            <a style="text-decoration: none;" href="/trading/{{ transac.3 }}"><font style="width: fit-content;font-weight: 900; background: linear-gradient(90deg, {{ transac.6 }} 23%, {{ transac.7 }} 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ transac.3 }}</font></a> at
+                            <font style="color: #3498db">${{ transac.4 }}</font>
+                            <font style="float: right; color: #95a5a6">{{ transac.5 }}</font>
+                        </h5>
+                    </li>
+                {% endfor %}
             </div>
         </div>
         {% else %}

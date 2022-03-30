@@ -1,0 +1,52 @@
+{% extends 'base/base_layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+<div class="container" style="margin-top: 20px;max-width:575px;">
+	<div class="row">
+		<div class="col-12 text-center">
+			<div class="container" style="margin-top: 20px;">
+				<div class="row" style="border-bottom:1px solid #95a5a6">
+					<h2 style="text-align: center;">Account Settings</h2>
+				</div>
+				<div class="container" style="padding-top: 20px;">
+					<form action="/change_settings/" method="POST">
+						<div class="grid">
+							<div class="profile-input row">
+								<h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Username:</h5>
+								<h5 class="profile-input-text col-12 col-sm-7">{{ user.username }}</h5>
+							</div>
+							<div class="profile-input row">
+								<h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Joined:</h5>
+								<h5 class="profile-input-text col-12 col-sm-8">{{ user.date_joined }}</h5>
+							</div>
+							<div class="profile-input row">
+								<h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Last login:</h5>
+								<h5 class="profile-input-text col-12 col-sm-7">{{ user.last_login }}</h5>
+							</div>
+							<div class="profile-input row">
+								<h5 class="profile-input-text col-12 col-sm-4" style="color: var(--river);">Friends:</h5>
+								<h5 class="profile-input-text col-12 col-sm-7">{{ user.friends.count }}</h5>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+    function showEntry(id){
+        if(document.getElementById(id).style.display=="flex"){
+            document.getElementById(id).style.display="none";
+        }else{
+            document.getElementById(id).style.display="flex";
+        }
+    }
+</script>
+<script src="https://kit.fontawesome.com/2938df8840.js" crossorigin="anonymous"></script>
+
+{% endblock %}
