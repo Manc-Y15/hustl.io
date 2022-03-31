@@ -14,6 +14,9 @@ import json
 import random
 
 
+def landing_page(request):
+	return render(request, 'home.html', {})
+
 # home_view (view func)
 # User homepage, not viewable if not logged in.
 # Displays both global and user-related information

@@ -11,7 +11,7 @@ from django.views.generic.base import RedirectView
 # URLs can have variables in them (e.g. "<str:name>"), these are passed into the funcs.
 
 urlpatterns = [
-    path('', main_views.login_view),
+    path('', main_views.landing_page),
     path('favicon.png', RedirectView.as_view(url=staticfiles_storage.url('img/favicon2.png'))),
     path('signup/', main_views.signup_view),
     path('login/', main_views.login_view),

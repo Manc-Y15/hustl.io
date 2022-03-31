@@ -1,0 +1,55 @@
+section {
+    min-height: 400px;
+    padding: 100px 10vw;
+}
+
+
+.spacer {
+    min-height: 400px;
+}
+
+.trade-with {
+    color: var(--emerald);
+    font-weight: 500;
+}
+
+.login {
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-decoration: none;
+    color: var(--river);
+    transition: .2s ease;
+}
+
+.login:hover {
+    color: white;
+    transition: .2s ease;
+}
+
+
+.green_wave {}
+.logo {}
+
+.landing-section-heading {
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.showcase-icon {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.showcase-h {
+    font-size: 2.5rem;
+    font-family: 'Comfortaa', sans-serif;
+}
+
+.showcase-p {
+    color: var(--concrete);
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 1rem;
+}
