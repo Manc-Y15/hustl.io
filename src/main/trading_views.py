@@ -135,7 +135,7 @@ def asset_page(request, ticket, league_name="global"):
                     'bought' if transac.buy else 'sold',
                     round(transac.buy_price * transac.volume,2),
                     transac.stock_id.ticket,
-                    transac.stock_id.buy_price,
+                    transac.buy_price,
                     transac.time,
                     transac.stock_id.col11,
                     transac.stock_id.col12,
