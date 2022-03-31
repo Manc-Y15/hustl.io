@@ -19,7 +19,7 @@ def get_total_value(user_portfolio, league="global"):
     else:
         leagueobj = League.objects.filter(name=league)[0]
         userHoldings = [holding for holding in LeagueHolding.objects.filter(owner = user_portfolio.owner, league=leagueobj)]
-        portfolio_value = user_portfolio.owner.portfolio.balance
+        portfolio_value = user_portfolio.balance
         for holding in userHoldings:
             portfolio_value += round((holding.stock_id.current_price * holding.amount),2)
     return portfolio_value
